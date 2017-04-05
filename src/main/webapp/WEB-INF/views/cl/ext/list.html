@@ -1,23 +1,23 @@
 #override("title")
-SpringWind - 用户管理
+外部拓展客户名单
 #end
 #override("css")
 <link href="#springUrl('/static/css/plugins/bootstrap-table/bootstrap-table.min.css')" rel="stylesheet">
 #end
 #override("breadcrumb")
-<li><a>权限管理</a></li><li class="active"><strong>用户管理</strong></li>
+<li><a>客户名单</a></li><li class="active"><strong>外部拓展</strong></li>
 #end
 #override("content")
 <div class="row">
 	<div class="ibox-content text-right form-inline" style="background: #F3F3F4;">
 		<div class="input-group">
-			<input type="text" class="form-control" id="txt_search" value="13500008888">
+			<input type="text" class="form-control">
 			<span class="input-group-btn">
-				<button type="button" class="btn btn-info" id="btn_query">搜索</button>
+				<button type="button" class="btn btn-info" onclick="enterSearch(src)">搜索</button>
 			</span>
 		</div>
 		<button class="btn btn-primary" onclick="editUser(null)" type="button">
-		<i class="fa fa-pencil"></i>&nbsp;添加用户</button>
+		<i class="fa fa-pencil"></i>&nbsp;添加客户</button>
 	</div>
 </div>
 <div class="row">
@@ -74,14 +74,25 @@ SpringWind - 用户管理
         }
     }
     ];
-	function dataQueryParams(params) {
+    function dataQueryParams(params) {
         console.log(params)
         return {
             _size: params.limit,  //页面大小
             _index: params.offset, //页码
-            _search:$("#txt_search").val(), //搜索
         };
     }
+
+	/*搜索*/
+    /*$("#search").click(function () {
+	 findByPage(1);
+	 });
+	 var search_text = "";
+	 $("#search_text").change(function () {
+	 search_text = $(this).val();
+	 });*/
+    function enterSearch(){
+
+	}
 
     function delUser(userId) {
         //询问框
@@ -104,24 +115,24 @@ SpringWind - 用户管理
         });
     }
 
-function editUser(id){
-   	var title = "新增用户";
-   	var url = "#springUrl('/perm/user/edit.html')";
-   	if(id!=null){
-   		title = "编辑用户";
-   		url = url + "?id=" + id;
-   	}
-    layer.open({
-        type: 2,
-        title: title,
-        shadeClose: true,
-        shade: 0.8,
-        area: ['600px', '430px'],
-        fix: false,
-        maxmin: true,
-        content: url
-    });
-}
+	function editUser(id){
+		var title = "新增用户";
+		var url = "#springUrl('/perm/user/edit.html')";
+		if(id!=null){
+			title = "编辑用户";
+			url = url + "?id=" + id;
+		}
+		layer.open({
+			type: 2,
+			title: title,
+			shadeClose: true,
+			shade: 0.8,
+			area: ['600px', '430px'],
+			fix: false,
+			maxmin: true,
+			content: url
+		});
+	}
 </script>
 #end
 #extends("/common/framework.html")

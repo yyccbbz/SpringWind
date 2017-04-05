@@ -18,6 +18,8 @@ import com.baomidou.springwind.entity.User;
 import com.baomidou.springwind.service.IRoleService;
 import com.baomidou.springwind.service.IUserService;
 
+import javax.servlet.http.HttpServletRequest;
+
 /**
  * <p>
  * 用户管理相关操作
@@ -74,7 +76,7 @@ public class UserController extends BaseController {
 	@ResponseBody
 	@Permission("2001")
 	@RequestMapping("/getUserList")
-	public String getUserList() {
+	public String getUserList(HttpServletRequest request) {
 		Page<User> page = getPage();
 		return jsonPage(userService.selectPage(page, null));
 	}
