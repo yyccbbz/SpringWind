@@ -28,7 +28,7 @@ import com.baomidou.framework.upload.UploadFileHeader;
 public class CosFileHeaderTest {
 
 	public static void main( String[] args ) {
-		System.out.println(UploadFileHeader.getThreeBytes("c:/kisso.pdf"));
+		System.out.println(UploadFileHeader.getThreeBytes("d:/kisso.pdf"));
 	}
 
 }

@@ -141,7 +141,7 @@
 	</dependencies>
 
 	<profiles>
-		<profile>
+		<!--<profile>
 			<id>jdk16</id>
 			<activation>
 				<activeByDefault>true</activeByDefault>
@@ -153,7 +153,22 @@
 				<maven.compiler.compilerVersion>1.6</maven.compiler.compilerVersion>
 				<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
 			</properties>
+		</profile>-->
+
+		<profile>
+			<id>jdk18</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+				<jdk>1.8</jdk>
+			</activation>
+			<properties>
+				<maven.compiler.source>1.8</maven.compiler.source>
+				<maven.compiler.target>1.8</maven.compiler.target>
+				<maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+				<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+			</properties>
 		</profile>
+
 	</profiles>
 
 	<build>
