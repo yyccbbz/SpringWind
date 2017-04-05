@@ -1,15 +1,5 @@
 package com.baomidou.springwind.controller;
 
-import java.util.Date;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.baomidou.kisso.annotation.Action;
 import com.baomidou.kisso.annotation.Permission;
 import com.baomidou.kisso.common.encrypt.SaltEncoder;
@@ -17,8 +7,12 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.entity.User;
 import com.baomidou.springwind.service.IRoleService;
 import com.baomidou.springwind.service.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
 
 /**
  * <p>
@@ -76,8 +70,11 @@ public class UserController extends BaseController {
 	@ResponseBody
 	@Permission("2001")
 	@RequestMapping("/getUserList")
-	public String getUserList(HttpServletRequest request) {
-		Page<User> page = getPage();
+	public String getUserList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, @RequestParam("search") String search) {
+
+//        System.out.println("limit = " + limit + ",offset =" + offset + ",search" + search);
+
+        Page<User> page = getPage();
 		return jsonPage(userService.selectPage(page, null));
 	}
 

@@ -57,6 +57,7 @@ var ButtonInit = function () {
         // $('#btn_query').click(function () {
         //
         // })
+        alert("abc")
     };
 
     return oInit;
