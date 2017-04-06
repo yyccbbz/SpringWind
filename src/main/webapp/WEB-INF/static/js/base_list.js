@@ -17,6 +17,8 @@ var TableInit = function () {
     var oTableInit = new Object();
     //初始化Table
     oTableInit.Init = function () {
+        alert("pre do ajax list...");
+        $('#dataTable').children().remove();
         $('#dataTable').bootstrapTable({
             url: dataUrl,               //请求后台的URL（*）
             method: 'get',              //请求方式（*）
