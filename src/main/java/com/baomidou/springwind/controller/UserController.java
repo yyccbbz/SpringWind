@@ -70,13 +70,15 @@ public class UserController extends BaseController {
 	@ResponseBody
 	@Permission("2001")
 	@RequestMapping("/getUserList")
-	public String getUserList(@RequestParam("limit") int limit, @RequestParam("offset") int offset, @RequestParam("search") String search) {
+    public String getUserList(@RequestParam("_size") int _size,
+                              @RequestParam("_index") int _index,
+                              @RequestParam("_search") String _search) {
 
-//        System.out.println("limit = " + limit + ",offset =" + offset + ",search" + search);
+        System.out.println("页面大小 = " + _size + ",当前页 =" + _index + ",搜索条件 =" + _search);
 
         Page<User> page = getPage();
-		return jsonPage(userService.selectPage(page, null));
-	}
+        return jsonPage(userService.selectPage(page, null));
+    }
 
 	@ResponseBody
 	@Permission("2001")

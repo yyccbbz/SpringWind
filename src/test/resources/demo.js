@@ -1,3 +1,7 @@
+
+
+
+/*
 var dataColumns = [
     {field: 'id', title: '序号'},
     {field: 'loginName', title: '登录名'},
@@ -29,6 +33,11 @@ var dataColumns = [
     }
 ];
 
+*/
+
+
+
+/*
 
 $(function () {
 
@@ -114,3 +123,6 @@ var ButtonInit = function () {
 
     return oInit;
 };
+
+*/
+

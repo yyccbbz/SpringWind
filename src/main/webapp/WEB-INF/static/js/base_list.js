@@ -8,9 +8,9 @@ $(function () {
     var oTable = new TableInit();
     oTable.Init();
 
-    //2.初始化Button的点击事件
-    var oButtonInit = new ButtonInit();
-    oButtonInit.Init();
+    //2.初始化表格原生的Button的点击事件
+    /*var oButtonInit = new ButtonInit();
+    oButtonInit.Init();*/
 })
 
 var TableInit = function () {
@@ -20,7 +20,7 @@ var TableInit = function () {
         $('#dataTable').bootstrapTable({
             url: dataUrl,               //请求后台的URL（*）
             method: 'get',              //请求方式（*）
-            toolbar: '#toolbar',        //工具按钮用哪个容器
+            toolbar: '#toolbar_screen',        //工具按钮用哪个容器#toolbar_screen
             striped: true,              //是否显示行间隔色
             cache: false,               //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
             pagination: true,           //是否显示分页（*）
@@ -48,6 +48,7 @@ var TableInit = function () {
     return oTableInit;
 };
 
+/*
 var ButtonInit = function () {
     var oInit = new Object();
     var postdata = {};
@@ -61,4 +62,4 @@ var ButtonInit = function () {
     };
 
     return oInit;
-};
+};*/
