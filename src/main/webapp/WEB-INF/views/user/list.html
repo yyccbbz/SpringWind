@@ -18,6 +18,11 @@ SpringWind - 用户管理
 		</div>
 		<button class="btn btn-primary" onclick="editUser(null)" type="button">
 		<i class="fa fa-pencil"></i>&nbsp;添加用户</button>
+		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
+		#if ($SSOPermission.isActionable("10010"))
+		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
+		<i class="fa fa-pencil"></i>&nbsp;导出列表</button>
+		#end
 	</div>
 </div>
 <div class="row">
@@ -86,7 +91,7 @@ SpringWind - 用户管理
                 var id = row.id;
                 return '<a class="btn btn-xs btn-warning" onclick="editUser(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
                 <!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
-                #if ($SSOPermission.isActionable("10010"))
+                	#if ($SSOPermission.isActionable("10010"))
                     +'<a class="btn btn-xs btn-danger" onclick="delUser(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
                     #end;
             }
@@ -106,9 +111,14 @@ SpringWind - 用户管理
     /**点击搜索*/
 	function queryBy(){
         var oTable1 = new TableInit();
-        console.log(oTable1);
         oTable1.Init();
 	}
+
+	/**导出Excel*/
+	function downloadExcel() {
+		alert("downloadExcel...");
+    }
+
 
     function delUser(userId) {
         //询问框

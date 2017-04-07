@@ -36,4 +36,7 @@
 		</aop:aspect>
 	</aop:config>
 
+	<!-- 初始化SpringUtil -->
+	<bean id="springUtil" class="com.baomidou.springwind.common.utils.SpringUtil"/>
+
 </beans>

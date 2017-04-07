@@ -25,6 +25,13 @@
 		<mail.version>1.4.7</mail.version>
 		<ehcache.version>2.6.11</ehcache.version>
 
+		<!-- excel -->
+		<commons-beanutils.version>1.9.2</commons-beanutils.version>
+		<commons-collections.version>3.2.1</commons-collections.version>
+		<commons-lang.version>2.6</commons-lang.version>
+		<poi.version>3.14</poi.version>
+		<xmlbeans.version>2.6.0</xmlbeans.version>
+
 		<!-- test -->
 		<junit.version>4.12</junit.version>
 	</properties>
@@ -118,6 +125,47 @@
 			<version>${mysql-connector-java.version}</version>
 		</dependency>
 		<!-- data end -->
+
+		<!-- commons -->
+		<dependency>
+			<groupId>commons-beanutils</groupId>
+			<artifactId>commons-beanutils</artifactId>
+			<version>${commons-beanutils.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-collections</groupId>
+			<artifactId>commons-collections</artifactId>
+			<version>${commons-collections.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>${commons-lang.version}</version>
+		</dependency>
+		<!-- commons end -->
+
+		<!-- POI -->
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi-ooxml-schemas</artifactId>
+			<version>${poi.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.xmlbeans</groupId>
+			<artifactId>xmlbeans</artifactId>
+			<version>${xmlbeans.version}</version>
+		</dependency>
+		<!-- POI end -->
 
 		<dependency>
 			<groupId>javax.mail</groupId>
