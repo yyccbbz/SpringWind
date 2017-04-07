@@ -4,6 +4,7 @@ import com.baomidou.kisso.annotation.Action;
 import com.baomidou.kisso.annotation.Permission;
 import com.baomidou.kisso.common.encrypt.SaltEncoder;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.springwind.common.utils.StringUtil;
 import com.baomidou.springwind.entity.User;
 import com.baomidou.springwind.service.IRoleService;
 import com.baomidou.springwind.service.IUserService;
@@ -19,7 +20,6 @@ import java.util.Date;
  * 用户管理相关操作
  * </p>
  *
- *
  * @Author Jack
  * @Date 2016/4/15 15:03
  */
@@ -27,81 +27,80 @@ import java.util.Date;
 @RequestMapping("/perm/user")
 public class UserController extends BaseController {
 
-	@Autowired
-	private IUserService userService;
+    @Autowired
+    private IUserService userService;
 
-	@Autowired
-	private IRoleService roleService;
+    @Autowired
+    private IRoleService roleService;
 
-	@Permission("2001")
-	@RequestMapping("/list")
-	public String list(Model model) {
-		return "/user/list";
-	}
+    @Permission("2001")
+    @RequestMapping("/list")
+    public String list(Model model) {
+        return "/user/list";
+    }
 
     @Permission("2001")
     @RequestMapping("/edit")
-    public String edit(Model model, Long id ) {
-    	if ( id != null ) {
-			model.addAttribute("user", userService.selectById(id));
-		}
-    	model.addAttribute("roleList", roleService.selectList(null));
+    public String edit(Model model, Long id) {
+        if (id != null) {
+            model.addAttribute("user", userService.selectById(id));
+        }
+        model.addAttribute("roleList", roleService.selectList(null));
         return "/user/edit";
     }
-    
-	@ResponseBody
-	@Permission("2001")
-	@RequestMapping("/editUser")
-	public String editUser( User user ) {
-		boolean rlt = false;
-		if ( user != null ) {
-			user.setPassword(SaltEncoder.md5SaltEncode(user.getLoginName(), user.getPassword()));
-			if ( user.getId() != null ) {
-				rlt = userService.updateById(user);
-			} else {
-				user.setCrTime(new Date());
-				user.setLastTime(user.getCrTime());
-				rlt = userService.insert(user);
-			}
-		}
-		return callbackSuccess(rlt);
-	}
 
-	@ResponseBody
-	@Permission("2001")
-	@RequestMapping("/getUserList")
-    public String getUserList(@RequestParam("_size") int _size,
-                              @RequestParam("_index") int _index,
-                              @RequestParam("_search") String _search) {
-
-        System.out.println("页面大小 = " + _size + ",当前页 =" + _index + ",搜索条件 =" + _search);
-
-        Page<User> page = getPage();
-        return jsonPage(userService.selectPage(page, null));
+    @ResponseBody
+    @Permission("2001")
+    @RequestMapping("/editUser")
+    public String editUser(User user) {
+        boolean rlt = false;
+        if (user != null) {
+            user.setPassword(SaltEncoder.md5SaltEncode(user.getLoginName(), user.getPassword()));
+            if (user.getId() != null) {
+                rlt = userService.updateById(user);
+            } else {
+                user.setCrTime(new Date());
+                user.setLastTime(user.getCrTime());
+                rlt = userService.insert(user);
+            }
+        }
+        return callbackSuccess(rlt);
     }
 
-	@ResponseBody
-	@Permission("2001")
-	@RequestMapping("/delUser/{userId}")
-	public String delUser(@PathVariable Long userId) {
+    @ResponseBody
+    @Permission("2001")
+    @RequestMapping("/getUserList")
+    public String getUserList(@RequestParam("_search") String _search) {
+
+        System.out.println("搜索条件 =" + _search);
+
+        Page<User> page = getPage();
+        Page<User> userPage = userService.selectPageBySearch(page, StringUtil.getStrEmpty(_search));
+        return jsonPage(userPage);
+    }
+
+    @ResponseBody
+    @Permission("2001")
+    @RequestMapping("/delUser/{userId}")
+    public String delUser(@PathVariable Long userId) {
         userService.deleteUser(userId);
-		return Boolean.TRUE.toString();
-	}
+        return Boolean.TRUE.toString();
+    }
 
-	@ResponseBody
-	@Permission("2001")
-	@RequestMapping("/{userId}")
-	public User getUser(@PathVariable Long userId) {
-		return userService.selectById(userId);
-	}
+    @ResponseBody
+    @Permission("2001")
+    @RequestMapping("/{userId}")
+    public User getUser(@PathVariable Long userId) {
+        return userService.selectById(userId);
+    }
 
 
-	/**
-	 * 设置头像
-	 */
-	@Permission(action = Action.Skip)
-	@RequestMapping(value = "/setAvatar", method = RequestMethod.GET)
-	public String setAvatar() {
-		return "/user/avatar";
-	}
+    /**
+     * 设置头像
+     */
+    @Permission(action = Action.Skip)
+    @RequestMapping(value = "/setAvatar", method = RequestMethod.GET)
+    public String setAvatar() {
+        return "/user/avatar";
+    }
 }
