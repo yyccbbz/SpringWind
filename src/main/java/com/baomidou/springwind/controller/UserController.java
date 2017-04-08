@@ -5,15 +5,20 @@ import com.baomidou.kisso.annotation.Permission;
 import com.baomidou.kisso.common.encrypt.SaltEncoder;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.StringUtil;
+import com.baomidou.springwind.common.view.SpringMvcExcelView;
 import com.baomidou.springwind.entity.User;
 import com.baomidou.springwind.service.IRoleService;
 import com.baomidou.springwind.service.IUserService;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -102,5 +107,38 @@ public class UserController extends BaseController {
     @RequestMapping(value = "/setAvatar", method = RequestMethod.GET)
     public String setAvatar() {
         return "/user/avatar";
+    }
+
+    /**
+     *
+     * @return
+     */
+    @RequestMapping("downloadExcel")
+    public ModelAndView downloadExcel(){
+
+        /**1.执行你的业务逻辑获取数据，使用ExcelContent生成Workbook，需要四个参数
+         * @param id 配置ID
+         * @param beans 配置class对应的List
+         * @param header 导出之前,在标题前面做出一些额外的操作,比如增加文档描述等,可以为null
+         * @param fields 指定Excel导出的字段(bean对应的字段名称),可以为null
+         */
+        Workbook workbook = null;
+        String id = "";
+        List<User> list = userService.selectList(null);
+        List<String> fields = new ArrayList<String>();
+
+        fields.add("");
+        try {
+            workbook = excelContext.createExcel(id, list,null,fields);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        /**2.跳转到Excel下载视图*/
+        ModelAndView view = new ModelAndView("springMvcExcelView");
+        view.addObject(SpringMvcExcelView.EXCEL_NAME,"测试Excel下载");
+        view.addObject(SpringMvcExcelView.EXCEL_WORKBOOK,workbook);
+        view.addObject(SpringMvcExcelView.EXCEL_EMPTY_MESSAGE,"XXX没有相关数据可以导出");
+        return view;
     }
 }

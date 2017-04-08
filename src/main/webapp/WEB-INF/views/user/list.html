@@ -21,7 +21,7 @@ SpringWind - 用户管理
 		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
 		#if ($SSOPermission.isActionable("10010"))
 		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
-		<i class="fa fa-pencil"></i>&nbsp;导出列表</button>
+		<i class="fa fa-pencil"></i>&nbsp;导出查询结果</button>
 		#end
 	</div>
 </div>
@@ -117,6 +117,7 @@ SpringWind - 用户管理
 	/**导出Excel*/
 	function downloadExcel() {
 		alert("downloadExcel...");
+		$.get()
     }
 
 

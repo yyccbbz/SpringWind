@@ -3,6 +3,7 @@ package com.baomidou.springwind.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.baomidou.springwind.excel.ExcelContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -32,6 +33,9 @@ public class BaseController extends SuperController implements HandlerIntercepto
 
 	@Autowired
 	private IPermissionService permissionService;
+
+	@Autowired
+	protected ExcelContext excelContext;
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)

@@ -11,7 +11,7 @@ $(function () {
     //2.初始化表格原生的Button的点击事件
     /*var oButtonInit = new ButtonInit();
     oButtonInit.Init();*/
-})
+});
 
 var TableInit = function () {
     var oTableInit = new Object();

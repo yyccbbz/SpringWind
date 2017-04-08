@@ -11,8 +11,7 @@
        http://www.springframework.org/schema/context/spring-context-4.2.xsd">
 
 	<!-- 加载配置文件 -->
-	<bean id="placeholder"
-		class="com.baomidou.framework.velocity.VelocityPropertyPlaceholderConfigurer">
+	<bean id="placeholder" class="com.baomidou.framework.velocity.VelocityPropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
 				<value>classpath:properties/jdbc.properties</value>
@@ -36,7 +35,15 @@
 		</aop:aspect>
 	</aop:config>
 
+	<!-- Excel上下文  -->
+	<bean id="excelContext" class="com.baomidou.springwind.excel.ExcelContext">
+		<constructor-arg>
+			<!--你自己的excel配置文件路径,不要使用classpath前缀,底层使用的classPathResource-->
+			<value>xml/excel-config.xml</value>
+		</constructor-arg>
+	</bean>
 	<!-- 初始化SpringUtil -->
-	<bean id="springUtil" class="com.baomidou.springwind.common.utils.SpringUtil"/>
+	<!--<bean id="springUtil" class="com.baomidou.springwind.common.utils.SpringUtil"/>-->
+
 
 </beans>
