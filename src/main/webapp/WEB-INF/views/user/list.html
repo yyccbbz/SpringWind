@@ -35,7 +35,8 @@ SpringWind - 用户管理
 <script src="#springUrl('/static/js/plugins/bootstrap-table/bootstrap-table.min.js')"></script>
 <script src="#springUrl('/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js')"></script>
 <script src="#springUrl('/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js')"></script>
-<script src="#springUrl('/static/plugins/layer-v2.2/layer/layer.js')"></script>
+<!--<script src="#springUrl('/static/plugins/layer-v2.2/layer/layer.js')"></script>-->
+<script src="#springUrl('/static/plugins/layer-v3.0.3/layer/layer.js')"></script>
 <script src="#springUrl('/static/js/base_list.js')"></script>
 <script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
@@ -116,8 +117,14 @@ SpringWind - 用户管理
 
 	/**导出Excel*/
 	function downloadExcel() {
-		alert("downloadExcel...");
-		$.get()
+	    var url = "#springUrl('/perm/user/')" + downloadExcel;
+        //Ajax获取
+        $.get(url, {}, function(str){
+            layer.open({
+                type: 1,
+                content: str //注意，如果str是object，那么需要字符拼接。
+            });
+        });
     }
 
 

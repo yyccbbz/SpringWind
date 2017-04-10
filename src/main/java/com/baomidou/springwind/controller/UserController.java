@@ -17,7 +17,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -89,31 +88,6 @@ public class UserController extends BaseController {
         return jsonPage(userPage);
     }
 
-    @ResponseBody
-    @Permission("2001")
-    @RequestMapping("/delUser/{userId}")
-    public String delUser(@PathVariable Long userId) {
-        userService.deleteUser(userId);
-        return Boolean.TRUE.toString();
-    }
-
-    @ResponseBody
-    @Permission("2001")
-    @RequestMapping("/{userId}")
-    public User getUser(@PathVariable Long userId) {
-        return userService.selectById(userId);
-    }
-
-
-    /**
-     * 设置头像
-     */
-    @Permission(action = Action.Skip)
-    @RequestMapping(value = "/setAvatar", method = RequestMethod.GET)
-    public String setAvatar() {
-        return "/user/avatar";
-    }
-
     /**
      * excel导出列表
      *
@@ -145,4 +119,31 @@ public class UserController extends BaseController {
         view.addObject(SpringMvcExcelView.EXCEL_EMPTY_MESSAGE,"XXX没有相关数据可以导出");
         return view;
     }
+
+    @ResponseBody
+    @Permission("2001")
+    @RequestMapping("/delUser/{userId}")
+    public String delUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
+        return Boolean.TRUE.toString();
+    }
+
+    @ResponseBody
+    @Permission("2001")
+    @RequestMapping("/{userId}")
+    public User getUser(@PathVariable Long userId) {
+        return userService.selectById(userId);
+    }
+
+
+    /**
+     * 设置头像
+     */
+    @Permission(action = Action.Skip)
+    @RequestMapping(value = "/setAvatar", method = RequestMethod.GET)
+    public String setAvatar() {
+        return "/user/avatar";
+    }
+
+
 }
