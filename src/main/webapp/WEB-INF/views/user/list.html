@@ -117,13 +117,15 @@ SpringWind - 用户管理
 
 	/**导出Excel*/
 	function downloadExcel() {
-	    var url = "#springUrl('/perm/user/')" + downloadExcel;
+	    var url = "#springUrl('/perm/user/downloadExcel.html')";
+	    console.log(url);
         //Ajax获取
-        $.get(url, {}, function(str){
-            layer.open({
-                type: 1,
-                content: str //注意，如果str是object，那么需要字符拼接。
-            });
+        downLoadFile({
+            url: url, //请求的url
+            data: {search: $("#txt_search").val()},//要发送的数据
+            callback: function () {
+                alert("导出excel文件成功");
+            }
         });
     }
 

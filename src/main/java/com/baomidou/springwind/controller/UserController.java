@@ -93,6 +93,7 @@ public class UserController extends BaseController {
      *
      * @return
      */
+    @Permission("2001")
     @RequestMapping("downloadExcel")
     public ModelAndView downloadExcel(){
 
