@@ -12,9 +12,16 @@
 
 	<!-- 加载配置文件 -->
 	<bean id="placeholder" class="com.baomidou.framework.velocity.VelocityPropertyPlaceholderConfigurer">
+		<!-- 允许JVM参数覆盖 -->
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+		<!-- 忽略没有找到的资源文件 -->
+		<property name="ignoreResourceNotFound" value="true"/>
+		<!-- 配置资源文件 -->
 		<property name="locations">
 			<list>
 				<value>classpath:properties/jdbc.properties</value>
+				<value>classpath:properties/excelFields.properties</value>
+				<value>classpath:properties/sso.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -43,7 +50,7 @@
 		</constructor-arg>
 	</bean>
 	<!-- 初始化SpringUtil -->
-	<!--<bean id="springUtil" class="com.baomidou.springwind.common.utils.SpringUtil"/>-->
+	<bean id="springUtil" class="com.baomidou.springwind.common.utils.SpringUtil"/>
 
 
 </beans>

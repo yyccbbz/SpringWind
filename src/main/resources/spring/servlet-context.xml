@@ -27,14 +27,8 @@
 		<property name="layoutUrl" value="layout/default.vm"/>
 		<property name="toolboxConfigLocation" value="/WEB-INF/toolbox.xml" />
 	</bean>
-
-	<!--&lt;!&ndash; 支持自定义视图解析器 &ndash;&gt;
-	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
-		<property name="order" value="100"></property>
-	</bean>
-
-	&lt;!&ndash; 定义Excel的视图对象 &ndash;&gt;
-	<bean name="excelView" class="org.blazer.bigclient.view.ExcelView"></bean>-->
+	<!-- 自定义springMvcExcelView的视图对象 -->
+	<bean name="springMvcExcelView" class="com.baomidou.springwind.common.view.SpringMvcExcelView"></bean>
 
 	<!-- 重定向视图控制器标签 -->
 	<mvc:redirect-view-controller path="/redirect" redirect-url="/status" context-relative="true" status-code="301"

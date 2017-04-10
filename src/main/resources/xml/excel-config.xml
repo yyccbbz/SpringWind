@@ -4,13 +4,13 @@
 
 	<excel id="user" class="com.baomidou.springwind.entity.User" sheetname="用户列表" defaultColumnWidth="5000" enableStyle="true">
 		<field name="id" title="主键"/>
-		<field name="loginName" title="loginName"/>
-		<field name="password" title="password"/>
-		<field name="email" title="email"/>
-		<field name="type" title="type"/>
-		<field name="status" title="status"/>
-		<field name="crTime" title="crTime" pattern="yyyy/MM/dd"/>
-		<field name="lastTime" title="lastTime" pattern="yyyy/MM/dd"/>
+		<field name="loginName" title="用户名"/>
+		<field name="password" title="密码"/>
+		<field name="email" title="邮箱"/>
+		<field name="type" title="类别" format="1:管理员,0:普通用户" />
+		<field name="status" title="状态" format="1:正常,0:禁用" />
+		<field name="crTime" title="创建时间" pattern="yyyy/MM/dd"/>
+		<field name="lastTime" title="最后登录时间" pattern="yyyy/MM/dd"/>
 	</excel>
 
 
