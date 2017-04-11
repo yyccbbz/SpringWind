@@ -9,7 +9,22 @@
 						http://www.springframework.org/schema/context/spring-context-4.2.xsd
 						http://www.springframework.org/schema/mvc
 						http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
-  
+
+	<!-- 加载配置文件 -->
+	<bean id="placeholder" class="com.baomidou.framework.velocity.VelocityPropertyPlaceholderConfigurer">
+		<!-- 允许JVM参数覆盖 -->
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+		<!-- 忽略没有找到的资源文件 -->
+		<property name="ignoreResourceNotFound" value="true"/>
+		<!-- 配置资源文件 -->
+		<property name="locations">
+			<list>
+				<value>classpath:properties/excelFields.properties</value>
+				<value>classpath:properties/sso.properties</value>
+			</list>
+		</property>
+	</bean>
+
 	<!-- 扫描 controller -->
 	<context:component-scan base-package="com.baomidou.springwind.controller" />
 
@@ -27,7 +42,11 @@
 		<property name="layoutUrl" value="layout/default.vm"/>
 		<property name="toolboxConfigLocation" value="/WEB-INF/toolbox.xml" />
 	</bean>
-	<!-- 自定义springMvcExcelView的视图对象 -->
+	<!-- 支持自定义视图解析器 -->
+	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+		<property name="order" value="100"></property>
+	</bean>
+	<!-- springMvcExcelView的视图对象 -->
 	<bean name="springMvcExcelView" class="com.baomidou.springwind.common.view.SpringMvcExcelView"></bean>
 
 	<!-- 重定向视图控制器标签 -->

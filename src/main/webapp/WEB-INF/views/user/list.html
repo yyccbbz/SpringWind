@@ -19,10 +19,10 @@ SpringWind - 用户管理
 		<button class="btn btn-primary" onclick="editUser(null)" type="button">
 		<i class="fa fa-pencil"></i>&nbsp;添加用户</button>
 		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
-		#if ($SSOPermission.isActionable("10010"))
+		<!--#if ($SSOPermission.isActionable("10010"))-->
 		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
 		<i class="fa fa-pencil"></i>&nbsp;导出查询结果</button>
-		#end
+		<!--#end-->
 	</div>
 </div>
 <div class="row">
@@ -120,12 +120,12 @@ SpringWind - 用户管理
 	    var url = "#springUrl('/perm/user/downloadExcel.html')";
 	    console.log(url);
         //Ajax获取
-        downLoadFile({
+        DownLoadFile({
             url: url, //请求的url
-            data: {search: $("#txt_search").val()},//要发送的数据
-            callback: function () {
+            data: {search: $("#txt_search").val()}//要发送的数据
+            /*callback: function () {
                 alert("导出excel文件成功");
-            }
+            }*/
         });
     }
 

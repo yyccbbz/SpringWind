@@ -39,8 +39,8 @@ public class UserController extends BaseController {
     @Autowired
     private IRoleService roleService;
 
-    @Value("USER_EXCEL_FIELDS")
-    public String USER_EXCEL_FIELDS;
+    @Value("${user.fields}")
+    private String userFields;
 
     @Permission("2001")
     @RequestMapping("/list")
@@ -94,8 +94,8 @@ public class UserController extends BaseController {
      * @return
      */
     @Permission("2001")
-    @RequestMapping("downloadExcel")
-    public ModelAndView downloadExcel(){
+    @RequestMapping(value = "downloadExcel",method = RequestMethod.POST)
+    public ModelAndView downloadExcel(@RequestParam("search") String search){
 
         /**1.执行你的业务逻辑获取数据，使用ExcelContent生成Workbook，需要四个参数
          * id 配置ID
@@ -103,10 +103,11 @@ public class UserController extends BaseController {
          * header 导出之前,在标题前面做出一些额外的操作,比如增加文档描述等,可以为null
          * fields 指定Excel导出的字段(bean对应的字段名称),可以为null
          */
+        System.out.println("search = " + search);
         Workbook workbook = null;
-        String id = "";
+        String id = "user";
         List<User> list = userService.selectList(null);
-        List<String> fields = Arrays.asList(USER_EXCEL_FIELDS.split(","));
+        List<String> fields = Arrays.asList(userFields.split(","));
         try {
             workbook = excelContext.createExcel(id, list,null,fields);
         } catch (Exception e) {
