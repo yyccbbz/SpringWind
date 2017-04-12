@@ -6,10 +6,14 @@ import com.baomidou.kisso.common.encrypt.SaltEncoder;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.result.AjaxResult;
 import com.baomidou.springwind.common.utils.StringUtil;
+import com.baomidou.springwind.common.utils.UploadUtil;
 import com.baomidou.springwind.common.view.SpringMvcExcelView;
 import com.baomidou.springwind.entity.User;
+import com.baomidou.springwind.excel.exception.ExcelException;
+import com.baomidou.springwind.excel.result.ExcelImportResult;
 import com.baomidou.springwind.service.IRoleService;
 import com.baomidou.springwind.service.IUserService;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,12 +31,9 @@ import java.util.HashMap;
 import java.util.List;
 
 /**
- * <p>
  * 用户管理相关操作
- * </p>
  *
- * @Author Jack
- * @Date 2016/4/15 15:03
+ *
  */
 @Controller
 @RequestMapping("/perm/user")
@@ -50,7 +51,6 @@ public class UserController extends BaseController {
 
     //上传文件的类型
     private static final HashMap<String, String> TypeMap = new HashMap<String, String>();
-
     static {
         /*TypeMap.put("image", "gif,jpg,jpeg,png,bmp");
         TypeMap.put("flash", "swf,flv");
@@ -157,7 +157,7 @@ public class UserController extends BaseController {
 
         AjaxResult result = AjaxResult.success("导入数据成功...");
 
-        /*if (!file.isEmpty()) {
+        if (!file.isEmpty()) {
 
             //判断请求类型是否为文件上传类型
             if (!ServletFileUpload.isMultipartContent(request)) {
@@ -186,7 +186,7 @@ public class UserController extends BaseController {
             }
 
             try {
-                // 获取Excel对象
+                /*// 获取Excel对象
                 ClExcel excel = ExcelHandlerUtil.getExcelFile(file, request);
                 //当前上传用户的id
                 excel.setUserId(88888888L);
@@ -194,14 +194,14 @@ public class UserController extends BaseController {
                 result.setObj(excel);
 
                 // 读取excel文件
-                String excelType = "clExtUserBak";
+                String excelType = "user";
                 ExcelImportResult readExcel = excelContext.readExcel(excelType, file.getInputStream());
                 List<ClExtUserBak> listBean = readExcel.getListBean();
                 System.out.println("listBean = " + listBean);
                 this.clExtUserBakService.importExcelData(listBean, excel);
 
                 // 存储excel文件
-                UploadUtil.copy(file, excel.getExcelRealPath(), excel.getExcelRealName());
+                UploadUtil.copy(file, excel.getExcelRealPath(), excel.getExcelRealName());*/
             } catch (Exception e) {
                 result.setCode(AjaxResult.CODE_FAILURE);
                 if (e instanceof ExcelException) {
@@ -212,7 +212,6 @@ public class UserController extends BaseController {
                     } else {
                         result.setMsg(e.getMessage());
                         e.printStackTrace();
-                        LOGGER.error(e.getMessage());
                     }
                 }
             }
@@ -220,7 +219,7 @@ public class UserController extends BaseController {
             //上传文件为空，或者当前登录用户不是投资顾问，则无权限上传
             result.setCode(AjaxResult.CODE_DENIED);
             result.setMsg("无法上传，请检查该上传文件或您的登录账户权限！");
-        }*/
+        }
 
         System.out.println("返回页面的结果对象为result = " + result);
         return result;
