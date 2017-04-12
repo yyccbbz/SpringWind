@@ -19,10 +19,13 @@ SpringWind - 用户管理
 		<button class="btn btn-primary" onclick="editUser(null)" type="button">
 		<i class="fa fa-pencil"></i>&nbsp;添加用户</button>
 		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
-		<!--#if ($SSOPermission.isActionable("10010"))-->
+		#if ($SSOPermission.isActionable("10010"))
 		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
 		<i class="fa fa-pencil"></i>&nbsp;导出查询结果</button>
-		<!--#end-->
+		<button class="btn btn-primary" onclick="uploadExcel()" type="button">
+		<i class="fa fa-pencil"></i>&nbsp;导入EXCEL文件</button>
+		<input type="file" id="fileExcel" name="fileExcel" accept=".xls,.xlsx" style="display: none"/>
+		#end
 	</div>
 </div>
 <div class="row">
@@ -117,18 +120,29 @@ SpringWind - 用户管理
 
 	/**导出Excel*/
 	function downloadExcel() {
-	    var url = "#springUrl('/perm/user/downloadExcel.html')";
-	    console.log(url);
-        //Ajax获取
-        DownLoadFile({
-            url: url, //请求的url
-            data: {search: $("#txt_search").val()}//要发送的数据
-            /*callback: function () {
-                alert("导出excel文件成功");
-            }*/
+        //模拟Ajax获取
+        downLoadFile({
+            url: "#springUrl('/perm/user/downloadExcel.html')", //请求的url
+            data: {search: $("#txt_search").val()}				//要发送的数据
         });
     }
 
+    /**导入excel*/
+    function uploadExcel() {
+		//出发input的点击事件，弹出文件选择窗口
+        $("#fileExcel").click();
+        //选择文件后，触发
+        $('#fileExcel').change(function() {
+            //询问框
+            layer.confirm('确定上传吗？', {
+                btn: ['确定', '取消'] //按钮
+            }, function () {
+                var url = "#springUrl('/perm/user/delUser/')";
+                var fileId = "fileExcel";
+                ajaxFileUpload(url,fileId);
+            });
+        });
+    }
 
     function delUser(userId) {
         //询问框
