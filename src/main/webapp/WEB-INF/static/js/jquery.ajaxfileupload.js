@@ -190,10 +190,10 @@
             // you have to delete the '<pre></pre>' tag.
             // The pre tag in Chrome has attribute, so have to use regex to remove
             var data = r.responseText;
-            var rx = new RegExp("<pre.*?>(.*?)</pre>", "i");
+            /*var rx = new RegExp("<pre.*?>(.*?)</pre>", "i");
             var am = rx.exec(data);
             //this is the desired data extracted
-            var data = (am) ? am[1] : "";    //the only submatch or empty
+            var data = (am) ? am[1] : "";    //the only submatch or empty*/
             eval("data = " + data);
         }
         // evaluate scripts within html
@@ -201,5 +201,17 @@
             jQuery("<div>").html(data).evalScripts();
         //alert($('param', data).each(function(){alert($(this).attr('value'));}));
         return data;
+    },
+
+    handleError: function( s, xhr, status, e )      {
+        // If a local callback was specified, fire it
+        if ( s.error ) {
+            s.error.call( s.context || s, xhr, status, e );
+        }
+
+        // Fire the global callback
+        if ( s.global ) {
+            (s.context ? jQuery(s.context) : jQuery.event).trigger( "ajaxError", [xhr, s, e] );
+        }
     }
 })

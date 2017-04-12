@@ -1,5 +1,9 @@
 package com.baomidou.springwind.controller;
 
+import com.baomidou.framework.common.util.DateUtil;
+import com.baomidou.framework.upload.UploadFile;
+import com.baomidou.framework.upload.UploadMsg;
+import com.baomidou.framework.upload.UploadMultipartRequest;
 import com.baomidou.kisso.annotation.Action;
 import com.baomidou.kisso.annotation.Permission;
 import com.baomidou.kisso.common.encrypt.SaltEncoder;
@@ -25,10 +29,9 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
+import java.io.File;
+import java.io.IOException;
+import java.util.*;
 
 /**
  * 用户管理相关操作
@@ -59,8 +62,8 @@ public class UserController extends BaseController {
         TypeMap.put("file", "xls,xlsx");
     }
 
-    //上传文件的最大值
-    public static long fileSize = 30 * 1024 * 1024;
+    //上传文件的最大值 30m
+    private final static int MAX_POST_SIZE = 30 * 1024 * 1024;
 
     @Permission("2001")
     @RequestMapping("/list")
@@ -114,7 +117,7 @@ public class UserController extends BaseController {
      * @return
      */
     @Permission("2001")
-    @RequestMapping(value = "downloadExcel",method = RequestMethod.POST)
+    @RequestMapping(value = "/downloadExcel",method = RequestMethod.POST)
     public ModelAndView downloadExcel(@RequestParam("search") String search){
 
         /**1.执行你的业务逻辑获取数据，使用ExcelContent生成Workbook，需要四个参数
@@ -145,86 +148,59 @@ public class UserController extends BaseController {
     /**
      * Excel导入
      *
-     * @param file
-     * @param request
      * @return
      */
     @ResponseBody
-    @RequestMapping(value = "importExcel", method = RequestMethod.POST)
-    public AjaxResult importExcel(@RequestParam("fileExcel") CommonsMultipartFile file, HttpServletRequest request) {
+    @Permission("2001")
+    @RequestMapping(value = "/uploadExcel", method = RequestMethod.POST)
+    public UploadMsg uploadExcel() {
 
-//        LOGGER.debug("该上传excel文件的原文件名是 :" + file.getOriginalFilename());
-
-        AjaxResult result = AjaxResult.success("导入数据成功...");
-
-        if (!file.isEmpty()) {
-
-            //判断请求类型是否为文件上传类型
-            if (!ServletFileUpload.isMultipartContent(request)) {
-                result.setCode(AjaxResult.CODE_FAILURE);
-                result.setMsg("该请求上传文件失败...");
-                return result;
-            }
-
-            //当文件超过设置的大小时，则不运行上传
-            if (file.getSize() > fileSize) {
-                result.setCode(AjaxResult.CODE_FAILURE);
-                result.setMsg("该上传文件大小超限制...");
-                return result;
-            }
-
-            //获取文件名后缀
-            String OriginalFilename = file.getOriginalFilename();
-            String fileSuffix = OriginalFilename.substring(OriginalFilename.lastIndexOf(".") + 1).toLowerCase();
-//            LOGGER.debug("该上传文件的后缀名为 :" + fileSuffix);
-
-            //判断该类型的文件是否在允许上传的文件类型内
-            if (!Arrays.asList(TypeMap.get("file").split(",")).contains(fileSuffix)) {
-                result.setCode(AjaxResult.CODE_FAILURE);
-                result.setMsg("请检查上传文件的格式...");
-                return result;
-            }
-
-            try {
-                /*// 获取Excel对象
-                ClExcel excel = ExcelHandlerUtil.getExcelFile(file, request);
-                //当前上传用户的id
-                excel.setUserId(88888888L);
-                excel.setCtime(new Date());
-                result.setObj(excel);
-
-                // 读取excel文件
-                String excelType = "user";
-                ExcelImportResult readExcel = excelContext.readExcel(excelType, file.getInputStream());
-                List<ClExtUserBak> listBean = readExcel.getListBean();
-                System.out.println("listBean = " + listBean);
-                this.clExtUserBakService.importExcelData(listBean, excel);
-
-                // 存储excel文件
-                UploadUtil.copy(file, excel.getExcelRealPath(), excel.getExcelRealName());*/
-            } catch (Exception e) {
-                result.setCode(AjaxResult.CODE_FAILURE);
-                if (e instanceof ExcelException) {
-                    result.setMsg(e.getMessage());
-                } else {
-                    if (e instanceof InvalidFormatException) {
-                        result.setMsg("错误的文件格式...");
-                    } else {
-                        result.setMsg(e.getMessage());
-                        e.printStackTrace();
+        UploadMsg msg = new UploadMsg();
+        try {
+            UploadMultipartRequest umr = new UploadMultipartRequest(request, getSaveDir(), MAX_POST_SIZE);
+            umr.setFileHeaderExts("504b03.xlsx");
+            umr.upload();
+            Enumeration<?> files = umr.getFileNames();
+            while ( files.hasMoreElements() ) {
+                String name = (String) files.nextElement();
+                UploadFile cf = umr.getUploadFile(name);
+                if ( cf != null ) {
+                    /**
+                     * 上传成功
+                     */
+                    if ( cf.isSuccess() ) {
+                        msg.setSuccess(true);
+                        msg.setUrl(cf.getFileUrl());
+                        msg.setSize(cf.getSize());
+                        System.err.println("上传文件地址：" + msg.getUrl());
                     }
+                    msg.setMsg(cf.getUploadCode().desc());
                 }
             }
-        } else {
-            //上传文件为空，或者当前登录用户不是投资顾问，则无权限上传
-            result.setCode(AjaxResult.CODE_DENIED);
-            result.setMsg("无法上传，请检查该上传文件或您的登录账户权限！");
+        } catch ( IOException e ) {
+            logger.error("uploadFile error. ", e);
         }
-
-        System.out.println("返回页面的结果对象为result = " + result);
-        return result;
+        System.out.println("msg = " + toJson(msg));
+        return msg;
     }
 
+
+    /**
+     * <p>
+     * 上传文件存放目录
+     * </p>
+     */
+    private static String getSaveDir() {
+        StringBuffer filePath = new StringBuffer(System.getProperty("user.dir"));
+        filePath.append(File.separator);
+        filePath.append(DateUtil.format(new Date(), "yyyy"));
+        filePath.append(File.separator);
+        File file = new File(filePath.toString());
+        if ( !file.exists() ) {
+            file.mkdirs();
+        }
+        return file.getPath();
+    }
 
     @ResponseBody
     @Permission("2001")

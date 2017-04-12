@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baomidou.springwind.mapper.ExcelMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.baomidou.springwind.entity.Excel">
+		<id column="id" property="id" />
+		<result column="user_id" property="userId" />
+		<result column="excel_name" property="excelName" />
+		<result column="excel_real_name" property="excelRealName" />
+		<result column="excel_real_path" property="excelRealPath" />
+		<result column="mtime" property="mtime" />
+		<result column="ctime" property="ctime" />
+	</resultMap>
+
+</mapper>

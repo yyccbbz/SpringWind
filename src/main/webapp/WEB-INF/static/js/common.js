@@ -63,35 +63,7 @@ var DownLoadFile = function (options) {
     $iframe.remove();
 }
 
-/**
- * ajax上传文件
- */
-var ajaxFileUpload = function(url,fileId) {
-    $.ajaxFileUpload({
-        url: url,                              //用于文件上传的服务器端请求地址
-        type: "post",                          //post请求方式
-        secureuri: false,                      //一般设置为false
-        fileElementId: "fileExcel",            //文件上传空间的id属性
-        dataType: "json",                      //返回值类型 一般设置为json
-        success: function (data, status) {     //服务器成功响应处理函数
-            console.log(data);
-            //刷新当前页
-            reload();
-            /** 0:失败,1:成功,2:未登录或session过期,3:无权限 */
-            if (data.code == 0) {
-                alert(data.msg);
-            } else if (data.code == 1) {
-                var excelName = data.obj.excelName;
-                alert(excelName + " ,文件成功上传 ，" + data.msg);
-            } else {
-                alert(data.msg);
-            }
-        },
-        error: function (data, status, e) {     //服务器响应失败处理函数
-            alert(data.msg + "---" + e);
-        }
-    });
-};
+
 
 
 

@@ -129,17 +129,34 @@ SpringWind - 用户管理
 
     /**导入excel*/
     function uploadExcel() {
-		//出发input的点击事件，弹出文件选择窗口
+        //触发input的点击事件，弹出文件选择窗口
         $("#fileExcel").click();
         //选择文件后，触发
-        $('#fileExcel').change(function() {
+        $('#fileExcel').change(function () {
             //询问框
             layer.confirm('确定上传吗？', {
                 btn: ['确定', '取消'] //按钮
             }, function () {
-                var url = "#springUrl('/perm/user/delUser/')";
+                var url = "#springUrl('/perm/user/uploadExcel/')";
                 var fileId = "fileExcel";
-                ajaxFileUpload(url,fileId);
+                $.ajaxFileUpload({
+                    url: url,                              //用于文件上传的服务器端请求地址
+                    type: "post",                          //post请求方式
+                    secureuri: false,                      //一般设置为false
+                    fileElementId: fileId,            	   //文件上传空间的id属性
+                    dataType: "json",                      //返回值类型 一般设置为json
+                    success: function (data, status) {     //服务器成功响应处理函数
+                        layer.closeAll();
+                        alert(data+"21321");
+						console.log(data);
+//                        if(data == 'true'){
+//                            $('#dataTable').bootstrapTable('refresh',{url:dataUrl});
+//                        }
+                    },
+                    error: function (data, status, e) {     //服务器响应失败处理函数
+                        console.log(data);
+                    }
+                });
             });
         });
     }
