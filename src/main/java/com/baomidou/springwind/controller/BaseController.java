@@ -3,6 +3,7 @@ package com.baomidou.springwind.controller;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.baomidou.framework.common.util.DateUtil;
 import com.baomidou.springwind.excel.ExcelContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -14,6 +15,9 @@ import com.baomidou.framework.mail.MailHelper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.service.IPermissionService;
 import com.baomidou.springwind.service.IUserService;
+
+import java.io.File;
+import java.util.Date;
 
 /**
  * <p>
@@ -112,6 +116,23 @@ public class BaseController extends SuperController implements HandlerIntercepto
 
 	protected String booleanToString(boolean rlt) {
 		return rlt ? "true" : "false";
+	}
+
+	/**
+	 * <p>
+	 * 上传文件存放目录
+	 * </p>
+	 */
+	protected static String getSaveDir() {
+		StringBuffer filePath = new StringBuffer("/opt/upload");
+		filePath.append(File.separator);
+		filePath.append(DateUtil.format(new Date(), "yyyy-MM"));
+		filePath.append(File.separator);
+		File file = new File(filePath.toString());
+		if ( !file.exists() ) {
+			file.mkdirs();
+		}
+		return file.getPath();
 	}
 
 }

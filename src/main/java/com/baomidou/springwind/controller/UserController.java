@@ -1,6 +1,5 @@
 package com.baomidou.springwind.controller;
 
-import com.baomidou.framework.common.util.DateUtil;
 import com.baomidou.framework.upload.UploadFile;
 import com.baomidou.framework.upload.UploadMsg;
 import com.baomidou.framework.upload.UploadMultipartRequest;
@@ -8,30 +7,28 @@ import com.baomidou.kisso.annotation.Action;
 import com.baomidou.kisso.annotation.Permission;
 import com.baomidou.kisso.common.encrypt.SaltEncoder;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.springwind.common.result.AjaxResult;
 import com.baomidou.springwind.common.utils.StringUtil;
-import com.baomidou.springwind.common.utils.UploadUtil;
 import com.baomidou.springwind.common.view.SpringMvcExcelView;
+import com.baomidou.springwind.entity.Excel;
 import com.baomidou.springwind.entity.User;
-import com.baomidou.springwind.excel.exception.ExcelException;
 import com.baomidou.springwind.excel.result.ExcelImportResult;
+import com.baomidou.springwind.service.IExcelService;
 import com.baomidou.springwind.service.IRoleService;
 import com.baomidou.springwind.service.IUserService;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpServletRequest;
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.List;
 
 /**
  * 用户管理相关操作
@@ -48,21 +45,18 @@ public class UserController extends BaseController {
     @Autowired
     private IRoleService roleService;
 
+    @Autowired
+    private IExcelService excelService;
+
+    //excel-config中配置的ID
+    @Value("${user.excelId}")
+    private String userExcelId;
+
     //excel导出的字段
     @Value("${user.fields}")
     private String userFields;
 
-    //上传文件的类型
-    private static final HashMap<String, String> TypeMap = new HashMap<String, String>();
-    static {
-        /*TypeMap.put("image", "gif,jpg,jpeg,png,bmp");
-        TypeMap.put("flash", "swf,flv");
-        TypeMap.put("media", "swf,flv,mp3,wav,wma,wmv,mid,avi,mpg,asf,rm,rmvb");
-        TypeMap.put("file", "doc,docx,xls,xlsx,ppt,pptx,htm,html,txt,dwg,pdf");*/
-        TypeMap.put("file", "xls,xlsx");
-    }
-
-    //上传文件的最大值 30m
+    /* 限制最大上传 30M */
     private final static int MAX_POST_SIZE = 30 * 1024 * 1024;
 
     @Permission("2001")
@@ -112,7 +106,7 @@ public class UserController extends BaseController {
     }
 
     /**
-     * excel导出列表
+     * Excel导出列表
      *
      * @return
      */
@@ -128,7 +122,7 @@ public class UserController extends BaseController {
          */
         System.out.println("search = " + search);
         Workbook workbook = null;
-        String id = "user";
+        String id = userExcelId;
         List<User> list = userService.selectList(null);
         List<String> fields = Arrays.asList(userFields.split(","));
         try {
@@ -148,58 +142,73 @@ public class UserController extends BaseController {
     /**
      * Excel导入
      *
+     * UploadFile，此上传模型的结构如下：
+     * [
+     *    "contentType":"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+     *    "dir":"\opt\upload\2017-04",
+     *    "file":"\opt\upload\2017-04\WP2HZivVYRYEQXTM94wyfD.xlsx",
+     *    "fileUrl":"\opt\upload\2017-04\WP2HZivVYRYEQXTM94wyfD.xlsx",
+     *    "filename":"WP2HZivVYRYEQXTM94wyfD.xlsx",
+     *    "filesystemName":"WP2HZivVYRYEQXTM94wyfD.xlsx",
+     *    "original":"测试Excel下载.xlsx",
+     *    "originalFileName":"测试Excel下载.xlsx",
+     *    "paramParts":{},
+     *    "size":3725,
+     *    "success":true,
+     *    "suffix":".xlsx",
+     *    "type":"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+     *    "uploadCode":"NORMAL"
+     * ]
      * @return
      */
     @ResponseBody
     @Permission("2001")
     @RequestMapping(value = "/uploadExcel", method = RequestMethod.POST)
     public UploadMsg uploadExcel() {
-
         UploadMsg msg = new UploadMsg();
         try {
             UploadMultipartRequest umr = new UploadMultipartRequest(request, getSaveDir(), MAX_POST_SIZE);
             umr.setFileHeaderExts("504b03.xlsx");
             umr.upload();
             Enumeration<?> files = umr.getFileNames();
-            while ( files.hasMoreElements() ) {
+            while (files.hasMoreElements()) {
                 String name = (String) files.nextElement();
                 UploadFile cf = umr.getUploadFile(name);
-                if ( cf != null ) {
+                if (cf != null) {
                     /**
                      * 上传成功
                      */
-                    if ( cf.isSuccess() ) {
+                    if (cf.isSuccess()) {
                         msg.setSuccess(true);
                         msg.setUrl(cf.getFileUrl());
                         msg.setSize(cf.getSize());
                         System.err.println("上传文件地址：" + msg.getUrl());
+                        System.err.println("UploadFile cf：" + cf.toString());
                     }
                     msg.setMsg(cf.getUploadCode().desc());
+                    /**读取Excel内容，进行写表*/
+                    Excel excel = new Excel();
+                    excel.setExcelName(cf.getOriginalFileName());
+                    excel.setExcelRealName(cf.getFilesystemName());
+                    excel.setExcelRealPath(cf.getFileUrl());
+                    excel.setUserId(0L);
+                    excel.setCtime(new Date());
+                    excelService.insert(excel);
+
+                    FileInputStream excelStream = new FileInputStream(cf.getFileUrl());
+                    ExcelImportResult readExcel = excelContext.readExcel(userExcelId, excelStream);
+                    List<User> listBean = readExcel.getListBean();
+
+                    userService.insertBatch(listBean);
                 }
             }
-        } catch ( IOException e ) {
+        } catch (IOException e) {
             logger.error("uploadFile error. ", e);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         System.out.println("msg = " + toJson(msg));
         return msg;
-    }
-
-
-    /**
-     * <p>
-     * 上传文件存放目录
-     * </p>
-     */
-    private static String getSaveDir() {
-        StringBuffer filePath = new StringBuffer(System.getProperty("user.dir"));
-        filePath.append(File.separator);
-        filePath.append(DateUtil.format(new Date(), "yyyy"));
-        filePath.append(File.separator);
-        File file = new File(filePath.toString());
-        if ( !file.exists() ) {
-            file.mkdirs();
-        }
-        return file.getPath();
     }
 
     @ResponseBody

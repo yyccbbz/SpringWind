@@ -107,7 +107,7 @@ SpringWind - 用户管理
             _index: params.offset, //页码
             _search: $("#txt_search").val(), //搜索
         };
-        console.log(temp);
+//        console.log(temp);
         return temp;
     }
 
@@ -147,7 +147,6 @@ SpringWind - 用户管理
                     dataType: "json",                      //返回值类型 一般设置为json
                     success: function (data, status) {     //服务器成功响应处理函数
                         layer.closeAll();
-                        alert(data+"21321");
 						console.log(data);
 //                        if(data == 'true'){
 //                            $('#dataTable').bootstrapTable('refresh',{url:dataUrl});
