@@ -10,6 +10,8 @@ import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
+import javax.xml.stream.events.StartDocument;
+
 /**
  * 
  * 自动生成映射工具类
@@ -58,9 +60,9 @@ public class AutoGeneratorHelper {
 		// 策略配置
 		StrategyConfig strategy = new StrategyConfig();
 		strategy.setTablePrefix(new String[] { "cl_", "pr_" });// 此处可以修改为您的表前缀
-		strategy.setNaming(NamingStrategy.remove_prefix_and_camel);// 表名生成策略
+		strategy.setNaming(NamingStrategy.underline_to_camel);// 表名生成策略
 		// 字段名生成策略
-		strategy.setFieldNaming(NamingStrategy.underline_to_camel);
+//		strategy.setFieldNaming(NamingStrategy.underline_to_camel);
 		strategy.setSuperServiceImplClass("com.baomidou.springwind.service.support.BaseServiceImpl");
 		mpg.setStrategy(strategy);
 

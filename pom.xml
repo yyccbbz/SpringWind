@@ -11,6 +11,7 @@
 	<properties>
 		<servlet-api.version>2.5</servlet-api.version>
 		<spring-wind.version>1.1.5</spring-wind.version>
+		<mybatis-plus.version>2.0.6-jdk8</mybatis-plus.version>
 		<velocity.version>1.7</velocity.version>
 		<velocity-tools.version>2.0</velocity-tools.version>
 
@@ -59,7 +60,7 @@
 		<dependency>
 			<groupId>com.baomidou</groupId>
 			<artifactId>mybatis-plus</artifactId>
-			<version>2.0.2</version>
+			<version>${mybatis-plus.version}</version>
 		</dependency>
 
 		<!-- velocity begin -->
@@ -102,6 +103,12 @@
 			<groupId>ch.qos.logback</groupId>
 			<artifactId>logback-classic</artifactId>
 			<version>${logback-classic.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.logback-extensions</groupId>
@@ -188,6 +195,12 @@
 			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache-core</artifactId>
 			<version>${ehcache.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-api</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<!-- test begin -->
@@ -214,7 +227,6 @@
 				<maven.compiler.encoding>UTF-8</maven.compiler.encoding>
 			</properties>
 		</profile>
-
 	</profiles>
 
 	<build>
@@ -234,11 +246,86 @@
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.8</source>
+					<target>1.8</target>
 					<encoding>UTF-8</encoding>
 				</configuration>
 			</plugin>
+			<!-- 代码生成插件 -->
+			<plugin>
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatisplus-maven-plugin</artifactId>
+				<version>1.0</version>
+				<configuration>
+					<!-- 输出目录(默认java.io.tmpdir) -->
+					<outputDir>D:\\springwind</outputDir>
+					<!-- 是否覆盖同名文件(默认false) -->
+					<fileOverride>true</fileOverride>
+					<!-- mapper.xml 中添加二级缓存配置(默认true) -->
+					<enableCache>false</enableCache>
+					<!-- 开发者名称 -->
+					<author>CuiCan</author>
+					<!-- 是否开启 ActiveRecord 模式(默认true) -->
+					<activeRecord>false</activeRecord>
+					<!-- 数据源配置，( **必配** ) -->
+					<dataSource>
+						<driverName>com.mysql.jdbc.Driver</driverName>
+						<url>jdbc:mysql://localhost:3306/springwind?characterEncoding=utf8</url>
+						<username>root</username>
+						<password>111111</password>
+					</dataSource>
+					<strategy>
+						<!-- 字段生成策略，四种类型，从名称就能看出来含义：
+                            nochange(默认),
+                            underline_to_camel,(下划线转驼峰)
+                            remove_prefix,(去除第一个下划线的前部分，后面保持不变)
+                            remove_prefix_and_camel(去除第一个下划线的前部分，后面转驼峰) -->
+						<naming>underline_to_camel</naming>
+						<!-- 表前缀 -->
+						<!--<tablePrefix>bmd_</tablePrefix>-->
+						<!--Entity中的ID生成策略（默认 id_worker）-->
+						<idGenType>AUTO</idGenType>
+						<!--自定义超类-->
+						<!--<superServiceClass>com.baomidou.springwind.service.IService</superServiceClass>-->
+						<superServiceImplClass>com.baomidou.springwind.service.support.BaseServiceImpl</superServiceImplClass>
+						<!-- 要包含的表 与exclude 二选一配置-->
+						<!--<include>-->
+						<!--<property>sec_user</property>-->
+						<!--<property>table1</property>-->
+						<!--</include>-->
+						<!-- 要排除的表 -->
+						<!--<exclude>-->
+						<!--<property>schema_version</property>-->
+						<!--</exclude>-->
+					</strategy>
+					<packageInfo>
+						<!-- 父级包名称，如果不写，下面的service等就需要写全包名(默认com.baomidou) -->
+						<parent>com.evergrande.bigcustomer</parent>
+						<!--service包名(默认service)-->
+						<service>service</service>
+						<!--serviceImpl包名(默认service.impl)-->
+						<serviceImpl>service.impl</serviceImpl>
+						<!--entity包名(默认entity)-->
+						<entity>entity</entity>
+						<!--mapper包名(默认mapper)-->
+						<mapper>mapper</mapper>
+						<!--xml包名(默认mapper.xml)-->
+						<xml>mapper.xml</xml>
+					</packageInfo>
+					<template>
+						<!-- 定义controller模板的路径 -->
+						<!--<controller>/template/controller1.java.vm</controller>-->
+					</template>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>mysql</groupId>
+						<artifactId>mysql-connector-java</artifactId>
+						<version>${mysql-connector-java.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+
 			<!--jetty 插件，mvn jetty:run -->
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>

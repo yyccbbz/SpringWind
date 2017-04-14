@@ -143,11 +143,10 @@ public class UserController extends BaseController {
      * Excel导入
      *
      * UploadFile，此上传模型的结构如下：
-     * [
-     *    "contentType":"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-     *    "dir":"\opt\upload\2017-04",
-     *    "file":"\opt\upload\2017-04\WP2HZivVYRYEQXTM94wyfD.xlsx",
-     *    "fileUrl":"\opt\upload\2017-04\WP2HZivVYRYEQXTM94wyfD.xlsx",
+     *   {"contentType":"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+     *    "dir":"\\opt\\upload\\2017-04",
+     *    "file":"\\opt\\upload\\2017-04\\WP2HZivVYRYEQXTM94wyfD.xlsx",
+     *    "fileUrl":"\\opt\\upload\\2017-04\\WP2HZivVYRYEQXTM94wyfD.xlsx",
      *    "filename":"WP2HZivVYRYEQXTM94wyfD.xlsx",
      *    "filesystemName":"WP2HZivVYRYEQXTM94wyfD.xlsx",
      *    "original":"测试Excel下载.xlsx",
@@ -157,8 +156,14 @@ public class UserController extends BaseController {
      *    "success":true,
      *    "suffix":".xlsx",
      *    "type":"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-     *    "uploadCode":"NORMAL"
-     * ]
+     *    "uploadCode":"NORMAL"}
+     *
+     * UploadMsg，页面结果返回对象的结构如下：
+     *  { "msg":"upload success.",
+     *    "size":9699,
+     *    "success":true,
+     *    "url":"\\opt\\upload\\2017-04\\9msB5tbZJpuAvwtG9Y4t63.xlsx" }
+     *
      * @return
      */
     @ResponseBody

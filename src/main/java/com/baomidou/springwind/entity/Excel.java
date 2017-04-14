@@ -2,6 +2,9 @@ package com.baomidou.springwind.entity;
 
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.enums.IdType;
+
 import java.io.Serializable;
 
 
@@ -15,11 +18,13 @@ import java.io.Serializable;
  */
 public class Excel implements Serializable {
 
+	@TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
     /**
      * 主键
      */
+	@TableId(type = IdType.AUTO)
 	private Long id;
     /**
      * 用户ID
