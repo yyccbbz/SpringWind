@@ -1,5 +1,5 @@
 #override("title")
-SpringWind - 用户管理
+BigClient - 用户管理
 #end
 #override("css")
 <link href="#springUrl('/static/css/plugins/bootstrap-table/bootstrap-table.min.css')" rel="stylesheet">
@@ -38,7 +38,6 @@ SpringWind - 用户管理
 <script src="#springUrl('/static/js/plugins/bootstrap-table/bootstrap-table.min.js')"></script>
 <script src="#springUrl('/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js')"></script>
 <script src="#springUrl('/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js')"></script>
-<!--<script src="#springUrl('/static/plugins/layer-v2.2/layer/layer.js')"></script>-->
 <script src="#springUrl('/static/plugins/layer-v3.0.3/layer/layer.js')"></script>
 <script src="#springUrl('/static/js/base_list.js')"></script>
 <script src="#springUrl('/static/js/common.js')"></script>
@@ -94,7 +93,7 @@ SpringWind - 用户管理
             formatter: function (value, row, index) {
                 var id = row.id;
                 return '<a class="btn btn-xs btn-warning" onclick="editUser(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
-                <!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
+                	<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
                 	#if ($SSOPermission.isActionable("10010"))
                     +'<a class="btn btn-xs btn-danger" onclick="delUser(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
                     #end;
@@ -103,11 +102,11 @@ SpringWind - 用户管理
     ];
     function dataQueryParams(params) {
         var temp = {
-            _size: params.limit,  //页面大小
-            _index: params.offset, //页码
-            _search: $("#txt_search").val(), //搜索
+            _size: params.limit,				//页面大小
+            _index: params.offset,				//页码
+            _search: $("#txt_search").val(), 	//搜索
         };
-//        console.log(temp);
+		// console.log(temp);
         return temp;
     }
 
@@ -120,7 +119,7 @@ SpringWind - 用户管理
 
 	/**导出Excel*/
 	function downloadExcel() {
-        //模拟Ajax获取
+        // 模拟Ajax获取
         downLoadFile({
             url: "#springUrl('/perm/user/downloadExcel.html')", //请求的url
             data: {search: $("#txt_search").val()}				//要发送的数据
@@ -129,13 +128,13 @@ SpringWind - 用户管理
 
     /**导入excel*/
     function uploadExcel() {
-        //触发input的点击事件，弹出文件选择窗口
+        // 触发input的点击事件，弹出文件选择窗口
         $("#fileExcel").click();
-        //选择文件后，触发
+        // 选择文件后，触发
         $('#fileExcel').change(function () {
-            //询问框
+            // 询问框
             layer.confirm('确定上传吗？', {
-                btn: ['确定', '取消'] //按钮
+                btn: ['确定', '取消'] // 按钮
             }, function () {
                 var url = "#springUrl('/perm/user/uploadExcel/')";
                 var fileId = "fileExcel";
@@ -162,9 +161,9 @@ SpringWind - 用户管理
     }
 
     function delUser(userId) {
-        //询问框
+        // 询问框
         layer.confirm('确定删除吗？', {
-            btn: ['确定', '取消'] //按钮
+            btn: ['确定', '取消'] // 按钮
         }, function () {
             $.ajax({
                 type: "POST",
