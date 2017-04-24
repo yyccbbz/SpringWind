@@ -150,21 +150,22 @@ public class RoleController extends BaseController {
 		}
 		return JSONObject.toJSONString(rightList);
 	}
-	
+
 	/**
 	 * 更新权限列表
-	 * @param right
-	 * @param page
-	 * @param rows
+	 * @param roleId
+	 * @param rights
 	 * @return
-	 * @throws IOException 
+	 * @throws Exception
 	 */
 	@Permission("2003")
 	@RequestMapping("updateRoleRight")
 	@ResponseBody
-	public String updateRoleRight(HttpServletResponse response,HttpServletRequest request,
-			@RequestParam(value="roleId",required = false) Long roleId,
-			@RequestParam(value="rights",required = false) String rights)  throws Exception{
+	public String updateRoleRight(@RequestParam(value = "roleId", required = false) Long roleId,
+								  @RequestParam(value = "rights", required = false) String rights) throws Exception {
+
+		System.out.println("前台的参数：roleId = " + roleId + " , rights" + rights);
+
 		try {
 			//查询出本角色已经分配了的权限
 			RolePermission rolePermission = new RolePermission();
@@ -172,16 +173,16 @@ public class RoleController extends BaseController {
 			EntityWrapper<RolePermission> ew = new EntityWrapper<RolePermission>();
 			ew.setEntity(rolePermission);
 			List<RolePermission> roleRightList = rolePermissionService.selectList(ew);
-			
+
 			//如果存在权限，先进行删除
 			if (roleRightList.size() > 0) {
-				for (RolePermission rp :roleRightList) {
+				for (RolePermission rp : roleRightList) {
 					rolePermissionService.delete(new EntityWrapper<RolePermission>(rp));
 				}
 			}
-			
+
 			String[] rightIds = rights.split(",");
-			if(StringUtils.isNotBlank(rights) && rightIds != null){
+			if (StringUtils.isNotBlank(rights) && rightIds != null) {
 				//添加新分配的权限
 				List<RolePermission> permissions = new ArrayList<RolePermission>();
 				RolePermission e = null;
@@ -198,4 +199,6 @@ public class RoleController extends BaseController {
 			return "false";
 		}
 	}
+
+
 }

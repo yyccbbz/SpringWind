@@ -5,6 +5,7 @@ import java.io.Serializable;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
 
 /**
  *
@@ -18,7 +19,7 @@ public class RolePermission implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/** 主键 */
-	@TableId
+	@TableId(type = IdType.AUTO)
 	private Long id;
 
 	/** 角色ID */

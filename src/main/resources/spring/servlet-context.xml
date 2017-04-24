@@ -76,7 +76,7 @@
 	</bean>
 	
 	<mvc:interceptors>
-		<!-- SSO 拦截器 -->
+		<!-- SSO 拦截器 登录验证 -->
 		<!-- path 对所有的请求拦截使用/**，对某个模块下的请求拦截使用：/myPath/* -->
 		<mvc:interceptor>
 			<mvc:mapping path="/**" />
