@@ -28,6 +28,12 @@ import com.baomidou.springwind.service.support.BaseServiceImpl;
 public class PermissionServiceImpl extends BaseServiceImpl<PermissionMapper, Permission>
 		implements IPermissionService, SSOAuthorization {
 
+	/**
+	 * 获取页面的左侧菜单栏
+	 *
+	 * @param userId
+	 * @return
+	 */
 	@Cacheable(value = "permissionCache", key = "#userId")
 	@Override
 	public List<MenuVO> selectMenuVOByUserId(Long userId) {
@@ -43,13 +49,15 @@ public class PermissionServiceImpl extends BaseServiceImpl<PermissionMapper, Per
 		return mvList;
 	}
 
+	/**
+	 * 菜单级别、权限验证，生产环境建议加上缓存处理。
+	 *
+	 * @param token
+	 * @param permission
+	 * @return
+	 */
 	@Override
 	public boolean isPermitted(Token token, String permission) {
-		/**
-		 * 
-		 * 菜单级别、权限验证，生产环境建议加上缓存处理。
-		 * 
-		 */
 		if (StringUtils.isNotBlank(permission)) {
 			List<Permission> pl = this.selectAllByUserId(token.getId());
 			if (pl != null) {
@@ -63,26 +71,48 @@ public class PermissionServiceImpl extends BaseServiceImpl<PermissionMapper, Per
 		return false;
 	}
 
+	/**
+	 * 根据用户ID查询用户拥有的权限
+	 *
+	 * @param userId
+	 * @return
+	 */
 	@Cacheable(value = "permissionCache", key = "#userId")
 	@Override
 	public List<Permission> selectAllByUserId(Long userId) {
 		return baseMapper.selectAllByUserId(userId);
 	}
 
+	/**
+	 * 按钮级别、权限验证，生产环境建议加上缓存处理。
+	 *
+	 * 演示  admin 返回 true
+	 *
+	 * @param token
+	 * 				SSO 票据顶级父类
+	 * @param permission
+	 * 				操作权限编码
+	 * @return
+	 */
 	@Override
 	public boolean isActionable( Token token, String permission ) {
-		/**
-		 * 
-		 * 按钮级别、权限验证，生产环境建议加上缓存处理。
-		 * <br>
-		 * 演示  admin 返回 true
-		 * 
-		 */
 		System.err.println(" isActionable =" + permission);
 		if ( token.getId() == 1L ) {
 			return true;
 		}
 		return false;
+	}
+
+	/**
+	 * 新增权限，包含主键ID这个字段
+	 *
+	 * @param permission
+	 * @return
+	 */
+	@Override
+	public boolean insertWithId(Permission permission) {
+		Integer result = baseMapper.insertWithId(permission);
+		return retBool(result);
 	}
 
 }

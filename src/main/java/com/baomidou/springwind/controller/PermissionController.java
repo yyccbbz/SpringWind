@@ -46,6 +46,26 @@ public class PermissionController extends BaseController {
         return "/permission/edit";
     }
 
+    @ResponseBody
+    @com.baomidou.kisso.annotation.Permission("2003")
+    @RequestMapping("/editPermission")
+    public String editPermission(Permission permission) {
+        boolean rlt = false;
+		if (permission != null) {
+			if (permission.getId() != null) {
+				//如果数据库中不存在该id，则为新增
+				Permission selelctPerm = permissionService.selectById(permission.getId());
+				if (selelctPerm != null) {
+					rlt = permissionService.updateById(permission);
+				} else {
+					//permission.setCrTime(new Date());
+					//permission.setLastTime(permission.getCrTime());
+					rlt = permissionService.insertWithId(permission);
+				}
+			}
+		}
+		return callbackSuccess(rlt);
+    }
 
 	@ResponseBody
 	@com.baomidou.kisso.annotation.Permission("2003")

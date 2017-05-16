@@ -35,68 +35,68 @@
 var index = parent.layer.getFrameIndex(window.name); 
 var treeNodes;
 var setting = {
-		view: {
-	        showLine : true,                  //是否显示节点间的连线  
-	        checkable : true,                  //每个节点上是否显示 CheckBox
-			showIcon: false
-		},
-        check: {
-			enable: true,
-			chkStyle: "checkbox",
-			chkboxType: { "Y": "ps", "N": "ps" }
-		},
-		data: {
-			simpleData: {
-				enable: true,			//数据是否采用简单 Array 格式，默认false
-				idKey: "id",
-				pIdKey: "pId",
-				rootPId: 0
-			}
-		}
-    };
+    view: {
+        showLine: true,		//是否显示节点间的连线
+        checkable: true,	//每个节点上是否显示 CheckBox
+        showIcon: false
+    },
+    check: {
+        enable: true,
+        chkStyle: "checkbox",
+        chkboxType: {"Y": "ps", "N": "ps"}
+    },
+    data: {
+        simpleData: {
+            enable: true,	//数据是否采用简单 Array 格式，默认false
+            idKey: "id",
+            pIdKey: "pId",
+            rootPId: 0
+        }
+    }
+};
 
-$(function() { 
- 	var roleId = '${roleId}';
-	$.ajax({
-		url: "#springUrl('/perm/role/right.html')",
-		type: "post",
-		data: {"roleId":roleId},
-		success:function(data){
-			if(data){
-				var treeNodes = JSON.parse(data);
-				$.fn.zTree.init($("#treeDiv"), setting, treeNodes);
-			}
-		}
-	});
- }); 
- 
-function update(ele){
-	var treeObj = $.fn.zTree.getZTreeObj("treeDiv");
-	var nodes = treeObj.getCheckedNodes(true);
-	var arr = [];
-	for(var i=0;i<nodes.length;i++){
-		arr.push(nodes[i].id);
-	}
-	$.ajax({
-		url: "#springUrl('/perm/role/updateRoleRight.html')",
-		type: "post",
-		data: {"roleId":ele.getAttribute("attr"),"rights":arr.join()},
-		success:function(data){
-		if(data == "true"){
-			parent.layer.alert("修改成功",function(){
-					parent.layer.closeAll(); 
-			});
-				
-		}else{
-			layer.alert("修改失败");
-		}
-		}
-	});
+$(function () {
+    var roleId = '${roleId}';
+    $.ajax({
+        url: "#springUrl('/perm/role/right.html')",
+        type: "post",
+        data: {"roleId": roleId},
+        success: function (data) {
+            if (data) {
+                var treeNodes = JSON.parse(data);
+                $.fn.zTree.init($("#treeDiv"), setting, treeNodes);
+            }
+        }
+    });
+});
+
+function update(ele) {
+    var treeObj = $.fn.zTree.getZTreeObj("treeDiv");
+    var nodes = treeObj.getCheckedNodes(true);
+    var arr = [];
+    for (var i = 0; i < nodes.length; i++) {
+        arr.push(nodes[i].id);
+    }
+    $.ajax({
+        url: "#springUrl('/perm/role/updateRoleRight.html')",
+        type: "post",
+        data: {"roleId": ele.getAttribute("attr"), "rights": arr.join()},
+        success: function (data) {
+            if (data == "true") {
+                parent.layer.alert("修改成功", function () {
+                    parent.layer.closeAll();
+                });
+
+            } else {
+                layer.alert("修改失败");
+            }
+        }
+    });
 }
 //关闭窗口
-function closeAll(){
-	//ifram层关闭自身，传入索引
-	parent.layer.close(index); 
+function closeAll() {
+    //ifram层关闭自身，传入索引
+    parent.layer.close(index);
 }
 </script>
 </body>

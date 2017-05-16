@@ -31,4 +31,6 @@ public interface IPermissionService extends IService<Permission> {
 	 * @return
 	 */
 	boolean isActionable( Token token, String permission );
+
+    boolean insertWithId(Permission permission);
 }

@@ -19,4 +19,5 @@ public interface PermissionMapper extends BaseMapper<Permission> {
 
 	List<Permission> selectAllByUserId(@Param("userId") Long userId);
 
+	Integer insertWithId(Permission permission);
 }
