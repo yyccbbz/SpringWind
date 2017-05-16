@@ -1,5 +1,6 @@
 package com.baomidou.springwind.controller;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -72,7 +73,7 @@ public class PermissionController extends BaseController {
 	@RequestMapping("/getPermissionList")
 	public String getPermissionList() {
 		Page<Permission> page = getPage();
-		return jsonPage(permissionService.selectPage(page, null));
+		return jsonPage(permissionService.selectPage(page, new EntityWrapper<Permission>().orderBy("id")));
 	}
 
 	@ResponseBody

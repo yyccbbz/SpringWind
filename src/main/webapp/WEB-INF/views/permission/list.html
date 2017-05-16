@@ -10,16 +10,16 @@ SpringWind - 权限管理
 #override("content")
 <div class="row">
     <div class="ibox-content text-right form-inline" style="background: #F3F3F4;">
-        <div class="input-group">
+        <!--<div class="input-group">
             <input type="text" class="form-control" id="txt_search" name="_search">
             <span class="input-group-btn">
 				<button type="button" class="btn btn-info" onclick="queryBy()" id="btn_query">搜索</button>
 			</span>
-        </div>
+        </div>-->
         <button class="btn btn-primary" onclick="editPermission(null)" type="button">
             <i class="fa fa-pencil"></i>&nbsp;添加权限</button>
-        <button class="btn btn-primary" onclick="exportExcel()" type="button">
-            <i class="fa fa-pencil"></i>&nbsp;导出列表</button>
+        <!--<button class="btn btn-primary" onclick="exportExcel()" type="button">
+            <i class="fa fa-pencil"></i>&nbsp;导出列表</button>-->
     </div>
 </div>
 <div class="row">
@@ -41,30 +41,48 @@ SpringWind - 权限管理
     var dataUrl="#springUrl('/perm/permission/getPermissionList.html')";
     var dataColumns = [{
         field: 'id',
-        title: '序号'
+        title: '序号',
+        align: "center",
+        valign: "middle"
     }, {
         field: 'title',
-        title: '标题'
+        title: '标题',
+        align: "center",
+        valign: "middle"
     }, {
         field: 'type',
-        title: '类型'
+        title: '类型',
+        align: "center",
+        valign: "middle"
     },{
         field: 'state',
-        title: '状态'
+        title: '状态',
+        align: "center",
+        valign: "middle"
     }, {
         field: 'url',
-        title: '地址'
+        title: '地址',
+        align: "center",
+        valign: "middle"
     }, {
         field: 'permCode',
-        title: '权限编码'
+        title: '权限编码',
+        align: "center",
+        valign: "middle"
     }, {
         field: 'icon',
-        title: '图标'
+        title: '图标',
+        align: "center",
+        valign: "middle"
     }, {
         field: 'description',
-        title: '描述'
+        title: '描述',
+        align: "center",
+        valign: "middle"
     }, {
         title: '操作',
+        align: "center",
+        valign: "middle",
         formatter: function (value, row, index) {
             var id = row.id;
             return '<a class="btn btn-xs btn-info" onclick="editPermission(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
