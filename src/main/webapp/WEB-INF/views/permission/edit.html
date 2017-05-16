@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSPINIA | Basic Form</title>
+	<link href="#springUrl('/static/css/bootstrap.min.css')" rel="stylesheet">
+	<link href="#springUrl('/static/css/style.css')" rel="stylesheet">
+</head>
+<body class="white-bg">
+<div class="ibox-content" style="width: 430px;">
+   <form id="myForm" class="form-horizontal" autocomplete="off" data-validator-option="{theme:'default'}">
+   	   <!--<input type="hidden" name="id" value="$!{permission.id}">-->
+        <!--/** 主键 */private Long id;-->
+       <div class="form-group"><label class="col-sm-2 control-label">权限ID</label>
+           <div class="col-sm-10">
+           		<input type="text" class="form-control" value="$!{permission.id}" name="id" data-rule="权限ID:required">
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <!--/** 上级ID */private Long pid;-->
+        <div class="form-group"><label class="col-sm-2 control-label">上级ID</label>
+           <div class="col-sm-10">
+           		<input type="text" class="form-control" value="$!{permission.pid}" name="pid" data-rule="上级ID:required">
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <!--/** 标题 */private String title;-->
+       <div class="form-group"><label class="col-sm-2 control-label">标题</label>
+           <div class="col-sm-10">
+           		<input type="text" class="form-control" value="$!{permission.title}" name="title" data-rule="标题:required">
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <!--/** 类型 0、菜单 1、功能 */private Integer type;-->
+       <div class="form-group"><label class="col-sm-2 control-label">类型</label>
+           <div class="col-sm-10">
+               <label class="checkbox-inline">
+                   <input type="radio" id="type1" name="type" value="0" checked>菜单
+               </label>
+               <label class="checkbox-inline">
+                   <input type="radio" id="type2" name="type" value="1">功能
+               </label>
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <!--/** 状态 0、正常 1、禁用 */private Integer state;-->
+       <div class="form-group"><label class="col-sm-2 control-label">状态</label>
+           <div class="col-sm-10">
+               <label class="checkbox-inline">
+                   <input type="radio" id="state1" name="state" value="0" checked>正常
+               </label>
+               <label class="checkbox-inline">
+                   <input type="radio" id="state2" name="state" value="1">禁用
+               </label>
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <!--/** 排序 */private Integer sort;-->
+       <div class="form-group"><label class="col-sm-2 control-label">排序</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control" value="$!{permission.sort}" name="sort" data-rule="排序:required">
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <!--/** 地址 */private String url;-->
+       <div class="form-group"><label class="col-sm-2 control-label">地址</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control" value="$!{permission.url}" name="url" data-rule="地址:required">
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <!--/** 权限编码 */private String permCode;-->
+       <div class="form-group"><label class="col-sm-2 control-label">权限编码</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control" value="$!{permission.permCode}" name="permCode" data-rule="权限编码:required">
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <!--/** 图标 */private String icon;-->
+       <div class="form-group"><label class="col-sm-2 control-label">图标</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control" value="$!{permission.icon}" name="icon" data-rule="图标:required">
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <!--/** 描述 */private String description;-->
+       <div class="form-group"><label class="col-sm-2 control-label">描述</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control" value="$!{permission.description}" name="description" data-rule="描述:required">
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <!--
+        <div class="form-group"><label class="col-sm-2 control-label">用户角色</label>
+            <div class="col-sm-10">
+            <select class="form-control m-b" name="rid">
+            	#foreach($role in $roleList)
+                <option id="$!{role.id}">$!{role.name}</option>
+                #end
+            </select>
+            </div>
+        </div>
+        <div class="hr-line-dashed"></div>
+        -->
+        <div class="form-group">
+            <div class="text-center">
+                <button class="btn btn-primary" type="submit">#if($!{permission})修 改#else提 交#end</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="#springUrl('/static/js/jquery-2.2.4.js')"></script>
+<!--<script src="#springUrl('/static/plugins/nice-validator-0.8.1/jquery.validator.js?local=zh-CN')"></script>-->
+<script src="#springUrl('/static/plugins/nice-validator-1.0.10/jquery.validator.js?local=zh-CN')"></script>
+<script type="text/javascript">
+$("#myForm").validator({
+    valid: function(form){
+        var me = this;
+        // 提交表单之前，hold住表单，防止重复提交
+        me.holdSubmit();
+        $.ajax({
+        	url: "#springUrl('/perm/permission/editPermission')",
+            data: $(form).serialize(),
+            type: "POST",
+            success: function(data){
+            	var d = JSON.parse(data);
+                if(d.success && d.data){
+                	window.parent.location.reload();
+                	//当你在iframe页面关闭自身时
+                	//var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                	//parent.layer.close(index); //再执行关闭   
+                } else {
+                	//失败，提交表单成功后，释放hold，如果不释放hold，就变成了只能提交一次的表单
+                    me.holdSubmit(false);
+                }
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>

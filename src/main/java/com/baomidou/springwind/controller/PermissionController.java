@@ -37,6 +37,16 @@ public class PermissionController extends BaseController {
 		return "/permission/list";
 	}
 
+	@com.baomidou.kisso.annotation.Permission("2003")
+    @RequestMapping("/edit")
+    public String edit(Model model, Long id) {
+        if (id != null) {
+            model.addAttribute("permission", permissionService.selectById(id));
+        }
+        return "/permission/edit";
+    }
+
+
 	@ResponseBody
 	@com.baomidou.kisso.annotation.Permission("2003")
 	@RequestMapping("/getPermissionList")
