@@ -5,11 +5,11 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**
  * <p>
-  * Excel文件类 Mapper 接口
+  * Excel上传文件 Mapper 接口
  * </p>
  *
  * @author CuiCan
- * @since 2017-04-12
+ * @since 2017-05-17
  */
 public interface ExcelMapper extends BaseMapper<Excel> {
 

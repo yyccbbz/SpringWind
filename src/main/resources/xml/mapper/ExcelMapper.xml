@@ -5,12 +5,12 @@
 	<!-- 通用查询映射结果 -->
 	<resultMap id="BaseResultMap" type="com.baomidou.springwind.entity.Excel">
 		<id column="id" property="id" />
-		<result column="user_id" property="userId" />
+		<result column="uid" property="uid" />
 		<result column="excel_name" property="excelName" />
 		<result column="excel_real_name" property="excelRealName" />
 		<result column="excel_real_path" property="excelRealPath" />
-		<result column="mtime" property="mtime" />
-		<result column="ctime" property="ctime" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
 	</resultMap>
 
 </mapper>

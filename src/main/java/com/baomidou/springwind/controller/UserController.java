@@ -14,7 +14,6 @@ import com.baomidou.springwind.entity.User;
 import com.baomidou.springwind.excel.result.ExcelImportResult;
 import com.baomidou.springwind.service.IExcelService;
 import com.baomidou.springwind.service.IRoleService;
-import com.baomidou.springwind.service.IUserService;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -31,16 +30,16 @@ import java.util.Enumeration;
 import java.util.List;
 
 /**
- * 用户管理相关操作
+ * <p>
+ * 用户表 前端控制器
+ * </p>
  *
- *
+ * @author CuiCan
+ * @since 2017-05-17
  */
 @Controller
 @RequestMapping("/perm/user")
-public class UserController extends BaseController {
-
-    @Autowired
-    private IUserService userService;
+public class UserController extends BaseController  {
 
     @Autowired
     private IRoleService roleService;
@@ -59,6 +58,7 @@ public class UserController extends BaseController {
     //限制最大上传大小--30M
     private final static int MAX_POST_SIZE = 30 * 1024 * 1024;
 
+    /*页面跳转*/
     @Permission("2001")
     @RequestMapping("/list")
     public String list(Model model) {
@@ -75,24 +75,7 @@ public class UserController extends BaseController {
         return "/user/edit";
     }
 
-    @ResponseBody
-    @Permission("2001")
-    @RequestMapping("/editUser")
-    public String editUser(User user) {
-        boolean rlt = false;
-        if (user != null) {
-            user.setPassword(SaltEncoder.md5SaltEncode(user.getLoginName(), user.getPassword()));
-            if (user.getId() != null) {
-                rlt = userService.updateById(user);
-            } else {
-                user.setCrTime(new Date());
-                user.setLastTime(user.getCrTime());
-                rlt = userService.insert(user);
-            }
-        }
-        return callbackSuccess(rlt);
-    }
-
+    /*CRUD*/
     @ResponseBody
     @Permission("2001")
     @RequestMapping("/getUserList")
@@ -104,6 +87,40 @@ public class UserController extends BaseController {
         Page<User> userPage = userService.selectPageBySearch(page, StringUtil.getStrEmpty(_search));
         return jsonPage(userPage);
     }
+
+    @ResponseBody
+    @Permission("2001")
+    @RequestMapping("/editUser")
+    public String editUser(User user) {
+        boolean rlt = false;
+        if (user != null) {
+            user.setPassword(SaltEncoder.md5SaltEncode(user.getLoginName(), user.getPassword()));
+            if (user.getId() != null) {
+                rlt = userService.updateById(user);
+            } else {
+                user.setCreateTime(new Date());
+                user.setLastTime(user.getCreateTime());
+                rlt = userService.insert(user);
+            }
+        }
+        return callbackSuccess(rlt);
+    }
+
+    @ResponseBody
+    @Permission("2001")
+    @RequestMapping("/delUser/{userId}")
+    public String delUser(@PathVariable Long userId) {
+        userService.deleteUser(userId);
+        return Boolean.TRUE.toString();
+    }
+
+    @ResponseBody
+    @Permission("2001")
+    @RequestMapping("/{userId}")
+    public User getUser(@PathVariable Long userId) {
+        return userService.selectById(userId);
+    }
+
 
     /**
      * Excel导出列表
@@ -196,8 +213,8 @@ public class UserController extends BaseController {
                     excel.setExcelName(cf.getOriginalFileName());
                     excel.setExcelRealName(cf.getFilesystemName());
                     excel.setExcelRealPath(cf.getFileUrl());
-                    excel.setUserId(0L);
-                    excel.setCtime(new Date());
+                    excel.setUid(0L);
+                    excel.setCreateTime(new Date());
                     excelService.insert(excel);
 
                     FileInputStream excelStream = new FileInputStream(cf.getFileUrl());
@@ -216,22 +233,6 @@ public class UserController extends BaseController {
         return msg;
     }
 
-    @ResponseBody
-    @Permission("2001")
-    @RequestMapping("/delUser/{userId}")
-    public String delUser(@PathVariable Long userId) {
-        userService.deleteUser(userId);
-        return Boolean.TRUE.toString();
-    }
-
-    @ResponseBody
-    @Permission("2001")
-    @RequestMapping("/{userId}")
-    public User getUser(@PathVariable Long userId) {
-        return userService.selectById(userId);
-    }
-
-
     /**
      * 设置头像
      */
@@ -240,6 +241,5 @@ public class UserController extends BaseController {
     public String setAvatar() {
         return "/user/avatar";
     }
-
 
 }

@@ -107,8 +107,8 @@ public class AccountController extends SuperController {
 				/* 演示不验证表单，用户名作为密码盐值 */
 				user.setPassword(SaltEncoder.md5SaltEncode(user.getLoginName(), user.getPassword()));
 				user.setType(UserType.MEMBER.key());
-				user.setCrTime(new Date());
-				user.setLastTime(user.getCrTime());
+				user.setCreateTime(new Date());
+				user.setLastTime(user.getCreateTime());
 				boolean rlt = userService.insert(user);
 				if (rlt) {
 					/*

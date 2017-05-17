@@ -13,7 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
- * User 表数据服务层接口实现类
+ * <p>
+ * 用户表 服务实现类
+ * </p>
+ *
+ * @author CuiCan
+ * @since 2017-05-17
  */
 @Service
 public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implements IUserService {

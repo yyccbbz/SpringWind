@@ -60,8 +60,8 @@ CREATE TABLE `permission` (
 -- ----------------------------
 -- Records of permission
 -- ----------------------------
-INSERT INTO `permission` VALUES ('2', '0', '权限管理', '0', '0', '2', '/perm/', '2000', 'fa fa-eye', '权限管理');
 INSERT INTO `permission` VALUES ('1', '0', '功能管理', '0', '0', '1', '/sys/', '1000', 'fa fa-magic', '功能管理');
+INSERT INTO `permission` VALUES ('2', '0', '权限管理', '0', '0', '2', '/perm/', '2000', 'fa fa-eye', '权限管理');
 INSERT INTO `permission` VALUES ('3', '0', '系统监控', '0', '0', '3', '/monitor/', '3000', 'fa fa-bar-chart-o', '系统监控');
 INSERT INTO `permission` VALUES ('4', '0', '操作日志', '0', '0', '4', '/log/', '4000', 'fa fa-bug', '操作日志');
 INSERT INTO `permission` VALUES ('11', '1', '发送邮件测试', '0', '0', '1', '/sys/mail/send.html', '1001', null, '发送邮件测试');
@@ -114,7 +114,6 @@ CREATE TABLE `role_permission` (
 -- ----------------------------
 -- Records of role_permission
 -- ----------------------------
-INSERT INTO `role_permission` VALUES ('20', '1', '53');
 INSERT INTO `role_permission` VALUES ('1', '1', '52');
 INSERT INTO `role_permission` VALUES ('2', '1', '51');
 INSERT INTO `role_permission` VALUES ('3', '1', '5');
@@ -134,18 +133,19 @@ INSERT INTO `role_permission` VALUES ('16', '1', '54');
 INSERT INTO `role_permission` VALUES ('17', '1', '6');
 INSERT INTO `role_permission` VALUES ('18', '1', '7');
 INSERT INTO `role_permission` VALUES ('19', '1', '8');
+INSERT INTO `role_permission` VALUES ('20', '1', '53');
 
 -- ----------------------------
 -- Table structure for sys_log
 -- ----------------------------
 DROP TABLE IF EXISTS `sys_log`;
 CREATE TABLE `sys_log` (
-  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `uid` bigint(20) unsigned DEFAULT NULL COMMENT '用户ID',
-  `content` varchar(600) NOT NULL DEFAULT '' COMMENT '日志内容',
-  `operation` varchar(250) DEFAULT NULL COMMENT '用户操作',
-  `crTime` datetime NOT NULL COMMENT '创建时间',
-  PRIMARY KEY (`id`)
+`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '主键',
+`uid` bigint(20) unsigned DEFAULT NULL COMMENT '用户ID',
+`content` varchar(600) NOT NULL DEFAULT '' COMMENT '日志内容',
+`operation` varchar(250) DEFAULT NULL COMMENT '用户操作',
+`crTime` datetime NOT NULL COMMENT '创建时间',
+PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=852748128224387150 DEFAULT CHARSET=utf8 COMMENT='操作日志表';
 
 -- ----------------------------

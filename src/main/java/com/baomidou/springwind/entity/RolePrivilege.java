@@ -1,35 +1,40 @@
 package com.baomidou.springwind.entity;
 
-import java.io.Serializable;
-
-import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
-import com.baomidou.mybatisplus.enums.IdType;
+import java.io.Serializable;
 
 /**
- *
+ * <p>
  * 角色权限表
+ * </p>
  *
+ * @author CuiCan
+ * @since 2017-05-17
  */
-@TableName(value = "role_permission")
-public class RolePermission implements Serializable {
+@TableName("role_privilege")
+public class RolePrivilege implements Serializable {
 
-	@TableField(exist = false)
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/** 主键 */
-	@TableId(type = IdType.AUTO)
+    /**
+     * 主键
+     */
+	@TableId(value="id", type= IdType.AUTO)
 	private Long id;
-
-	/** 角色ID */
+    /**
+     * 角色ID
+     */
 	private Long rid;
-
-	/** 权限ID */
+    /**
+     * 权限ID
+     */
 	private Long pid;
 
+
 	public Long getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(Long id) {
@@ -37,7 +42,7 @@ public class RolePermission implements Serializable {
 	}
 
 	public Long getRid() {
-		return this.rid;
+		return rid;
 	}
 
 	public void setRid(Long rid) {
@@ -45,7 +50,7 @@ public class RolePermission implements Serializable {
 	}
 
 	public Long getPid() {
-		return this.pid;
+		return pid;
 	}
 
 	public void setPid(Long pid) {

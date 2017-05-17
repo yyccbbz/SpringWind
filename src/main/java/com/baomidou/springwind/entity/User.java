@@ -1,51 +1,63 @@
 package com.baomidou.springwind.entity;
 
-import java.io.Serializable;
-import java.util.Date;
-
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
 import com.baomidou.mybatisplus.enums.IdType;
+import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
+import java.io.Serializable;
 
 /**
- *
+ * <p>
  * 用户表
+ * </p>
  *
+ * @author CuiCan
+ * @since 2017-05-17
  */
-@TableName(value = "user")
 public class User implements Serializable {
 
-	@TableField(exist = false)
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/** 主键ID */
-	@TableId(type = IdType.AUTO)
+    /**
+     * 主键
+     */
+	@TableId(value="id", type= IdType.AUTO)
 	private Long id;
-
-	/** 登录名称 */
+    /**
+     * 登录名称
+     */
+	@TableField("login_name")
 	private String loginName;
-
-	/** 密码 */
+    /**
+     * 密码
+     */
 	private String password;
-
-	/** 邮箱 */
+    /**
+     * 邮箱
+     */
 	private String email;
-
-	/** 0、普通用户 1、管理员 */
+    /**
+     * 0、普通用户 1、管理员 2、超级管理员
+     */
 	private Integer type;
-
-	/** 0、禁用 1、正常 */
+    /**
+     * 0、禁用 1、正常
+     */
 	private Integer status;
-
-	/** 创建时间 */
-	private Date crTime;
-
-	/** 最后登录时间 */
+    /**
+     * 创建时间
+     */
+	@TableField("create_time")
+	private Date createTime;
+    /**
+     * 最后登录时间
+     */
+	@TableField("last_time")
 	private Date lastTime;
 
+
 	public Long getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(Long id) {
@@ -53,7 +65,7 @@ public class User implements Serializable {
 	}
 
 	public String getLoginName() {
-		return this.loginName;
+		return loginName;
 	}
 
 	public void setLoginName(String loginName) {
@@ -61,7 +73,7 @@ public class User implements Serializable {
 	}
 
 	public String getPassword() {
-		return this.password;
+		return password;
 	}
 
 	public void setPassword(String password) {
@@ -69,7 +81,7 @@ public class User implements Serializable {
 	}
 
 	public String getEmail() {
-		return this.email;
+		return email;
 	}
 
 	public void setEmail(String email) {
@@ -77,7 +89,7 @@ public class User implements Serializable {
 	}
 
 	public Integer getType() {
-		return this.type;
+		return type;
 	}
 
 	public void setType(Integer type) {
@@ -85,23 +97,23 @@ public class User implements Serializable {
 	}
 
 	public Integer getStatus() {
-		return this.status;
+		return status;
 	}
 
 	public void setStatus(Integer status) {
 		this.status = status;
 	}
 
-	public Date getCrTime() {
-		return this.crTime;
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setCrTime(Date crTime) {
-		this.crTime = crTime;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
 	public Date getLastTime() {
-		return this.lastTime;
+		return lastTime;
 	}
 
 	public void setLastTime(Date lastTime) {

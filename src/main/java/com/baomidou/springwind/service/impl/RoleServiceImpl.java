@@ -11,21 +11,24 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
+ * <p>
+ * 角色表 服务实现类
+ * </p>
  *
- * Role 表数据服务层接口实现类
- *
+ * @author CuiCan
+ * @since 2017-05-17
  */
 @Service
 public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implements IRoleService {
 
-	@Autowired
-	private UserRoleMapper userRoleMapper;
+    @Autowired
+    private UserRoleMapper userRoleMapper;
 
-	@Override
-	public void deleteByUserId(Long userId) {
-		UserRole ur = new UserRole();
-		ur.setUid(userId);
-		userRoleMapper.delete(new EntityWrapper<UserRole>(ur));
-	}
+    @Override
+    public void deleteByUserId(Long userId) {
+        UserRole ur = new UserRole();
+        ur.setUid(userId);
+        userRoleMapper.delete(new EntityWrapper<UserRole>(ur));
+    }
 
 }

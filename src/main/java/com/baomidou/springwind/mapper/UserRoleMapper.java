@@ -1,12 +1,15 @@
 package com.baomidou.springwind.mapper;
 
-import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.springwind.entity.UserRole;
+import com.baomidou.mybatisplus.mapper.BaseMapper;
 
 /**
+ * <p>
+  * 用户角色表 Mapper 接口
+ * </p>
  *
- * UserRole 表数据库控制层接口
- *
+ * @author CuiCan
+ * @since 2017-05-17
  */
 public interface UserRoleMapper extends BaseMapper<UserRole> {
 

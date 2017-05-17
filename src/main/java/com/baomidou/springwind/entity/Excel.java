@@ -1,36 +1,32 @@
 package com.baomidou.springwind.entity;
 
-import java.util.Date;
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.enums.IdType;
-
+import java.util.Date;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableField;
 import java.io.Serializable;
-
 
 /**
  * <p>
- * Excel文件类
+ * Excel上传文件
  * </p>
  *
  * @author CuiCan
- * @since 2017-04-12
+ * @since 2017-05-17
  */
 public class Excel implements Serializable {
 
-	@TableField(exist = false)
     private static final long serialVersionUID = 1L;
 
     /**
      * 主键
      */
-	@TableId(type = IdType.AUTO)
+	@TableId(value="id", type= IdType.AUTO)
 	private Long id;
     /**
      * 用户ID
      */
-	@TableField("user_id")
-	private Long userId;
+	private Long uid;
     /**
      * Excel源文件名
      */
@@ -47,13 +43,15 @@ public class Excel implements Serializable {
 	@TableField("excel_real_path")
 	private String excelRealPath;
     /**
-     * 更新时间
-     */
-	private Date mtime;
-    /**
      * 创建时间
      */
-	private Date ctime;
+	@TableField("create_time")
+	private Date createTime;
+    /**
+     * 更新时间
+     */
+	@TableField("update_time")
+	private Date updateTime;
 
 
 	public Long getId() {
@@ -64,12 +62,12 @@ public class Excel implements Serializable {
 		this.id = id;
 	}
 
-	public Long getUserId() {
-		return userId;
+	public Long getUid() {
+		return uid;
 	}
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
+	public void setUid(Long uid) {
+		this.uid = uid;
 	}
 
 	public String getExcelName() {
@@ -96,20 +94,20 @@ public class Excel implements Serializable {
 		this.excelRealPath = excelRealPath;
 	}
 
-	public Date getMtime() {
-		return mtime;
+	public Date getCreateTime() {
+		return createTime;
 	}
 
-	public void setMtime(Date mtime) {
-		this.mtime = mtime;
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 
-	public Date getCtime() {
-		return ctime;
+	public Date getUpdateTime() {
+		return updateTime;
 	}
 
-	public void setCtime(Date ctime) {
-		this.ctime = ctime;
+	public void setUpdateTime(Date updateTime) {
+		this.updateTime = updateTime;
 	}
 
 }

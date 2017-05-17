@@ -1,55 +1,65 @@
 package com.baomidou.springwind.entity;
 
+import com.baomidou.mybatisplus.annotations.TableField;
 import java.io.Serializable;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-
 /**
- *
+ * <p>
  * 权限表
+ * </p>
  *
+ * @author CuiCan
+ * @since 2017-05-17
  */
-@TableName(value = "permission")
-public class Permission implements Serializable {
+public class Privilege implements Serializable {
 
-	@TableField(exist = false)
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/** 主键 */
-	@TableId
+    /**
+     * 主键
+     */
 	private Long id;
-
-	/** 上级ID */
+    /**
+     * 上级ID
+     */
 	private Long pid;
-
-	/** 标题 */
+    /**
+     * 标题
+     */
 	private String title;
-
-	/** 类型 0、菜单 1、功能 */
+    /**
+     * 类型 0、菜单 1、功能
+     */
 	private Integer type;
-
-	/** 状态 0、正常 1、禁用 */
+    /**
+     * 状态 0、正常 1、禁用
+     */
 	private Integer state;
-
-	/** 排序 */
+    /**
+     * 排序
+     */
 	private Integer sort;
-
-	/** 地址 */
+    /**
+     * 地址
+     */
 	private String url;
-
-	/** 权限编码 */
+    /**
+     * 权限编码
+     */
+	@TableField("perm_code")
 	private String permCode;
-
-	/** 图标 */
+    /**
+     * 图标
+     */
 	private String icon;
-
-	/** 描述 */
+    /**
+     * 描述
+     */
 	private String description;
 
+
 	public Long getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(Long id) {
@@ -57,7 +67,7 @@ public class Permission implements Serializable {
 	}
 
 	public Long getPid() {
-		return this.pid;
+		return pid;
 	}
 
 	public void setPid(Long pid) {
@@ -65,7 +75,7 @@ public class Permission implements Serializable {
 	}
 
 	public String getTitle() {
-		return this.title;
+		return title;
 	}
 
 	public void setTitle(String title) {
@@ -73,7 +83,7 @@ public class Permission implements Serializable {
 	}
 
 	public Integer getType() {
-		return this.type;
+		return type;
 	}
 
 	public void setType(Integer type) {
@@ -81,7 +91,7 @@ public class Permission implements Serializable {
 	}
 
 	public Integer getState() {
-		return this.state;
+		return state;
 	}
 
 	public void setState(Integer state) {
@@ -89,7 +99,7 @@ public class Permission implements Serializable {
 	}
 
 	public Integer getSort() {
-		return this.sort;
+		return sort;
 	}
 
 	public void setSort(Integer sort) {
@@ -97,7 +107,7 @@ public class Permission implements Serializable {
 	}
 
 	public String getUrl() {
-		return this.url;
+		return url;
 	}
 
 	public void setUrl(String url) {
@@ -105,7 +115,7 @@ public class Permission implements Serializable {
 	}
 
 	public String getPermCode() {
-		return this.permCode;
+		return permCode;
 	}
 
 	public void setPermCode(String permCode) {
@@ -113,7 +123,7 @@ public class Permission implements Serializable {
 	}
 
 	public String getIcon() {
-		return this.icon;
+		return icon;
 	}
 
 	public void setIcon(String icon) {
@@ -121,7 +131,7 @@ public class Permission implements Serializable {
 	}
 
 	public String getDescription() {
-		return this.description;
+		return description;
 	}
 
 	public void setDescription(String description) {

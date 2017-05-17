@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.baomidou.framework.common.util.DateUtil;
 import com.baomidou.springwind.excel.ExcelContext;
+import com.baomidou.springwind.service.IPrivilegeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,7 +14,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.framework.controller.SuperController;
 import com.baomidou.framework.mail.MailHelper;
 import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.springwind.service.IPermissionService;
 import com.baomidou.springwind.service.IUserService;
 
 import java.io.File;
@@ -36,7 +36,7 @@ public class BaseController extends SuperController implements HandlerIntercepto
 	protected IUserService userService;
 
 	@Autowired
-	private IPermissionService permissionService;
+	private IPrivilegeService privilegeService;
 
 	@Autowired
 	protected ExcelContext excelContext;
@@ -55,7 +55,7 @@ public class BaseController extends SuperController implements HandlerIntercepto
 		 */
 		if (isLegalView(modelAndView)) {
 			modelAndView.addObject("currentUser", userService.selectById(getCurrentUserId()));
-			modelAndView.addObject("menuList", permissionService.selectMenuVOByUserId(getCurrentUserId()));
+			modelAndView.addObject("menuList", privilegeService.selectMenuVOByUserId(getCurrentUserId()));
 		}
 	}
 

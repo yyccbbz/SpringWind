@@ -10,7 +10,6 @@ import com.baomidou.mybatisplus.generator.config.converts.MySqlTypeConvert;
 import com.baomidou.mybatisplus.generator.config.rules.DbType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 
-import javax.xml.stream.events.StartDocument;
 
 /**
  * 
@@ -53,8 +52,8 @@ public class AutoGeneratorHelper {
 		dsc.setTypeConvert(new MySqlTypeConvert());
 		dsc.setDriverName("com.mysql.jdbc.Driver");
 		dsc.setUsername("root");
-		dsc.setPassword("111111");
-		dsc.setUrl("jdbc:mysql://127.0.0.1:3306/springwind?characterEncoding=utf8");
+		dsc.setPassword("HdWiFi@2016!");
+		dsc.setUrl("jdbc:mysql://116.62.134.242:3306/big_customer?useUnicode=true&characterEncoding=utf8");
 		mpg.setDataSource(dsc);
 
 		// 策略配置

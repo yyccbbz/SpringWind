@@ -1,37 +1,42 @@
 package com.baomidou.springwind.entity;
 
+import com.baomidou.mybatisplus.enums.IdType;
+import com.baomidou.mybatisplus.annotations.TableId;
 import java.io.Serializable;
 
-import com.baomidou.mybatisplus.annotations.TableField;
-import com.baomidou.mybatisplus.annotations.TableId;
-import com.baomidou.mybatisplus.annotations.TableName;
-
 /**
- *
+ * <p>
  * 角色表
+ * </p>
  *
+ * @author CuiCan
+ * @since 2017-05-17
  */
-@TableName(value = "role")
 public class Role implements Serializable {
 
-	@TableField(exist = false)
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/** 主键 */
-	@TableId
+    /**
+     * 主键
+     */
+	@TableId(value="id", type= IdType.AUTO)
 	private Long id;
-
-	/** 角色 */
+    /**
+     * 角色
+     */
 	private String name;
-
-	/** 排序 */
+    /**
+     * 排序
+     */
 	private Integer sort;
-
-	/** 描述 */
+    /**
+     * 描述
+     */
 	private String description;
 
+
 	public Long getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(Long id) {
@@ -39,7 +44,7 @@ public class Role implements Serializable {
 	}
 
 	public String getName() {
-		return this.name;
+		return name;
 	}
 
 	public void setName(String name) {
@@ -47,7 +52,7 @@ public class Role implements Serializable {
 	}
 
 	public Integer getSort() {
-		return this.sort;
+		return sort;
 	}
 
 	public void setSort(Integer sort) {
@@ -55,7 +60,7 @@ public class Role implements Serializable {
 	}
 
 	public String getDescription() {
-		return this.description;
+		return description;
 	}
 
 	public void setDescription(String description) {

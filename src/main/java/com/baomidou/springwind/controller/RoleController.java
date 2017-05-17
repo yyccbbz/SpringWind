@@ -4,10 +4,11 @@ import com.alibaba.fastjson.JSONObject;
 import com.baomidou.kisso.annotation.Permission;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.springwind.entity.Privilege;
 import com.baomidou.springwind.entity.Role;
-import com.baomidou.springwind.entity.RolePermission;
-import com.baomidou.springwind.service.IPermissionService;
-import com.baomidou.springwind.service.IRolePermissionService;
+import com.baomidou.springwind.entity.RolePrivilege;
+import com.baomidou.springwind.service.IPrivilegeService;
+import com.baomidou.springwind.service.IRolePrivilegeService;
 import com.baomidou.springwind.service.IRoleService;
 import com.baomidou.springwind.service.IUserRoleService;
 import org.apache.commons.lang.StringUtils;
@@ -26,11 +27,11 @@ import java.util.Map;
 
 /**
  * <p>
- * 角色管理相关操作
+ * 角色表 前端控制器
  * </p>
  *
- * @Author hubin
- * @Date 2016-04-15
+ * @author CuiCan
+ * @since 2017-05-17
  */
 @Controller
 @RequestMapping("/perm/role")
@@ -40,10 +41,10 @@ public class RoleController extends BaseController {
     private IRoleService roleService;
 
     @Autowired
-    private IPermissionService permissionService;
+    private IPrivilegeService privilegeService;
 
     @Autowired
-    private IRolePermissionService rolePermissionService;
+    private IRolePrivilegeService rolePrivilegeService;
 
     @Autowired
     private IUserRoleService userRoleService;
@@ -127,10 +128,10 @@ public class RoleController extends BaseController {
     @RequestMapping("/right")
     @ResponseBody
     public String right(Model model, @RequestParam(value = "roleId", required = true) Long roleId) {
-        List<com.baomidou.springwind.entity.Permission> list = permissionService.selectList(null);
-        List<Long> roleRightList = rolePermissionService.selecPermissionIdsByRoleId(roleId);
+        List<Privilege> list = privilegeService.selectList(null);
+        List<Long> roleRightList = rolePrivilegeService.selecPermissionIdsByRoleId(roleId);
         List<Map<String, String>> rightList = new ArrayList<Map<String, String>>();
-        for (com.baomidou.springwind.entity.Permission r : list) {
+        for (Privilege r : list) {
             Map<String, String> map = new HashMap<String, String>();
             map.put("id", r.getId().toString());
             map.put("pId", r.getPid().toString());
@@ -164,37 +165,35 @@ public class RoleController extends BaseController {
 
         try {
             //查询出本角色已经分配了的权限
-            RolePermission rolePermission = new RolePermission();
-            rolePermission.setRid(roleId);
-            EntityWrapper<RolePermission> ew = new EntityWrapper<RolePermission>();
-            ew.setEntity(rolePermission);
-            List<RolePermission> roleRightList = rolePermissionService.selectList(ew);
+            RolePrivilege rolePrivilege = new RolePrivilege();
+            rolePrivilege.setRid(roleId);
+            EntityWrapper<RolePrivilege> ew = new EntityWrapper<RolePrivilege>();
+            ew.setEntity(rolePrivilege);
+            List<RolePrivilege> roleRightList = rolePrivilegeService.selectList(ew);
 
             //如果存在权限，先进行删除
             if (roleRightList.size() > 0) {
-                for (RolePermission rp : roleRightList) {
-                    rolePermissionService.delete(new EntityWrapper<RolePermission>(rp));
+                for (RolePrivilege rp : roleRightList) {
+                    rolePrivilegeService.delete(new EntityWrapper<RolePrivilege>(rp));
                 }
             }
 
             String[] rightIds = rights.split(",");
             if (StringUtils.isNotBlank(rights) && rightIds != null) {
                 //添加新分配的权限
-                List<RolePermission> permissions = new ArrayList<RolePermission>();
-                RolePermission e = null;
+                List<RolePrivilege> privileges = new ArrayList<RolePrivilege>();
+                RolePrivilege e = null;
                 for (String pid : rightIds) {
-                    e = new RolePermission();
+                    e = new RolePrivilege();
                     e.setPid(Long.valueOf(pid));
                     e.setRid(roleId);
-                    permissions.add(e);
+                    privileges.add(e);
                 }
-                rolePermissionService.insertBatch(permissions);
+                rolePrivilegeService.insertBatch(privileges);
             }
             return "true";
         } catch (Exception e) {
             return "false";
         }
     }
-
-
 }

@@ -8,11 +8,11 @@ import org.springframework.stereotype.Service;
 
 /**
  * <p>
- * Excel文件类 服务实现类
+ * Excel上传文件 服务实现类
  * </p>
  *
  * @author CuiCan
- * @since 2017-04-12
+ * @since 2017-05-17
  */
 @Service
 public class ExcelServiceImpl extends BaseServiceImpl<ExcelMapper, Excel> implements IExcelService {

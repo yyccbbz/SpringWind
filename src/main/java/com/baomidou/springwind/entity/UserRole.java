@@ -1,34 +1,40 @@
 package com.baomidou.springwind.entity;
 
-import java.io.Serializable;
-
-import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.enums.IdType;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import java.io.Serializable;
 
 /**
- *
+ * <p>
  * 用户角色表
+ * </p>
  *
+ * @author CuiCan
+ * @since 2017-05-17
  */
-@TableName(value = "user_role")
+@TableName("user_role")
 public class UserRole implements Serializable {
 
-	@TableField(exist = false)
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	/** 主键 */
-	@TableId
+    /**
+     * 主键
+     */
+	@TableId(value="id", type= IdType.AUTO)
 	private Long id;
-
-	/** 用户ID */
+    /**
+     * 用户ID
+     */
 	private Long uid;
-
-	/** 角色ID */
+    /**
+     * 角色ID
+     */
 	private Long rid;
 
+
 	public Long getId() {
-		return this.id;
+		return id;
 	}
 
 	public void setId(Long id) {
@@ -36,7 +42,7 @@ public class UserRole implements Serializable {
 	}
 
 	public Long getUid() {
-		return this.uid;
+		return uid;
 	}
 
 	public void setUid(Long uid) {
@@ -44,7 +50,7 @@ public class UserRole implements Serializable {
 	}
 
 	public Long getRid() {
-		return this.rid;
+		return rid;
 	}
 
 	public void setRid(Long rid) {
