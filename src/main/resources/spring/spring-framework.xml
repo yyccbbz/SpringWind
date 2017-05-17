@@ -30,7 +30,7 @@
 	<!-- 扫描切面包路径 -->
 	<bean id="logAspect" class="com.baomidou.framework.aop.LogAspect">
 		<property name="logPoint">
-			<bean class="com.baomidou.springwind.service.impl.SysLogServiceImpl" />
+			<bean class="com.baomidou.springwind.service.impl.SystemLogServiceImpl" />
 		</property>
 	</bean>
 	<aop:config>

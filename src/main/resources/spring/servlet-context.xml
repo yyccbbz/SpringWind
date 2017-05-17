@@ -87,7 +87,7 @@
 			<mvc:mapping path="/**" />
 			<bean class="com.baomidou.kisso.web.interceptor.SSOPermissionInterceptor">
 				<property name="authorization">
-					<bean class="com.baomidou.springwind.service.impl.PermissionServiceImpl"/>
+					<bean class="com.baomidou.springwind.service.impl.PrivilegeServiceImpl"/>
 				</property>
 				<property name="illegalUrl" value="/error/illegalAccess.html"/>
 			</bean>
