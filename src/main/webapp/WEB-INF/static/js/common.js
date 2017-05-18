@@ -17,6 +17,17 @@ function formatDate(time) {
 }
 
 
+function formatUserType(type){
+    if (type == '' || type == null || type == undefined) return '';
+    if(type == 0){
+
+    }
+    return ;
+}
+
+
+
+
 /**
  * 下载文件,以POST的方式提交---同一个页面
  * @param options{url,data}

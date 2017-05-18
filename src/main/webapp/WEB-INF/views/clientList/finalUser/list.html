@@ -1,11 +1,11 @@
 #override("title")
-BigClient - 用户管理
+BigClient - 正式名单
 #end
 #override("css")
 <link href="#springUrl('/static/css/plugins/bootstrap-table/bootstrap-table.min.css')" rel="stylesheet">
 #end
 #override("breadcrumb")
-<li><a>权限管理</a></li><li class="active"><strong>用户管理</strong></li>
+<li><a>客户名单</a></li><li class="active"><strong>正式名单</strong></li>
 #end
 #override("content")
 <div class="row">
@@ -19,13 +19,13 @@ BigClient - 用户管理
 		<button class="btn btn-primary" onclick="editUser(null)" type="button">
 		<i class="fa fa-pencil"></i>&nbsp;添加用户</button>
 		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
-		#if ($SSOPermission.isActionable("10010"))
+		<!--#if ($SSOPermission.isActionable("10010"))-->
 		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
 		<i class="fa fa-pencil"></i>&nbsp;导出查询结果</button>
-		<button class="btn btn-primary" onclick="uploadExcel()" type="button">
-		<i class="fa fa-pencil"></i>&nbsp;导入EXCEL文件</button>
-		<input type="file" id="fileExcel" name="fileExcel" accept=".xls,.xlsx" style="display: none"/>
-		#end
+		<!--<button class="btn btn-primary" onclick="uploadExcel()" type="button">-->
+		<!--<i class="fa fa-pencil"></i>&nbsp;导入EXCEL文件</button>-->
+		<!--<input type="file" id="fileExcel" name="fileExcel" accept=".xls,.xlsx" style="display: none"/>-->
+		<!--#end-->
 	</div>
 </div>
 <div class="row">
@@ -51,23 +51,56 @@ BigClient - 用户管理
             align: "center",
             valign: "middle"
         }, {
-            field: 'loginName',
-            title: '登录名',
+            field: 'mobileNo',
+            title: '手机号',
             align: "center",
             valign: "middle"
         }, {
-            field: 'email',
-            title: '邮箱',
+            field: 'userName',
+            title: '客户姓名',
             align: "center",
             valign: "middle"
         }, {
-            field: 'type',
-            title: '用户类型',
+            field: 'userType',
+            title: '客户类别',
+            align: "center",
+            valign: "middle",
+			formatter: function (value, row, index) {
+				return formatUserType(row.userType);
+			}
+        }, {
+            field: 'reportDate',
+            title: '上报日期',
             align: "center",
             valign: "middle"
         }, {
-            field: 'status',
-            title: '状态',
+            field: 'registerTime',
+            title: '注册时间',
+            align: "center",
+            valign: "middle"
+        }, {
+            field: 'isVipuser',
+            title: '是否vip',
+            align: "center",
+            valign: "middle"
+        }, {
+            field: 'vipDate',
+            title: '成为vip日期',
+            align: "center",
+            valign: "middle"
+        }, {
+            field: 'advisorName',
+            title: '投资顾问',
+            align: "center",
+            valign: "middle"
+        }, {
+            field: 'userMark',
+            title: '客户标识',
+            align: "center",
+            valign: "middle"
+        }, {
+            field: 'isPerformancePool',
+            title: '是否业绩池',
             align: "center",
             valign: "middle"
         }, {
@@ -78,7 +111,6 @@ BigClient - 用户管理
             formatter: function (value, row, index) {
                 return formatDate(row.createTime);
             }
-			//value:代表当前单元格中的值，row：代表当前行,index:代表当前行的下标
         }, {
             field: 'lastTime',
             title: '最后更新时间',

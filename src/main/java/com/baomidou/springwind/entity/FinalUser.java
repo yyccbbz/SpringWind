@@ -217,4 +217,24 @@ public class FinalUser implements Serializable {
 		this.updateTime = updateTime;
 	}
 
+	@Override
+	public String toString() {
+		return "FinalUser{" +
+				"id=" + id +
+				", mobileNo='" + mobileNo + '\'' +
+				", memberNo='" + memberNo + '\'' +
+				", userName='" + userName + '\'' +
+				", userType=" + userType +
+				", reportDate=" + reportDate +
+				", registerTime=" + registerTime +
+				", isVipuser=" + isVipuser +
+				", vipDate=" + vipDate +
+				", advisorId=" + advisorId +
+				", advisorName='" + advisorName + '\'' +
+				", userMark='" + userMark + '\'' +
+				", isPerformancePool=" + isPerformancePool +
+				", createTime=" + createTime +
+				", updateTime=" + updateTime +
+				'}';
+	}
 }

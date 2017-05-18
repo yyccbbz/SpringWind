@@ -1,7 +1,7 @@
 package test;
 
 import com.baomidou.springwind.common.utils.ReflectUtil;
-import com.baomidou.springwind.entity.User;
+import com.baomidou.springwind.entity.FinalUser;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.util.TypeUtils;
 import java.lang.reflect.Field;
@@ -20,7 +20,7 @@ public class ExcelXmlBuild {
 	
 	//快速构建一个XML配置,看不懂直接运行
 	public static void main(String[] args) {
-		String xml = builderXml("user", "用户列表", true, User.class,5000);
+		String xml = builderXml("finalUser", "正式名单", true, FinalUser.class,5000);
 		System.out.println(xml);
 	}
 	
@@ -39,7 +39,9 @@ public class ExcelXmlBuild {
 	 */
 	public static String builderXml(String id,String sheetname,boolean enableStyle,Class<?> clazz,Integer defaultColumnWidth,Class<?> ... clazzs){
 		StringBuilder res = new StringBuilder();
-		res.append("<excel id=\""+id+"\" class=\""+clazz.getName()+"\" sheetname=\""+sheetname+"\" defaultColumnWidth=\""+defaultColumnWidth+"\" enableStyle=\""+enableStyle+"\">");
+		res.append("<excel id=\""+id+"\" class=\""+clazz.getName()+"\" sheetname=\""+sheetname+
+				"\" defaultColumnWidth=\""+defaultColumnWidth+"\" defaultAlign=\""+"center"+
+				"\" enableStyle=\""+enableStyle+"\">");
 		List<Field> fields = ReflectUtil.getFields(clazz);
 		for(Field f:fields){
 			String str = buildFields(f, f.getName(), clazzs);
@@ -75,6 +77,8 @@ public class ExcelXmlBuild {
 		}
 		return res.toString();
 	}
+
+
 	//创建field标签字符
 	private static void buildStringField(StringBuilder res,Field field, String name){
 		//不是复杂对象
@@ -83,7 +87,7 @@ public class ExcelXmlBuild {
 		.append(" name=").append("\""+name+"\"")
 		.append(" title=").append("\""+name+"\"");
 		if(TypeUtils.isAssignable(Date.class, field.getType())){
-			String pattern = "yyyy/MM/dd";
+			String pattern = "yyyy/MM/dd HH:mm:ss";
 			res.append(" pattern=").append("\""+pattern+"\"");
 		}
 		//是否构建其他标签信息

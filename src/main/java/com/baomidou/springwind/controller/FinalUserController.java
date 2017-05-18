@@ -1,6 +1,8 @@
 package com.baomidou.springwind.controller;
 
+import com.baomidou.kisso.annotation.Permission;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -12,7 +14,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since 2017-05-17
  */
 @Controller
-@RequestMapping("/springwind/finalUser")
+@RequestMapping("/clientList/finalUser")
 public class FinalUserController extends BaseController {
-	
+
+
+    /*页面跳转*/
+    @Permission("5001")
+    @RequestMapping("/list")
+    public String list(Model model) {
+        return "/clientList/finalUser/list";
+    }
+
 }
