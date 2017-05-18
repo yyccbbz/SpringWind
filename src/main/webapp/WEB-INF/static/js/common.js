@@ -16,7 +16,7 @@ function formatDate(time) {
     return year + "年" + month + "月" + date + "日 " + hour + ":" + minute + ":" + second;
 }
 
-
+/**正式名单*/
 function formatUserType(type){
     if (type == '' || type == null || type == undefined) return '';
     if(type == 0){
@@ -25,7 +25,20 @@ function formatUserType(type){
     return ;
 }
 
-
+/**
+ * 是否格式化：1是、0否
+ * @param isyes
+ * @returns {*}
+ */
+function formatWhether(isyes) {
+    if (isyes == 1) {
+        return '是';
+    } else if (isyes == 0) {
+        return '否';
+    } else {
+        return '';
+    }
+}
 
 
 /**

@@ -10,24 +10,30 @@ BigClient - 正式名单
 #override("content")
 <div class="row">
 	<div class="ibox-content text-right form-inline" style="background: #F3F3F4;">
+
+
 		<div class="input-group">
 			<input type="text" class="form-control" id="txt_search" name="_search">
 			<span class="input-group-btn">
 				<button type="button" class="btn btn-info" onclick="queryBy()" id="btn_query">搜索</button>
 			</span>
 		</div>
+
 		<button class="btn btn-primary" onclick="editUser(null)" type="button">
 		<i class="fa fa-pencil"></i>&nbsp;添加用户</button>
+
 		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
 		<!--#if ($SSOPermission.isActionable("10010"))-->
 		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
 		<i class="fa fa-pencil"></i>&nbsp;导出查询结果</button>
+
 		<!--<button class="btn btn-primary" onclick="uploadExcel()" type="button">-->
 		<!--<i class="fa fa-pencil"></i>&nbsp;导入EXCEL文件</button>-->
 		<!--<input type="file" id="fileExcel" name="fileExcel" accept=".xls,.xlsx" style="display: none"/>-->
 		<!--#end-->
 	</div>
 </div>
+
 <div class="row">
     <div class="col-sm-12" id="tableDiv">
         <!--<table id="dataTable"></table>-->
@@ -42,17 +48,15 @@ BigClient - 正式名单
 <script src="#springUrl('/static/js/base_list.js')"></script>
 <script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
-    var dataUrl = "#springUrl('/perm/user/getUserList.html')";
-    var dataColumns = [{
-            checkbox: true
-        }, {
+    var dataUrl = "#springUrl('/clientList/finalUser/getUserList.html')";
+    var dataColumns = [/*{
             field: 'id',
             title: '序号',
             align: "center",
             valign: "middle"
-        }, {
+        }, */{
             field: 'mobileNo',
-            title: '手机号',
+            title: '客户手机号',
             align: "center",
             valign: "middle"
         }, {
@@ -72,22 +76,34 @@ BigClient - 正式名单
             field: 'reportDate',
             title: '上报日期',
             align: "center",
-            valign: "middle"
+            valign: "middle",
+			formatter: function (value, row, index) {
+				return formatDate(row.reportDate);
+			}
         }, {
             field: 'registerTime',
             title: '注册时间',
             align: "center",
-            valign: "middle"
+            valign: "middle",
+			formatter: function (value, row, index) {
+				return formatDate(row.registerTime);
+			}
         }, {
             field: 'isVipuser',
             title: '是否vip',
             align: "center",
-            valign: "middle"
+            valign: "middle",
+			formatter: function (value, row, index) {
+				return formatWhether(row.isVipuser);
+			}
         }, {
             field: 'vipDate',
             title: '成为vip日期',
             align: "center",
-            valign: "middle"
+            valign: "middle",
+			formatter: function (value, row, index) {
+				return formatDate(row.vipDate);
+			}
         }, {
             field: 'advisorName',
             title: '投资顾问',
@@ -102,31 +118,18 @@ BigClient - 正式名单
             field: 'isPerformancePool',
             title: '是否业绩池',
             align: "center",
-            valign: "middle"
-        }, {
-            field: 'createTime',
-            title: '创建时间',
-            align: "center",
             valign: "middle",
-            formatter: function (value, row, index) {
-                return formatDate(row.createTime);
-            }
-        }, {
-            field: 'lastTime',
-            title: '最后更新时间',
-            align: "center",
-            valign: "middle",
-            formatter: function (value, row, index) {
-                return formatDate(row.lastTime);
-            }
-        }, {
+			formatter: function (value, row, index) {
+				return formatWhether(row.isPerformancePool);
+			}
+        },  {
             title: '操作',
             align: "center",
             valign: "middle",
             formatter: function (value, row, index) {
                 var id = row.id;
                 return '<a class="btn btn-xs btn-warning" onclick="editUser(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
-                	<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
+                	<!-- 此处按钮级别权限控制,目前只有 admin 拥有该权限! -->
                 	#if ($SSOPermission.isActionable("10010"))
                     +'<a class="btn btn-xs btn-danger" onclick="delUser(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
                     #end;
@@ -154,7 +157,7 @@ BigClient - 正式名单
 	function downloadExcel() {
         // 模拟Ajax获取
         downLoadFile({
-            url: "#springUrl('/perm/user/downloadExcel.html')", //请求的url
+            url: "#springUrl('/clientList/finalUser/downloadExcel.html')", //请求的url
             data: {search: $("#txt_search").val()}				//要发送的数据
         });
     }
@@ -169,7 +172,7 @@ BigClient - 正式名单
             layer.confirm('确定上传吗？', {
                 btn: ['确定', '取消'] // 按钮
             }, function () {
-                var url = "#springUrl('/perm/user/uploadExcel/')";
+                var url = "#springUrl('/clientList/finalUser/uploadExcel/')";
                 var fileId = "fileExcel";
                 $.ajaxFileUpload({
                     url: url,                              //用于文件上传的服务器端请求地址
@@ -200,7 +203,7 @@ BigClient - 正式名单
         }, function () {
             $.ajax({
                 type: "POST",
-                url: "#springUrl('/perm/user/delUser/')" + userId,
+                url: "#springUrl('/clientList/finalUser/delUser/')" + userId,
                 datatype: "text",
                 success: function (data) {
                     if(data == 'true'){
@@ -216,7 +219,7 @@ BigClient - 正式名单
 
 	function editUser(id){
 		var title = "新增用户";
-		var url = "#springUrl('/perm/user/edit.html')";
+		var url = "#springUrl('/clientList/finalUser/edit.html')";
 		if(id!=null){
 			title = "编辑用户";
 			url = url + "?id=" + id;
