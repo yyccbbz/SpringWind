@@ -37,6 +37,8 @@
 
 		<!-- test -->
 		<junit.version>4.12</junit.version>
+		<!-- jetty-maven-plugin -->
+		<jetty.version>9.3.19.v20170502</jetty.version>
 	</properties>
 
 	<dependencies>
@@ -330,7 +332,7 @@
 			<plugin>
 				<groupId>org.eclipse.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
-				<version>9.3.7.v20160115</version>
+				<version>${jetty.version}</version>
 				<configuration>
 					<webApp>
 						<contextPath>/</contextPath>

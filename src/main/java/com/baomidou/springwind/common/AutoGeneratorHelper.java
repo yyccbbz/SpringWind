@@ -51,8 +51,8 @@ public class AutoGeneratorHelper {
 		dsc.setDbType(DbType.MYSQL);
 		dsc.setTypeConvert(new MySqlTypeConvert());
 		dsc.setDriverName("com.mysql.jdbc.Driver");
-		dsc.setUsername("root");
-		dsc.setPassword("HdWiFi@2016!");
+		dsc.setUsername("bigdata");
+		dsc.setPassword("9P)x=O_s");
 		dsc.setUrl("jdbc:mysql://116.62.134.242:3306/big_customer?useUnicode=true&characterEncoding=utf8");
 		mpg.setDataSource(dsc);
 

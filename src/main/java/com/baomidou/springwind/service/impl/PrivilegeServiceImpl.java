@@ -1,5 +1,6 @@
 package com.baomidou.springwind.service.impl;
 
+import com.baomidou.kisso.SSOAuthorization;
 import com.baomidou.kisso.Token;
 import com.baomidou.springwind.entity.Privilege;
 import com.baomidou.springwind.entity.vo.MenuVO;
@@ -15,14 +16,15 @@ import java.util.List;
 
 /**
  * <p>
- * 权限表 数据服务层接口实现类
+ * 权限表 Privilege 数据服务层接口实现类
  * </p>
  *
  * @author CuiCan
  * @since 2017-05-17
  */
 @Service
-public class PrivilegeServiceImpl extends BaseServiceImpl<PrivilegeMapper, Privilege> implements IPrivilegeService {
+public class PrivilegeServiceImpl extends BaseServiceImpl<PrivilegeMapper, Privilege>
+        implements IPrivilegeService, SSOAuthorization {
 
 
     /**
@@ -59,6 +61,7 @@ public class PrivilegeServiceImpl extends BaseServiceImpl<PrivilegeMapper, Privi
             List<Privilege> pl = this.selectAllByUserId(token.getId());
             if (pl != null) {
                 for (Privilege p : pl) {
+//                    System.err.println("permCode = " + p.getPermCode());
                     if (permission.equals(p.getPermCode())) {
                         return true;
                     }
