@@ -70,7 +70,7 @@ BigClient - 正式名单
             align: "center",
             valign: "middle",
 			formatter: function (value, row, index) {
-				return formatUserType(row.userType);
+				return formatFinalUserType(row.userType);
 			}
         }, {
             field: 'reportDate',
@@ -86,7 +86,7 @@ BigClient - 正式名单
             align: "center",
             valign: "middle",
 			formatter: function (value, row, index) {
-				return formatDate(row.registerTime);
+				return formatDateTime(row.registerTime);
 			}
         }, {
             field: 'isVipuser',

@@ -64,19 +64,25 @@ BigClient - 用户管理
             field: 'type',
             title: '用户类型',
             align: "center",
-            valign: "middle"
+            valign: "middle",
+			formatter: function (value, row, index) {
+				return formatUserType(row.type);
+			}
         }, {
             field: 'status',
             title: '状态',
             align: "center",
-            valign: "middle"
+            valign: "middle",
+			formatter: function (value, row, index) {
+				return formatStatus(row.status);
+			}
         }, {
             field: 'createTime',
             title: '创建时间',
             align: "center",
             valign: "middle",
             formatter: function (value, row, index) {
-                return formatDate(row.createTime);
+                return formatDateTime(row.createTime);
             }
 			//value:代表当前单元格中的值，row：代表当前行,index:代表当前行的下标
         }, {
@@ -85,7 +91,7 @@ BigClient - 用户管理
             align: "center",
             valign: "middle",
             formatter: function (value, row, index) {
-                return formatDate(row.lastTime);
+                return formatDateTime(row.lastTime);
             }
         }, {
             title: '操作',

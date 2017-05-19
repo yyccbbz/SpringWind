@@ -1,9 +1,9 @@
 /**
- * 日期格式化
+ * 日期格式化[年月日 时分秒]
  * @param time
  * @returns {*}
  */
-function formatDate(time) {
+function formatDateTime(time) {
     if (time == '' || time == null || time == undefined) return '';
     var datetime = new Date();
     datetime.setTime(time);
@@ -16,13 +16,64 @@ function formatDate(time) {
     return year + "年" + month + "月" + date + "日 " + hour + ":" + minute + ":" + second;
 }
 
-/**正式名单*/
-function formatUserType(type){
-    if (type == '' || type == null || type == undefined) return '';
-    if(type == 0){
+/**
+ * 日期格式化[年月日]
+ * @param time
+ * @returns {*}
+ */
+function formatDate(time) {
+    if (time == '' || time == null || time == undefined) return '';
+    var datetime = new Date();
+    datetime.setTime(time);
+    var year = datetime.getFullYear();
+    var month = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
+    var date = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
+    return year + "年" + month + "月" + date + "日 ";
+}
 
+/**
+ * 用户 User
+ * '0、普通用户 1、管理员 2、超级管理员'
+ */
+function formatUserType(type){
+    if (type == 0) {
+        return '普通用户';
+    } else if (type == 1) {
+        return '管理员';
+    } else if (type == 2) {
+        return '超级管理员';
+    } else {
+        return '';
     }
-    return ;
+}
+
+/**0、禁用 1、正常*/
+function formatStatus(status){
+    if (status == 0) {
+        return '禁用';
+    } else if (status == 1) {
+        return '正常';
+    } else {
+        return '';
+    }
+}
+
+/**正式名单*/
+/**
+ * 客户类别：1上报；2分配；3未分配vip
+ * @param type
+ * @returns {*}
+ */
+function formatFinalUserType(type){
+    if (type == 1) {
+        return '上报';
+    } else if (type == 2) {
+        return '分配';
+    } else if (type == 3) {
+        return '未分配vip';
+    } else {
+        return '';
+    }
 }
 
 /**
