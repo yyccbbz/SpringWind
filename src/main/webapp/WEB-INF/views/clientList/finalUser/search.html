@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSPINIA | Basic Form</title>
+    <link href="#springUrl('/static/css/bootstrap.min.css')" rel="stylesheet">
+    <link href="#springUrl('/static/css/style.css')" rel="stylesheet">
+    <link href="#springUrl('/static/plugins/Datepicker/css/foundation-datepicker.css')" rel="stylesheet">
+    <style>
+        .calendarBox {
+            position: relative;
+        }
+
+        .glyphicon-calendar {
+            position: absolute;
+            right: 20px;
+            top: 35px;
+        }
+
+        .btns {
+            float: right;
+            padding: 70px 40px 30px 0;
+        }
+
+        #submit {
+            margin-left: 15px;
+        }
+    </style>
+</head>
+<body class="white-bg">
+<div style="width: 100%;">
+    <form style="padding:45px 30px;" id="myForm" name="form" method="post" action="" onsubmit="">
+        <div class="row">
+            <div class="form-group col-xs-4">
+                <label class="form-label">客户姓名</label>
+                <input type="text" class="form-control" name="clientName"/>
+            </div>
+            <div class="form-group col-xs-4">
+                <label class="form-label">手机号</label>
+                <input type="text" class="form-control" name="phone"/>
+            </div>
+            <div class="form-group col-xs-4">
+                <label class="form-label">客户类别</label>
+                <select class="form-control" name="clientType">
+                    <option value="">请选择</option>
+                    <option value="1">上报</option>
+                    <option value="2">分配</option>
+                    <option value="3">未分配VIP</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-4">
+                <label class="form-label">上报日期开始</label>
+                <input type="text" class="form-control calendarBox calendar startDate" name="startDate"/>
+                <span class="glyphicon glyphicon-calendar"></span>
+            </div>
+            <div class="form-group col-xs-4">
+                <label class="form-label">至</label>
+                <input type="text" class="form-control calendarBox calendar endDate" name="endDate"/>
+                <span class="glyphicon glyphicon-calendar"></span>
+            </div>
+            <div class="form-group col-xs-4">
+                <label class="form-label">是否为VIP</label>
+                <select class="form-control" name="isVip">
+                    <option value="">请选择</option>
+                    <option value="0">否</option>
+                    <option value="1">是</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-4">
+                <label class="form-label">投资顾问</label>
+                <input type="text" class="form-control" name="investConsultant"/>
+            </div>
+            <div class="form-group col-xs-4">
+                <label class="form-label">客户标识</label>
+                <select class="form-control" name="clientMark">
+                    <option value="">请选择</option>
+                    <option value="DHK000">DHK000</option>
+                    <option value="DHK001">DHK001</option>
+                </select>
+            </div>
+            <div class="form-group col-xs-4">
+                <label class="form-label">是否业绩池</label>
+                <select class="form-control" name="isPerformance">
+                    <option value="">请选择</option>
+                    <option value="0">否</option>
+                    <option value="1">是</option>
+                </select>
+            </div>
+
+            <span id="startSpan" style="opacity: 0;"></span>
+            <span id="endSpan" style="opacity: 0;"></span>
+        </div>
+
+        <div class="row btns">
+            <input type="reset" value="重置" class="btn"/>
+            <input type="button" value="确定" class="btn btn-info yesBtn" id="submit"/>
+        </div>
+    </form>
+</div>
+<script src="#springUrl('/static/js/jquery-2.2.4.js')"></script>
+<script src="#springUrl('/static/plugins/nice-validator-1.0.10/jquery.validator.js?local=zh-CN')"></script>
+<script src="#springUrl('/static/plugins/Datepicker/js/foundation-datepicker.js')"></script>
+<script src="#springUrl('/static/plugins/layer-v3.0.3/layer/layer.js')"></script>
+<script type="text/javascript">
+    /*$("#myForm").validator({
+        valid: function (form) {
+            var me = this;
+            // 提交表单之前，hold住表单，防止重复提交
+            me.holdSubmit();
+
+            $.ajax({
+                url: "#springUrl('/clientList/finalUser/editUser')",
+                data: $(form).serialize(),
+                type: "POST",
+                success: function (data) {
+                    var d = JSON.parse(data);
+                    if (d.success && d.data) {
+                        window.parent.location.reload();
+                        //当你在iframe页面关闭自身时
+                        //var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        //parent.layer.close(index); //再执行关闭
+                    } else {
+                        //失败，提交表单成功后，释放hold，如果不释放hold，就变成了只能提交一次的表单
+                        me.holdSubmit(false);
+                    }
+                }
+            });
+        }
+    });*/
+
+    /**点击弹出层内确定按钮，将值传入父级页面并关闭弹出层*/
+    $(".yesBtn").click(function () {
+        var formData = $('#myForm').serialize();
+        //初始化列表
+        var oTable1 = new window.parent.TableInit();
+        oTable1.formData = formData;
+        oTable1.Init();
+
+        //该iframe页面关闭自身
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+    });
+
+    //日期插件
+    function calendar() {
+        $('.calendar').fdatepicker();
+        var nowTemp = new Date();
+
+        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
+        var checkin = $('#dpd1').fdatepicker({
+            onRender: function (date) {
+                return date.valueOf() < now.valueOf() ? 'disabled' : '';
+            }
+        }).on('changeDate', function (ev) {
+            if (ev.date.valueOf() > checkout.date.valueOf()) {
+                var newDate = new Date(ev.date);
+                newDate.setDate(newDate.getDate() + 1);
+                checkout.update(newDate);
+            }
+            checkin.hide();
+            $('#dpd2')[0].focus();
+        }).data('datepicker');
+        var checkout = $('#dpd2').fdatepicker({
+            onRender: function (date) {
+                return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
+            }
+        }).on('changeDate', function (ev) {
+            checkout.hide();
+        }).data('datepicker');
+    }
+
+    calendar();
+
+    var endDateVal = $(".endDate").val();
+    //end.year=new Date().getFullYear();
+    //end.month=new Date().getMonth()+1;
+    //end.day=new Date().getDate();
+    var timeArr = [];
+    var timeStartEnd = [];
+    $(".startDate").change(function () {
+        var startDateVal = $(".startDate").val();
+        var startTimestamp = Date.parse(new Date(startDateVal));
+        $('#startSpan').html(startTimestamp);
+        var startSpan = parseInt($('#startSpan').html());
+        var endSpan = parseInt($('#endSpan').html());
+
+        if( startSpan > endSpan) {
+            layer.msg('结束日期不能小于开始日期');
+            return;
+        }
+    });
+
+
+    $(".endDate").change(function () {
+
+        var endDateVal = $(".endDate").val();
+        var endTimestamp = Date.parse(new Date(endDateVal));
+
+        $('#endSpan').html(endTimestamp);
+        var startSpan = parseInt($('#startSpan').html());
+        var endSpan = parseInt($('#endSpan').html());
+
+        if( startSpan > endSpan) {
+            layer.msg('结束日期不能小于开始日期');
+            return;
+        }
+    });
+
+
+
+
+</script>
+</body>
+</html>

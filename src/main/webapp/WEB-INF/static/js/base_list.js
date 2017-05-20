@@ -43,9 +43,10 @@ var TableInit = function () {
         });
     };
 
+    oTableInit.formData = "";
     //得到查询的参数
     oTableInit.queryParams = function (params) {
-        return dataQueryParams(params);
+        return dataQueryParams(params,oTableInit.formData);
     };
     return oTableInit;
 };

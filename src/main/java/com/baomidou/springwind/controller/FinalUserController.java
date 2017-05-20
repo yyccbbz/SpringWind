@@ -38,14 +38,20 @@ public class FinalUserController extends BaseController {
         return "/clientList/finalUser/list";
     }
 
+    @Permission("5001")
+    @RequestMapping("/search")
+    public String search(Model model) {
+        return "/clientList/finalUser/search";
+    }
+
 
     /*CRUD*/
     @ResponseBody
-    @Permission("2001")
+    @Permission("5001")
     @RequestMapping("/getUserList")
-    public String getUserList(@RequestParam("_search") String _search) {
+    public String getUserList(FinalUser user) {
 
-        System.out.println("搜索条件 =" + _search);
+        System.out.println("搜索条件 formData =" + user);
 
 //        Page<FinalUser> page = getPage();
 //        Page<FinalUser> userPage = finalUserService.selectPageBySearch(page, StringUtil.getStrEmpty(_search));
