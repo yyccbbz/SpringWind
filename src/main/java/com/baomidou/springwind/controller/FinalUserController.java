@@ -5,17 +5,24 @@ import com.baomidou.kisso.annotation.Permission;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.DateUtil;
 import com.baomidou.springwind.common.utils.StringUtil;
+import com.baomidou.springwind.common.view.SpringMvcExcelView;
 import com.baomidou.springwind.entity.FinalUser;
 import com.baomidou.springwind.service.IFinalUserService;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -31,6 +38,14 @@ public class FinalUserController extends BaseController {
 
     @Autowired
     private IFinalUserService finalUserService;
+
+    //excel-config中配置的ID
+    @Value("${finalUser.excelId}")
+    private String userExcelId;
+
+    //excel导出的字段
+    @Value("${finalUser.fields}")
+    private String userFields;
 
     /*页面跳转*/
     @Permission("5001")
@@ -88,6 +103,40 @@ public class FinalUserController extends BaseController {
         finalUserService.deleteUser(userId);
         return Boolean.TRUE.toString();
     }*/
+
+
+    /**
+     * Excel导出列表
+     *
+     * @return
+     */
+    @Permission("2001")
+    @RequestMapping(value = "/downloadExcel",method = RequestMethod.POST)
+    public ModelAndView downloadExcel(){
+
+        /**1.执行你的业务逻辑获取数据，使用ExcelContent生成Workbook，需要四个参数
+         * ①id 配置ID
+         * ②beans 配置class对应的List
+         * ③header 导出之前,在标题前面做出一些额外的操作,比如增加文档描述等,可以为null
+         * ④fields 指定Excel导出的字段(bean对应的字段名称),可以为null
+         */
+        Workbook workbook = null;
+        String id = userExcelId;
+        List<FinalUser> list = finalUserService.selectList(null);
+        List<String> fields = Arrays.asList(userFields.split(","));
+        try {
+            workbook = excelContext.createExcel(id, list,null,fields);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        /**2.跳转到Excel下载视图*/
+        ModelAndView view = new ModelAndView("springMvcExcelView");
+        view.addObject(SpringMvcExcelView.EXCEL_NAME,"正式名单");
+        view.addObject(SpringMvcExcelView.EXCEL_WORKBOOK,workbook);
+        view.addObject(SpringMvcExcelView.EXCEL_EMPTY_MESSAGE,"XXX没有相关数据可以导出");
+        return view;
+    }
 
     @ResponseBody
     @Permission("5001")
