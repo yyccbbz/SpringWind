@@ -66,3 +66,23 @@ var ButtonInit = function () {
 
     return oInit;
 };*/
+
+/**form表单序列化后的数据转json字符串*/
+function formToJsonStr(data){
+    // var data = $("#form").serialize();
+    data= decodeURIComponent(data,true);//防止中文乱码
+    data = data.replace(/&/g, "','" );
+    data = data.replace(/=/g, "':'" );
+    data = "{'" +data + "'}" ;
+    return data;
+}
+/**form表单序列化后的数据转json对象*/
+function formToJson(data){
+    // var data = $("#form").serialize();
+    data= decodeURIComponent(data,true);//防止中文乱码
+    data = data.replace(/&/g, "','" );
+    data = data.replace(/=/g, "':'" );
+    data = "({'" +data + "'})" ;
+    obj = eval(data);
+    return obj;
+}

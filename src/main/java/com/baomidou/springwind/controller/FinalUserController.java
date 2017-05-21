@@ -1,19 +1,20 @@
 package com.baomidou.springwind.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.kisso.annotation.Permission;
-import com.baomidou.kisso.common.encrypt.SaltEncoder;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.springwind.common.utils.DateUtil;
 import com.baomidou.springwind.common.utils.StringUtil;
 import com.baomidou.springwind.entity.FinalUser;
 import com.baomidou.springwind.service.IFinalUserService;
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /**
@@ -34,13 +35,13 @@ public class FinalUserController extends BaseController {
     /*页面跳转*/
     @Permission("5001")
     @RequestMapping("/list")
-    public String list(Model model) {
+    public String list() {
         return "/clientList/finalUser/list";
     }
 
     @Permission("5001")
     @RequestMapping("/search")
-    public String search(Model model) {
+    public String search() {
         return "/clientList/finalUser/search";
     }
 
@@ -48,15 +49,18 @@ public class FinalUserController extends BaseController {
     /*CRUD*/
     @ResponseBody
     @Permission("5001")
-    @RequestMapping("/getUserList")
-    public String getUserList(FinalUser user) {
+    @RequestMapping(value = "/getUserList")
+    public String getUserList(@RequestParam("_search") String _search) {
 
-        System.out.println("搜索条件 formData =" + user);
+        System.err.println("筛选条件 formData =" + _search);
 
-//        Page<FinalUser> page = getPage();
-//        Page<FinalUser> userPage = finalUserService.selectPageBySearch(page, StringUtil.getStrEmpty(_search));
-//        return jsonPage(userPage);
-        return "";
+        FinalUser finalUser = null;
+        if(StringUtil.isNotEmpty(_search)){
+             finalUser = JSONObject.parseObject(_search, FinalUser.class);
+        }
+        Page<FinalUser> page = getPage();
+        Page<FinalUser> userPage = finalUserService.selectPageByParams(page, finalUser);
+        return jsonPage(userPage);
     }
 
     /*@ResponseBody
@@ -85,7 +89,39 @@ public class FinalUserController extends BaseController {
         return Boolean.TRUE.toString();
     }*/
 
+    @ResponseBody
+    @Permission("5001")
+    @RequestMapping("addTestData")
+    public String addTestData(){
 
+        ArrayList<FinalUser> list = new ArrayList<>();
+        for (int i = 1;i<= 80;i++){
+            FinalUser u = new FinalUser();
+
+            u.setMobileNo(RandomStringUtils.randomNumeric(11));
+            u.setMemberNo(RandomStringUtils.randomAlphanumeric(10));
+            u.setUserName(RandomStringUtils.randomAlphabetic(5));
+            u.setUserType(Integer.parseInt(RandomStringUtils.random(1,new char[]{'1','2','3'})));
+            u.setReportDate(DateUtil.randomDate("2017-01-01", "2017-05-01"));
+            u.setRegisterTime(DateUtil.randomDate("2017-01-01", "2017-05-01"));
+            u.setIsVipuser(Integer.parseInt(RandomStringUtils.random(1,new char[]{'0','1'})));
+            u.setVipDate(DateUtil.randomDate("2017-01-01", "2017-05-01"));
+            u.setAdvisorId(Integer.parseInt(RandomStringUtils.randomNumeric(4)));
+            u.setAdvisorName(RandomStringUtils.randomAlphabetic(6));
+            u.setUserMark(RandomStringUtils.randomAlphanumeric(6));
+            u.setIsPerformancePool(Integer.parseInt(RandomStringUtils.random(1,new char[]{'0','1'})));
+            u.setCreateTime(new Date());
+            u.setUpdateTime(u.getCreateTime());
+
+            list.add(u);
+
+            System.out.println(u);
+        }
+
+        Boolean b = finalUserService.insertBatch(list);
+
+        return b.toString();
+    }
 
 
 

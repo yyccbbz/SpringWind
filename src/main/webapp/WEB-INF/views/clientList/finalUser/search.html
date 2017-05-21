@@ -34,15 +34,15 @@
         <div class="row">
             <div class="form-group col-xs-4">
                 <label class="form-label">客户姓名</label>
-                <input type="text" class="form-control" name="clientName"/>
+                <input type="text" class="form-control" name="userName"/>
             </div>
             <div class="form-group col-xs-4">
                 <label class="form-label">手机号</label>
-                <input type="text" class="form-control" name="phone"/>
+                <input type="text" class="form-control" name="mobileNo"/>
             </div>
             <div class="form-group col-xs-4">
                 <label class="form-label">客户类别</label>
-                <select class="form-control" name="clientType">
+                <select class="form-control" name="userType">
                     <option value="">请选择</option>
                     <option value="1">上报</option>
                     <option value="2">分配</option>
@@ -53,17 +53,17 @@
         <div class="row">
             <div class="form-group col-xs-4">
                 <label class="form-label">上报日期开始</label>
-                <input type="text" class="form-control calendarBox calendar startDate" name="startDate"/>
+                <input type="text" class="form-control calendarBox calendar startDate" name="reportDate"/>
                 <span class="glyphicon glyphicon-calendar"></span>
             </div>
             <div class="form-group col-xs-4">
                 <label class="form-label">至</label>
-                <input type="text" class="form-control calendarBox calendar endDate" name="endDate"/>
+                <input type="text" class="form-control calendarBox calendar endDate" name="vipDate"/>
                 <span class="glyphicon glyphicon-calendar"></span>
             </div>
             <div class="form-group col-xs-4">
                 <label class="form-label">是否为VIP</label>
-                <select class="form-control" name="isVip">
+                <select class="form-control" name="isVipuser">
                     <option value="">请选择</option>
                     <option value="0">否</option>
                     <option value="1">是</option>
@@ -73,11 +73,11 @@
         <div class="row">
             <div class="form-group col-xs-4">
                 <label class="form-label">投资顾问</label>
-                <input type="text" class="form-control" name="investConsultant"/>
+                <input type="text" class="form-control" name="advisorName"/>
             </div>
             <div class="form-group col-xs-4">
                 <label class="form-label">客户标识</label>
-                <select class="form-control" name="clientMark">
+                <select class="form-control" name="userMark">
                     <option value="">请选择</option>
                     <option value="DHK000">DHK000</option>
                     <option value="DHK001">DHK001</option>
@@ -85,7 +85,7 @@
             </div>
             <div class="form-group col-xs-4">
                 <label class="form-label">是否业绩池</label>
-                <select class="form-control" name="isPerformance">
+                <select class="form-control" name="isPerformancePool">
                     <option value="">请选择</option>
                     <option value="0">否</option>
                     <option value="1">是</option>
@@ -135,7 +135,10 @@
 
     /**点击弹出层内确定按钮，将值传入父级页面并关闭弹出层*/
     $(".yesBtn").click(function () {
-        var formData = $('#myForm').serialize();
+//        var formData = $('#myForm').serialize();
+        var formData = window.parent.formToJsonStr($('#myForm').serialize());
+        console.log(formData);
+
         //初始化列表
         var oTable1 = new window.parent.TableInit();
         oTable1.formData = formData;

@@ -53,8 +53,8 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     @Override
     public Page<User> selectPageBySearch(Page<User> page, String search) {
         if (search != null && StringUtils.isNotEmpty(search)) {
-            return this.selectPage(page, new EntityWrapper<User>().like("loginName", search));
+            return super.selectPage(page, new EntityWrapper<User>().like("loginName", search));
         }
-        return this.selectPage(page);
+        return super.selectPage(page);
     }
 }

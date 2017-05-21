@@ -1,5 +1,6 @@
 package test.MapperTest;
 
+import com.baomidou.springwind.common.utils.DateUtil;
 import com.baomidou.springwind.entity.FinalUser;
 import org.apache.commons.lang.RandomStringUtils;
 import org.junit.Test;
@@ -21,17 +22,19 @@ public class FinalUserTest extends BasicTest {
 //        FinalUserMapper fum = sch.getBean(FinalUserMapper.class);
 
         ArrayList<FinalUser> list = new ArrayList<>();
-        for (int i = 1;i<= 20;i++){
+
+        for (int i = 1;i<= 80;i++){
+
             FinalUser u = new FinalUser();
 
             u.setMobileNo(RandomStringUtils.randomNumeric(11));
             u.setMemberNo(RandomStringUtils.randomAlphanumeric(10));
             u.setUserName(RandomStringUtils.randomAlphabetic(5));
             u.setUserType(Integer.parseInt(RandomStringUtils.random(1,new char[]{'1','2','3'})));
-            u.setReportDate(randomDate());
-            u.setRegisterTime(randomDate());
+            u.setReportDate(DateUtil.randomDate("2017-01-01", "2017-05-01"));
+            u.setRegisterTime(DateUtil.randomDate("2017-01-01", "2017-05-01"));
             u.setIsVipuser(Integer.parseInt(RandomStringUtils.random(1,new char[]{'0','1'})));
-            u.setVipDate(randomDate());
+            u.setVipDate(DateUtil.randomDate("2017-01-01", "2017-05-01"));
             u.setAdvisorId(Integer.parseInt(RandomStringUtils.randomNumeric(4)));
             u.setAdvisorName(RandomStringUtils.randomAlphabetic(6));
             u.setUserMark(RandomStringUtils.randomAlphanumeric(6));
@@ -39,20 +42,11 @@ public class FinalUserTest extends BasicTest {
             u.setCreateTime(new Date());
             u.setUpdateTime(u.getCreateTime());
 
-            System.out.println(u);
+            list.add(u);
+
+            System.err.println(u);
         }
 
     }
-
-    public Date randomDate() {
-        Random random = new Random();
-        Calendar can = Calendar.getInstance();
-        can.setTimeInMillis(random.nextLong());
-        return can.getTime();
-
-    }
-
-
-
 
 }

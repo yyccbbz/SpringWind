@@ -21,4 +21,95 @@
 		<result column="update_time" property="updateTime" />
 	</resultMap>
 
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		id,mobile_no,member_no,user_name,user_type,report_date,register_time,is_vipuser,vip_date,
+		advisor_id,advisor_name,user_mark,is_performance_pool,create_time,update_time
+	</sql>
+
+	<select id="selectCountByParams" resultType="int">
+		SELECT COUNT(*) FROM final_user WHERE 1=1
+		<if test="finalUser != null">
+
+			<if test="finalUser.userName != null and finalUser.userName != ''">
+				AND user_name like CONCAT('%',#{finalUser.userName},'%')
+			</if>
+			<if test="finalUser.mobileNo != null and finalUser.mobileNo != ''">
+				AND mobile_no = #{finalUser.mobileNo}
+			</if>
+			<if test="finalUser.userType != null">
+				AND user_type = #{finalUser.userType}
+			</if>
+			<if test="finalUser.isVipuser != null">
+				AND is_vipuser = #{finalUser.isVipuser}
+			</if>
+			<if test="finalUser.advisorName != null and finalUser.advisorName != ''">
+				AND advisor_name = #{finalUser.advisorName}
+			</if>
+			<if test="finalUser.userMark != null and finalUser.userMark != ''">
+				AND user_mark = #{finalUser.userMark}
+			</if>
+			<if test="finalUser.isPerformancePool != null">
+				AND is_performance_pool like #{finalUser.isPerformancePool}
+			</if>
+			<!-- 日期比较有三种情况 -->
+			<if test="finalUser.reportDate != null and finalUser.vipDate != null">
+				AND report_date >= #{finalUser.reportDate}
+				AND #{finalUser.vipDate} >= report_date
+			</if>
+			<if test="finalUser.reportDate == null and finalUser.vipDate != null">
+				AND #{finalUser.vipDate} >= report_date
+			</if>
+			<if test="finalUser.reportDate != null and finalUser.vipDate == null">
+				AND report_date >= #{finalUser.reportDate}
+			</if>
+
+		</if>
+
+	</select>
+
+	<select id="selectPageByParams" resultMap="BaseResultMap">
+		SELECT COUNT(*) FROM final_user WHERE 1=1
+		<if test="finalUser != null">
+
+			<if test="finalUser.userName != null and finalUser.userName != ''">
+				AND user_name like CONCAT('%',#{finalUser.userName},'%')
+			</if>
+			<if test="finalUser.mobileNo != null and finalUser.mobileNo != ''">
+				AND mobile_no = #{finalUser.mobileNo}
+			</if>
+			<if test="finalUser.userType != null">
+				AND user_type = #{finalUser.userType}
+			</if>
+			<if test="finalUser.isVipuser != null">
+				AND is_vipuser = #{finalUser.isVipuser}
+			</if>
+			<if test="finalUser.advisorName != null and finalUser.advisorName != ''">
+				AND advisor_name = #{finalUser.advisorName}
+			</if>
+			<if test="finalUser.userMark != null and finalUser.userMark != ''">
+				AND user_mark = #{finalUser.userMark}
+			</if>
+			<if test="finalUser.isPerformancePool != null">
+				AND is_performance_pool like #{finalUser.isPerformancePool}
+			</if>
+			<!-- 日期比较有三种情况 -->
+			<if test="finalUser.reportDate != null and finalUser.vipDate != null">
+				AND report_date >= #{finalUser.reportDate}
+				AND #{finalUser.vipDate} >= report_date
+			</if>
+			<if test="finalUser.reportDate == null and finalUser.vipDate != null">
+				AND #{finalUser.vipDate} >= report_date
+			</if>
+			<if test="finalUser.reportDate != null and finalUser.vipDate == null">
+				AND report_date >= #{finalUser.reportDate}
+			</if>
+
+		</if>
+		LIMIT
+			#{current}, #{size}
+	</select>
+
+
+
 </mapper>

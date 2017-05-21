@@ -24,6 +24,9 @@ BigClient - 正式名单
 		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
 		<i class="fa fa-pencil"></i>&nbsp;导出名单</button>
 
+		<button class="btn btn-primary" onclick="addTestData()" type="button">
+		<i class="fa fa-pencil"></i>&nbsp;添加测试数据</button>
+
 		<!--<button class="btn btn-primary" onclick="uploadExcel()" type="button">-->
 		<!--<i class="fa fa-pencil"></i>&nbsp;导入EXCEL文件</button>-->
 		<!--<input type="file" id="fileExcel" name="fileExcel" accept=".xls,.xlsx" style="display: none"/>-->
@@ -148,12 +151,21 @@ BigClient - 正式名单
 		return temp;
     }
 
-    /**点击搜索按钮，弹出搜索条件的弹层*/
-	function queryBy(){
-        var oTable1 = new TableInit();
-        oTable1.Init();
-	}
+    /*添加测试数据*/
+    function addTestData() {
+        $.ajax({
+            type: "get",
+            url: "#springUrl('/clientList/finalUser/addTestData')",
+            datatype: "text",
+            success: function (data) {
+                if(data == 'true'){
+                    $('#dataTable').bootstrapTable('refresh',{url:dataUrl});
+                }
+            }
+        });
+    }
 
+    /**点击搜索按钮，弹出搜索条件的弹层*/
     function searchByCondition(){
         var title = "请选择筛选条件";
         var url = "#springUrl('/clientList/finalUser/search.html')";

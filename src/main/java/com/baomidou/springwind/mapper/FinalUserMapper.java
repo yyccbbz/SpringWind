@@ -1,7 +1,11 @@
 package com.baomidou.springwind.mapper;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.entity.FinalUser;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface FinalUserMapper extends BaseMapper<FinalUser> {
 
+    List<FinalUser> selectPageByParams(@Param("current") int current, @Param("size") int size, @Param("finalUser") FinalUser finalUser);
+
+    int selectCountByParams(@Param("finalUser") FinalUser finalUser);
 }
