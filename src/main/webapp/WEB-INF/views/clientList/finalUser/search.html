@@ -6,7 +6,7 @@
     <title>INSPINIA | Basic Form</title>
     <link href="#springUrl('/static/css/bootstrap.min.css')" rel="stylesheet">
     <link href="#springUrl('/static/css/style.css')" rel="stylesheet">
-    <link href="#springUrl('/static/plugins/Datepicker/css/foundation-datepicker.css')" rel="stylesheet">
+    <link href="#springUrl('/static/plugins/foundation-datepicker-1.5.6/css/foundation-datepicker.css')" rel="stylesheet">
     <style>
         .calendarBox {
             position: relative;
@@ -52,7 +52,7 @@
         </div>
         <div class="row">
             <div class="form-group col-xs-4">
-                <label class="form-label">上报日期开始</label>
+                <label class="form-label">上报日期 从</label>
                 <input type="text" class="form-control calendarBox calendar startDate" name="reportDate"/>
                 <span class="glyphicon glyphicon-calendar"></span>
             </div>
@@ -103,89 +103,28 @@
     </form>
 </div>
 <script src="#springUrl('/static/js/jquery-2.2.4.js')"></script>
-<script src="#springUrl('/static/plugins/nice-validator-1.0.10/jquery.validator.js?local=zh-CN')"></script>
-<script src="#springUrl('/static/plugins/Datepicker/js/foundation-datepicker.js')"></script>
 <script src="#springUrl('/static/plugins/layer-v3.0.3/layer/layer.js')"></script>
+<script src="#springUrl('/static/plugins/nice-validator-1.0.10/jquery.validator.js?local=zh-CN')"></script>
+<script src="#springUrl('/static/plugins/foundation-datepicker-1.5.6/js/foundation-datepicker.js')"></script>
+<script src="#springUrl('/static/plugins/foundation-datepicker-1.5.6/js/locales/foundation-datepicker.zh-CN.js')"></script>
 <script type="text/javascript">
-    /*$("#myForm").validator({
-        valid: function (form) {
-            var me = this;
-            // 提交表单之前，hold住表单，防止重复提交
-            me.holdSubmit();
-
-            $.ajax({
-                url: "#springUrl('/clientList/finalUser/editUser')",
-                data: $(form).serialize(),
-                type: "POST",
-                success: function (data) {
-                    var d = JSON.parse(data);
-                    if (d.success && d.data) {
-                        window.parent.location.reload();
-                        //当你在iframe页面关闭自身时
-                        //var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        //parent.layer.close(index); //再执行关闭
-                    } else {
-                        //失败，提交表单成功后，释放hold，如果不释放hold，就变成了只能提交一次的表单
-                        me.holdSubmit(false);
-                    }
-                }
-            });
-        }
-    });*/
-
-    /**点击弹出层内确定按钮，将值传入父级页面并关闭弹出层*/
-    $(".yesBtn").click(function () {
-//        var formData = $('#myForm').serialize();
-        var formData = window.parent.formToJsonStr($('#myForm').serialize());
-        console.log(formData);
-
-        //初始化列表
-        var oTable1 = new window.parent.TableInit();
-        oTable1.formData = formData;
-        oTable1.Init();
-
-        //该iframe页面关闭自身
-        var index = parent.layer.getFrameIndex(window.name);
-        parent.layer.close(index);
-    });
-
     //日期插件
     function calendar() {
-        $('.calendar').fdatepicker();
-        var nowTemp = new Date();
-
-        var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-
-        var checkin = $('#dpd1').fdatepicker({
-            onRender: function (date) {
-                return date.valueOf() < now.valueOf() ? 'disabled' : '';
-            }
-        }).on('changeDate', function (ev) {
-            if (ev.date.valueOf() > checkout.date.valueOf()) {
-                var newDate = new Date(ev.date);
-                newDate.setDate(newDate.getDate() + 1);
-                checkout.update(newDate);
-            }
-            checkin.hide();
-            $('#dpd2')[0].focus();
-        }).data('datepicker');
-        var checkout = $('#dpd2').fdatepicker({
-            onRender: function (date) {
-                return date.valueOf() <= checkin.date.valueOf() ? 'disabled' : '';
-            }
-        }).on('changeDate', function (ev) {
-            checkout.hide();
-        }).data('datepicker');
+        $('.calendar').fdatepicker({
+//            initialDate: '2017-01-01',
+            format: 'yyyy-mm-dd',
+            language: 'zh-CN',
+            disableDblClickSelection: true,
+            leftArrow:'<<',
+            rightArrow:'>>',
+            closeIcon:'X',
+            closeButton: false
+        });
     }
-
     calendar();
 
-    var endDateVal = $(".endDate").val();
-    //end.year=new Date().getFullYear();
-    //end.month=new Date().getMonth()+1;
-    //end.day=new Date().getDate();
-    var timeArr = [];
-    var timeStartEnd = [];
+    var lockSubmit = false;
+
     $(".startDate").change(function () {
         var startDateVal = $(".startDate").val();
         var startTimestamp = Date.parse(new Date(startDateVal));
@@ -199,12 +138,9 @@
         }
     });
 
-
     $(".endDate").change(function () {
-
         var endDateVal = $(".endDate").val();
         var endTimestamp = Date.parse(new Date(endDateVal));
-
         $('#endSpan').html(endTimestamp);
         var startSpan = parseInt($('#startSpan').html());
         var endSpan = parseInt($('#endSpan').html());
@@ -216,7 +152,24 @@
     });
 
 
+    /**点击弹出层内确定按钮，将值传入父级页面并关闭弹出层*/
+    $(".yesBtn").click(function () {
 
+        //TODO 如果此时开始日期小于结束日期，不能提交。
+
+        var formData = window.parent.formToJsonStr($('#myForm').serialize());
+        console.log(formData);
+
+        //初始化列表
+        var oTable1 = new window.parent.TableInit();
+        oTable1.formData = formData;
+        oTable1.Init();
+
+        //该iframe页面关闭自身
+        var index = parent.layer.getFrameIndex(window.name);
+        parent.layer.close(index);
+
+    });
 
 </script>
 </body>

@@ -69,7 +69,7 @@
 	</select>
 
 	<select id="selectPageByParams" resultMap="BaseResultMap">
-		SELECT COUNT(*) FROM final_user WHERE 1=1
+		SELECT <include refid="Base_Column_List"/> FROM final_user WHERE 1=1
 		<if test="finalUser != null">
 
 			<if test="finalUser.userName != null and finalUser.userName != ''">
