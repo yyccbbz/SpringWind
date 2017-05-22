@@ -40,6 +40,10 @@ CREATE TABLE `final_user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='正式名单'
 ;
 
+insert into `final_user` (`mobile_no`, `member_no`, `user_name`, `user_type`, `report_date`, `register_time`, `is_vipuser`, `vip_date`, `advisor_id`, `advisor_name`, `user_mark`, `is_performance_pool`) values('13537001020','1234567890','张三','1','2017-05-01','2017-05-02 18:19:50','1','2017-05-03','10','花朵','DHK000','1');
+insert into `final_user` (`mobile_no`, `member_no`, `user_name`, `user_type`, `report_date`, `register_time`, `is_vipuser`, `vip_date`, `advisor_id`, `advisor_name`, `user_mark`, `is_performance_pool`) values('13537001021','1234567891','李四','2','2017-05-01','2017-05-02 18:19:50','0','2017-05-03','10','花朵','DHK001','0');
+
+
 -- ----------------------------
 -- Table structure for excel
 -- ----------------------------

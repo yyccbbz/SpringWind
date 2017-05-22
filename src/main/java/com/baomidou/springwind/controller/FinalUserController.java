@@ -13,10 +13,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -39,7 +37,7 @@ public class FinalUserController extends BaseController {
     @Autowired
     private IFinalUserService finalUserService;
 
-    //excel-config中配置的ID
+    //excel-config.xml中配置的ID
     @Value("${finalUser.excelId}")
     private String userExcelId;
 
@@ -47,7 +45,7 @@ public class FinalUserController extends BaseController {
     @Value("${finalUser.fields}")
     private String userFields;
 
-    /*页面跳转*/
+    /**页面跳转*/
     @Permission("5001")
     @RequestMapping("/list")
     public String list() {
@@ -60,8 +58,17 @@ public class FinalUserController extends BaseController {
         return "/clientList/finalUser/search";
     }
 
+    @Permission("5001")
+    @RequestMapping("/edit")
+    public String edit(Model model, Long id) {
+        if (id != null) {
+            model.addAttribute("user", finalUserService.selectById(id));
+        }
+        return "/clientList/finalUser/edit";
+    }
 
-    /*CRUD*/
+
+    /**CRUD*/
     @ResponseBody
     @Permission("5001")
     @RequestMapping(value = "/getUserList")
@@ -78,31 +85,30 @@ public class FinalUserController extends BaseController {
         return jsonPage(userPage);
     }
 
-    /*@ResponseBody
+    @ResponseBody
     @Permission("2001")
     @RequestMapping("/editUser")
     public String editUser(FinalUser user) {
         boolean rlt = false;
         if (user != null) {
-            user.setPassword(SaltEncoder.md5SaltEncode(user.getLoginName(), user.getPassword()));
             if (user.getId() != null) {
-                rlt = userService.updateById(user);
+                rlt = finalUserService.updateById(user);
             } else {
                 user.setCreateTime(new Date());
-                user.setLastTime(user.getCreateTime());
-                rlt = userService.insert(user);
+                user.setUpdateTime(user.getCreateTime());
+                rlt = finalUserService.insert(user);
             }
         }
         return callbackSuccess(rlt);
-    }*/
+    }
 
-    /*@ResponseBody
+    @ResponseBody
     @Permission("2001")
     @RequestMapping("/delUser/{userId}")
     public String delUser(@PathVariable Long userId) {
-        finalUserService.deleteUser(userId);
-        return Boolean.TRUE.toString();
-    }*/
+        Boolean rlt = finalUserService.deleteById(userId);
+        return rlt.toString();
+    }
 
 
     /**
@@ -114,7 +120,8 @@ public class FinalUserController extends BaseController {
     @RequestMapping(value = "/downloadExcel",method = RequestMethod.POST)
     public ModelAndView downloadExcel(){
 
-        /**1.执行你的业务逻辑获取数据，使用ExcelContent生成Workbook，需要四个参数
+        /**1.执行你的业务逻辑获取数据，使用ExcelContent生成Workbook，需要四个参数:
+         *
          * ①id 配置ID
          * ②beans 配置class对应的List
          * ③header 导出之前,在标题前面做出一些额外的操作,比如增加文档描述等,可以为null
@@ -132,9 +139,9 @@ public class FinalUserController extends BaseController {
 
         /**2.跳转到Excel下载视图*/
         ModelAndView view = new ModelAndView("springMvcExcelView");
-        view.addObject(SpringMvcExcelView.EXCEL_NAME,"正式名单");
+        view.addObject(SpringMvcExcelView.EXCEL_NAME,"正式名单"+DateUtil.getCurrentTime());
         view.addObject(SpringMvcExcelView.EXCEL_WORKBOOK,workbook);
-        view.addObject(SpringMvcExcelView.EXCEL_EMPTY_MESSAGE,"XXX没有相关数据可以导出");
+        view.addObject(SpringMvcExcelView.EXCEL_EMPTY_MESSAGE,"正式名单 没有相关数据可以导出");
         return view;
     }
 

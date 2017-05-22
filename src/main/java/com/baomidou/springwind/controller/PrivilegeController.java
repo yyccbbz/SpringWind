@@ -54,15 +54,9 @@ public class PrivilegeController extends BaseController {
         boolean rlt = false;
         if (permission != null) {
             if (permission.getId() != null) {
-                //如果数据库中不存在该id，则为新增
-                Privilege selelctPerm = privilegeService.selectById(permission.getId());
-                if (selelctPerm != null) {
-                    rlt = privilegeService.updateById(permission);
-                } else {
-                    //permission.setCrTime(new Date());
-                    //permission.setLastTime(permission.getCrTime());
-                    rlt = privilegeService.insertWithId(permission);
-                }
+                rlt = privilegeService.updateById(permission);
+            } else {
+                rlt = privilegeService.insertWithId(permission);
             }
         }
         return callbackSuccess(rlt);
