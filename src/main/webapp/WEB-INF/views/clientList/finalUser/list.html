@@ -3,7 +3,6 @@ BigClient - 正式名单
 #end
 #override("css")
 <link href="#springUrl('/static/css/plugins/bootstrap-table/bootstrap-table.min.css')" rel="stylesheet">
-<!--<link href="#springUrl('/static/plugins/Datepicker/css/foundation-datepicker.css')" rel="stylesheet">-->
 #end
 #override("breadcrumb")
 <li><a>客户名单</a></li><li class="active"><strong>正式名单</strong></li>
@@ -11,26 +10,24 @@ BigClient - 正式名单
 #override("content")
 <div class="row">
 	<div class="ibox-content text-right form-inline" style="background: #F3F3F4;">
-
-
 		<button type="button" class="btn btn-info" onclick="searchByCondition();" id="btn_query">
 		<i class="fa fa-search-plus"></i>&nbsp;条件搜索</button>
 
 		<button class="btn btn-primary" onclick="editUser(null)" type="button">
 		<i class="fa fa-pencil"></i>&nbsp;添加用户</button>
 
-		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
-		<!--#if ($SSOPermission.isActionable("10010"))-->
 		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
 		<i class="fa fa-pencil"></i>&nbsp;导出名单</button>
 
+		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
+		#if ($SSOPermission.isActionable("10010"))
 		<button class="btn btn-primary" onclick="addTestData()" type="button">
 		<i class="fa fa-pencil"></i>&nbsp;添加测试数据</button>
 
 		<!--<button class="btn btn-primary" onclick="uploadExcel()" type="button">-->
 		<!--<i class="fa fa-pencil"></i>&nbsp;导入EXCEL文件</button>-->
 		<!--<input type="file" id="fileExcel" name="fileExcel" accept=".xls,.xlsx" style="display: none"/>-->
-		<!--#end-->
+		#end
 	</div>
 </div>
 
@@ -44,7 +41,6 @@ BigClient - 正式名单
 <script src="#springUrl('/static/js/plugins/bootstrap-table/bootstrap-table.min.js')"></script>
 <script src="#springUrl('/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js')"></script>
 <script src="#springUrl('/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js')"></script>
-<!--<script src="#springUrl('/static/plugins/Datepicker/js/foundation-datepicker.js')"></script>-->
 <script src="#springUrl('/static/plugins/layer-v3.0.3/layer/layer.js')"></script>
 <script src="#springUrl('/static/js/base_list.js')"></script>
 <script src="#springUrl('/static/js/common.js')"></script>

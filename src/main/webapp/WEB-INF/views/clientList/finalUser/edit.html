@@ -20,147 +20,149 @@
 </head>
 <body class="white-bg">
 <div class="ibox-content" style="width: 430px;">
-    <form id="myForm" class="form-horizontal" autocomplete="off" data-validator-option="{theme:'default'}">
-        <input type="hidden" name="id" value="$!{user.id}">
+   <form id="myForm" class="form-horizontal" autocomplete="off" data-validator-option="{theme:'default'}">
+   	   <input type="hidden" name="id" value="$!{user.id}">
 
-        <div class="form-group"><label class="col-sm-2 control-label">客户手机号</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" value="$!{user.mobileNo}" name="mobileNo" data-rule="客户手机号:required;mobileNo">
-            </div>
-        </div>
-        <div class="hr-line-dashed"></div>
+       <div class="form-group"><label class="col-sm-2 control-label">客户手机号</label>
+           <div class="col-sm-10">
+           		<input type="text" class="form-control" value="$!{user.mobileNo}" name="mobileNo" data-rule="客户手机号:required;mobileNo">
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
 
-        <div class="form-group"><label class="col-sm-2 control-label">客户会员号</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="memberNo" data-rule="客户会员号:required;memberNo">
-            </div>
-        </div>
-        <div class="hr-line-dashed"></div>
+       <div class="form-group"><label class="col-sm-2 control-label">客户会员号</label>
+           <div class="col-sm-10">
+           		<input type="text" class="form-control" value="$!{user.memberNo}" name="memberNo" data-rule="客户会员号:required;memberNo">
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
 
-        <div class="form-group"><label class="col-sm-2 control-label">客户姓名</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="userName">
-            </div>
-        </div>
-        <div class="hr-line-dashed"></div>
+       <div class="form-group"><label class="col-sm-2 control-label">客户姓名</label>
+           <div class="col-sm-10">
+           		<input type="text" class="form-control" value="$!{user.userName}" name="userName">
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
         <div class="form-group"><label class="col-sm-2 control-label">客户类别</label>
             <div class="col-sm-10">
-                <select class="form-control m-b" name="userType">
-                    <option value="">请选择</option>
-                    <option value="1">上报</option>
-                    <option value="2">分配</option>
-                    <option value="3">未分配VIP</option>
-                </select>
+            <select class="form-control m-b" name="userType" value="$!{user.userType}">
+                <option value="">请选择</option>
+                <option value="1">上报</option>
+                <option value="2">分配</option>
+                <option value="3">未分配VIP</option>
+            </select>
             </div>
         </div>
         <div class="hr-line-dashed"></div>
-        <div class="form-group"><label class="col-sm-2 control-label">上报日期</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control calendarBox" name="reportDate" id="reportDate"
-                       onclick="calendarWithoutTime('#'+this.name);">
-                <div class="glyphicon glyphicon-calendar"></div>
-            </div>
-        </div>
-        <div class="hr-line-dashed"></div>
-        <div class="form-group"><label class="col-sm-2 control-label">注册时间</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control calendarBox" name="registerTime" id="registerTime"
-                       onclick="calendarWithTime('#'+this.name);">
-                <div class="glyphicon glyphicon-calendar"></div>
-            </div>
-        </div>
-        <div class="hr-line-dashed"></div>
-        <div class="form-group"><label class="col-sm-2 control-label">是否vip</label>
-            <div class="col-sm-10">
-                <label class="checkbox-inline">
-                    <input type="radio" name="isVipuser" value="1" checked >是
-                </label>
-                <label class="checkbox-inline">
-                    <input type="radio" name="isVipuser" value="0">否
-                </label>
-            </div>
-        </div>
-        <div class="hr-line-dashed"></div>
-        <div class="form-group"><label class="col-sm-2 control-label">成为vip日期</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control calendarBox" name="vipDate" id="vipDate"
-                       onclick="calendarWithTime('#'+this.name);">
-                <div class="glyphicon glyphicon-calendar"></div>
-            </div>
-        </div>
-        <div class="hr-line-dashed"></div>
-        <div class="form-group"><label class="col-sm-2 control-label">投资顾问ID号</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="advisorId">
-            </div>
-        </div>
-        <div class="hr-line-dashed"></div>
-        <div class="form-group"><label class="col-sm-2 control-label">投资顾问姓名</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" name="advisorName">
-            </div>
-        </div>
-        <div class="hr-line-dashed"></div>
-        <div class="form-group"><label class="col-sm-2 control-label">客户标识</label>
-            <div class="col-sm-10">
-                <label class="checkbox-inline">
-                    <input type="radio" name="userMark" value="DKH000" checked >DKH000
-                </label>
-                <label class="checkbox-inline">
-                    <input type="radio" name="userMark" value="DKH001">DKH001
-                </label>
-            </div>
-        </div>
-        <div class="hr-line-dashed"></div>
-        <div class="form-group"><label class="col-sm-2 control-label">是否业绩池</label>
-            <div class="col-sm-10">
-                <label class="checkbox-inline">
-                    <input type="radio" name="isPerformancePool" value="1" checked >是
-                </label>
-                <label class="checkbox-inline">
-                    <input type="radio" name="isPerformancePool" value="0">否
-                </label>
-            </div>
-        </div>
-        <div class="hr-line-dashed"></div>
+       <div class="form-group"><label class="col-sm-2 control-label">上报日期</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control calendarBox" name="reportDate" id="reportDate" value="$!{user.reportDate}">
+               <div class="glyphicon glyphicon-calendar"></div>
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <div class="form-group"><label class="col-sm-2 control-label">注册时间</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control calendarBox" name="registerTime" value="$!{user.registerTime}" id="registerTime">
+               <div class="glyphicon glyphicon-calendar"></div>
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <div class="form-group"><label class="col-sm-2 control-label">是否vip</label>
+           <div class="col-sm-10">
+               <label class="checkbox-inline">
+                    <input type="radio" name="isVipuser" value="1" checked value="$!{user.isVipuser}" > 是
+               </label>
+               <label class="checkbox-inline">
+                    <input type="radio" name="isVipuser" value="0" value="$!{user.isVipuser}"> 否
+               </label>
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <div class="form-group"><label class="col-sm-2 control-label">成为vip日期</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control calendarBox" name="vipDate" id="vipDate" value="$!{user.vipDate}">
+               <div class="glyphicon glyphicon-calendar"></div>
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <div class="form-group"><label class="col-sm-2 control-label">投资顾问ID号</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control" name="advisorId" value="$!{user.advisorId}" >
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <div class="form-group"><label class="col-sm-2 control-label">投资顾问姓名</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control" name="advisorName" value="$!{user.advisorName}" >
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <div class="form-group"><label class="col-sm-2 control-label">客户标识</label>
+           <div class="col-sm-10">
+               <label class="checkbox-inline">
+                   <input type="radio" name="userMark" value="DKH000" checked value="$!{user.userMark}"> DKH000
+               </label>
+               <label class="checkbox-inline">
+                   <input type="radio" name="userMark" value="DKH001" value="$!{user.userMark}"> DKH001
+               </label>
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+       <div class="form-group"><label class="col-sm-2 control-label">是否业绩池</label>
+           <div class="col-sm-10">
+               <label class="checkbox-inline">
+                   <input type="radio" name="isPerformancePool" value="1" checked value="$!{user.isPerformancePool}"> 是
+               </label>
+               <label class="checkbox-inline">
+                   <input type="radio" name="isPerformancePool" value="0" value="$!{user.isPerformancePool}"> 否
+               </label>
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
         <div class="form-group">
             <div class="text-center">
-                <button class="btn" type="reset">重置</button>
+                <button class="btn btn-info" type="reset">重 置</button>
                 <button class="btn btn-primary" type="submit">#if($!{user})修 改#else提 交#end</button>
             </div>
         </div>
     </form>
 </div>
 <script src="#springUrl('/static/js/jquery-2.2.4.js')"></script>
-<script src="#springUrl('/static/js/common.js')"></script>
 <script src="#springUrl('/static/plugins/nice-validator-1.0.10/jquery.validator.js?local=zh-CN')"></script>
 <script src="#springUrl('/static/plugins/foundation-datepicker-1.5.6/js/foundation-datepicker.js')"></script>
 <script src="#springUrl('/static/plugins/foundation-datepicker-1.5.6/js/locales/foundation-datepicker.zh-CN.js')"></script>
+<script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
-$("#myForm").validator({
-    valid: function(form){
-        var me = this;
-        // 提交表单之前，hold住表单，防止重复提交
-        me.holdSubmit();
-        $.ajax({
-        	url: "#springUrl('/clientList/finalUser/editUser')",
-            data: $(form).serialize(),
-            type: "POST",
-            success: function(data){
-            	var d = JSON.parse(data);
-                if(d.success && d.data){
-                	window.parent.location.reload();
-                	//当你在iframe页面关闭自身时
-                	//var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                	//parent.layer.close(index); //再执行关闭   
-                } else {
-                	//失败，提交表单成功后，释放hold，如果不释放hold，就变成了只能提交一次的表单
-                    me.holdSubmit(false);
+
+    calendarWithoutTime("#reportDate");
+    calendarWithTime("#registerTime");
+    calendarWithoutTime("#vipDate");
+
+    $("#myForm").validator({
+        valid: function (form) {
+            var me = this;
+            // 提交表单之前，hold住表单，防止重复提交
+            me.holdSubmit();
+            $.ajax({
+                url: "#springUrl('/perm/user/editUser')",
+                data: $(form).serialize(),
+                type: "POST",
+                success: function (data) {
+                    var d = JSON.parse(data);
+                    if (d.success && d.data) {
+                        window.parent.location.reload();
+                        //当你在iframe页面关闭自身时
+                        //var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        //parent.layer.close(index); //再执行关闭
+                    } else {
+                        //失败，提交表单成功后，释放hold，如果不释放hold，就变成了只能提交一次的表单
+                        me.holdSubmit(false);
+                    }
                 }
-            }
-        });
-    }
-});
+            });
+        }
+    });
 </script>
 </body>
 </html>

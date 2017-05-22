@@ -86,7 +86,7 @@ public class FinalUserController extends BaseController {
     }
 
     @ResponseBody
-    @Permission("2001")
+    @Permission("5001")
     @RequestMapping("/editUser")
     public String editUser(FinalUser user) {
         boolean rlt = false;
@@ -103,7 +103,7 @@ public class FinalUserController extends BaseController {
     }
 
     @ResponseBody
-    @Permission("2001")
+    @Permission("5001")
     @RequestMapping("/delUser/{userId}")
     public String delUser(@PathVariable Long userId) {
         Boolean rlt = finalUserService.deleteById(userId);
@@ -116,7 +116,7 @@ public class FinalUserController extends BaseController {
      *
      * @return
      */
-    @Permission("2001")
+    @Permission("5001")
     @RequestMapping(value = "/downloadExcel",method = RequestMethod.POST)
     public ModelAndView downloadExcel(){
 

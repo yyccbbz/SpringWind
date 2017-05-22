@@ -53,14 +53,12 @@
         <div class="row">
             <div class="form-group col-xs-4">
                 <label class="form-label">上报日期 从</label>
-                <input type="text" class="form-control calendarBox calendar startDate" id="reportDate"
-                       name="reportDate" onclick="calendarWithoutTime('#'+this.name);"/>
+                <input type="text" class="form-control calendarBox calendar startDate" id="reportDate" name="reportDate"/>
                 <span class="glyphicon glyphicon-calendar"></span>
             </div>
             <div class="form-group col-xs-4">
                 <label class="form-label">至</label>
-                <input type="text" class="form-control calendarBox calendar endDate" id="vipDate"
-                       name="vipDate" onclick="calendarWithoutTime('#'+this.name);"/>
+                <input type="text" class="form-control calendarBox calendar endDate" id="vipDate" name="vipDate"/>
                 <span class="glyphicon glyphicon-calendar"></span>
             </div>
             <div class="form-group col-xs-4">
@@ -109,21 +107,11 @@
 <script src="#springUrl('/static/plugins/nice-validator-1.0.10/jquery.validator.js?local=zh-CN')"></script>
 <script src="#springUrl('/static/plugins/foundation-datepicker-1.5.6/js/foundation-datepicker.js')"></script>
 <script src="#springUrl('/static/plugins/foundation-datepicker-1.5.6/js/locales/foundation-datepicker.zh-CN.js')"></script>
+<script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
-/*    //日期插件
-    function calendar() {
-        $('.calendar').fdatepicker({
-//            initialDate: '2017-01-01',
-            format: 'yyyy-mm-dd',
-            language: 'zh-CN',
-            disableDblClickSelection: true,
-            leftArrow:'<<',
-            rightArrow:'>>',
-            closeIcon:'X',
-            closeButton: false
-        });
-    }
-    calendar();*/
+    //日期插件
+    calendarWithoutTime("#reportDate");
+    calendarWithoutTime("#vipDate");
 
     /*选择日期比较*/
     $(".startDate").change(function () {
