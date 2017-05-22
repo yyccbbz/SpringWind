@@ -150,7 +150,7 @@ public class FinalUserController extends BaseController {
     @RequestMapping("addTestData")
     public String addTestData(){
         ArrayList<FinalUser> list = new ArrayList<>();
-        for (int i = 1;i<= 80;i++){
+        for (int i = 1;i<= 100;i++){
             FinalUser u = new FinalUser();
             u.setMobileNo(RandomStringUtils.randomNumeric(11));
             u.setMemberNo(RandomStringUtils.randomAlphanumeric(10));
@@ -167,7 +167,7 @@ public class FinalUserController extends BaseController {
             u.setCreateTime(new Date());
             u.setUpdateTime(u.getCreateTime());
             list.add(u);
-            System.out.println(u);
+            System.err.println(u);
         }
         Boolean b = finalUserService.insertBatch(list);
         return b.toString();

@@ -96,7 +96,8 @@ public class PrivilegeServiceImpl extends BaseServiceImpl<PrivilegeMapper, Privi
      */
     @Override
     public boolean isActionable( Token token, String permission ) {
-        System.err.println(" isActionable =" + permission);
+        System.err.println(" 请求的权限：isActionable =" + permission);
+        //TODO 该处目前只有一号用户 admin，待修改
         if ( token.getId() == 1L ) {
             return true;
         }

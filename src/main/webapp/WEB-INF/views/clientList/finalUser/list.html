@@ -11,18 +11,22 @@ BigClient - 正式名单
 <div class="row">
 	<div class="ibox-content text-right form-inline" style="background: #F3F3F4;">
 		<button type="button" class="btn btn-info" onclick="searchByCondition();" id="btn_query">
-		<i class="fa fa-search-plus"></i>&nbsp;条件搜索</button>
-
-		<button class="btn btn-primary" onclick="editUser(null)" type="button">
-		<i class="fa fa-pencil"></i>&nbsp;添加用户</button>
+			<i class="fa fa-search-plus"></i>&nbsp;条件搜索
+		</button>
 
 		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
-		<i class="fa fa-pencil"></i>&nbsp;导出名单</button>
+			<i class="fa fa-pencil"></i>&nbsp;导出名单
+		</button>
 
 		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
 		#if ($SSOPermission.isActionable("10010"))
+		<button class="btn btn-primary" onclick="editUser(null)" type="button">
+			<i class="fa fa-pencil"></i>&nbsp;添加用户
+		</button>
+
 		<button class="btn btn-primary" onclick="addTestData()" type="button">
-		<i class="fa fa-pencil"></i>&nbsp;添加测试数据</button>
+			<i class="fa fa-pencil"></i>&nbsp;添加测试数据
+		</button>
 
 		<!--<button class="btn btn-primary" onclick="uploadExcel()" type="button">-->
 		<!--<i class="fa fa-pencil"></i>&nbsp;导入EXCEL文件</button>-->
@@ -119,19 +123,21 @@ BigClient - 正式名单
 			formatter: function (value, row, index) {
 				return formatWhether(row.isPerformancePool);
 			}
-        },  {
+        }
+		<!-- 此处按钮级别权限控制,目前只有 admin 拥有该权限! -->
+		#if ($SSOPermission.isActionable("10010"))
+        ,{
             title: '操作',
             align: "center",
             valign: "middle",
             formatter: function (value, row, index) {
                 var id = row.id;
                 return '<a class="btn btn-xs btn-warning" onclick="editUser(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
-                	<!-- 此处按钮级别权限控制,目前只有 admin 拥有该权限! -->
-                	#if ($SSOPermission.isActionable("10010"))
-                    +'<a class="btn btn-xs btn-danger" onclick="delUser(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
-                    #end;
+					+'<a class="btn btn-xs btn-danger" onclick="delUser(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
+
             }
         }
+    	#end
     ];
 
 	function dataQueryParams(params,formData) {
