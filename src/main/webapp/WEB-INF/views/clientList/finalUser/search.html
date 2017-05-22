@@ -53,12 +53,14 @@
         <div class="row">
             <div class="form-group col-xs-4">
                 <label class="form-label">上报日期 从</label>
-                <input type="text" class="form-control calendarBox calendar startDate" name="reportDate"/>
+                <input type="text" class="form-control calendarBox calendar startDate" id="reportDate"
+                       name="reportDate" onclick="calendarWithoutTime('#'+this.name);"/>
                 <span class="glyphicon glyphicon-calendar"></span>
             </div>
             <div class="form-group col-xs-4">
                 <label class="form-label">至</label>
-                <input type="text" class="form-control calendarBox calendar endDate" name="vipDate"/>
+                <input type="text" class="form-control calendarBox calendar endDate" id="vipDate"
+                       name="vipDate" onclick="calendarWithoutTime('#'+this.name);"/>
                 <span class="glyphicon glyphicon-calendar"></span>
             </div>
             <div class="form-group col-xs-4">
@@ -97,7 +99,7 @@
         </div>
 
         <div class="row btns">
-            <input type="reset" value="重置" class="btn"/>
+            <input type="reset" value="重置" class="btn resetBtn"/>
             <input type="button" value="确定" class="btn btn-info yesBtn" id="submit"/>
         </div>
     </form>
@@ -108,7 +110,7 @@
 <script src="#springUrl('/static/plugins/foundation-datepicker-1.5.6/js/foundation-datepicker.js')"></script>
 <script src="#springUrl('/static/plugins/foundation-datepicker-1.5.6/js/locales/foundation-datepicker.zh-CN.js')"></script>
 <script type="text/javascript">
-    //日期插件
+/*    //日期插件
     function calendar() {
         $('.calendar').fdatepicker({
 //            initialDate: '2017-01-01',
@@ -121,10 +123,9 @@
             closeButton: false
         });
     }
-    calendar();
+    calendar();*/
 
-    var lockSubmit = false;
-
+    /*选择日期比较*/
     $(".startDate").change(function () {
         var startDateVal = $(".startDate").val();
         var startTimestamp = Date.parse(new Date(startDateVal));
@@ -134,8 +135,10 @@
 
         if( startSpan > endSpan) {
             layer.msg('结束日期不能小于开始日期');
+            $(".yesBtn").attr("disabled",true);
             return;
         }
+        $(".yesBtn").attr("disabled",false);
     });
 
     $(".endDate").change(function () {
@@ -147,8 +150,10 @@
 
         if( startSpan > endSpan) {
             layer.msg('结束日期不能小于开始日期');
+            $(".yesBtn").attr("disabled",true);
             return;
         }
+        $(".yesBtn").attr("disabled",false);
     });
 
 
@@ -170,6 +175,14 @@
         parent.layer.close(index);
 
     });
+
+    //重置后，提交按钮不再禁用,同时清空截止时间值
+    $(".resetBtn").click(function(){
+        $('#startSpan').html();
+        $('#endSpan').html();
+        $(".yesBtn").attr("disabled",false);
+    });
+
 
 </script>
 </body>

@@ -139,7 +139,34 @@ var DownLoadFile = function (options) {
 }
 
 
+//日期插件
+function calendarWithoutTime(id) {
+    $(id).fdatepicker({
+//            initialDate: '2017-01-01',
+        format: 'yyyy-mm-dd',
+        language: 'zh-CN',
+        disableDblClickSelection: true,
+        leftArrow:'<<',
+        rightArrow:'>>',
+        closeIcon:'X',
+        closeButton: false
+    });
+}
 
+
+function calendarWithTime(id) {
+    $(id).fdatepicker({
+//            initialDate: '2017-01-01',
+        format: 'yyyy-mm-dd hh:ii:ss',
+        pickTime: true,
+        language: 'zh-CN',
+        disableDblClickSelection: true,
+        leftArrow:'<<',
+        rightArrow:'>>',
+        closeIcon:'X',
+        closeButton: false
+    });
+}
 
 
 

@@ -149,11 +149,9 @@ public class FinalUserController extends BaseController {
     @Permission("5001")
     @RequestMapping("addTestData")
     public String addTestData(){
-
         ArrayList<FinalUser> list = new ArrayList<>();
         for (int i = 1;i<= 80;i++){
             FinalUser u = new FinalUser();
-
             u.setMobileNo(RandomStringUtils.randomNumeric(11));
             u.setMemberNo(RandomStringUtils.randomAlphanumeric(10));
             u.setUserName(RandomStringUtils.randomAlphabetic(5));
@@ -168,22 +166,11 @@ public class FinalUserController extends BaseController {
             u.setIsPerformancePool(Integer.parseInt(RandomStringUtils.random(1,new char[]{'0','1'})));
             u.setCreateTime(new Date());
             u.setUpdateTime(u.getCreateTime());
-
             list.add(u);
-
             System.out.println(u);
         }
-
         Boolean b = finalUserService.insertBatch(list);
-
         return b.toString();
     }
-
-
-
-
-
-
-
 
 }
