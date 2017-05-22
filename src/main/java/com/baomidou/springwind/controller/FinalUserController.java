@@ -132,38 +132,38 @@ public class FinalUserController extends BaseController {
         List<FinalUser> list = finalUserService.selectList(null);
         List<String> fields = Arrays.asList(userFields.split(","));
         try {
-            workbook = excelContext.createExcel(id, list,null,fields);
+            workbook = excelContext.createExcel(id, list, null, fields);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         /**2.跳转到Excel下载视图*/
         ModelAndView view = new ModelAndView("springMvcExcelView");
-        view.addObject(SpringMvcExcelView.EXCEL_NAME,"正式名单"+DateUtil.getCurrentTime());
-        view.addObject(SpringMvcExcelView.EXCEL_WORKBOOK,workbook);
-        view.addObject(SpringMvcExcelView.EXCEL_EMPTY_MESSAGE,"正式名单 没有相关数据可以导出");
+        view.addObject(SpringMvcExcelView.EXCEL_NAME, "正式名单" + DateUtil.getCurrentTime());
+        view.addObject(SpringMvcExcelView.EXCEL_WORKBOOK, workbook);
+        view.addObject(SpringMvcExcelView.EXCEL_EMPTY_MESSAGE, "正式名单 没有相关数据可以导出");
         return view;
     }
 
     @ResponseBody
     @Permission("5001")
     @RequestMapping("addTestData")
-    public String addTestData(){
+    public String addTestData() {
         ArrayList<FinalUser> list = new ArrayList<>();
-        for (int i = 1;i<= 100;i++){
+        for (int i = 1; i <= 100; i++) {
             FinalUser u = new FinalUser();
             u.setMobileNo(RandomStringUtils.randomNumeric(11));
             u.setMemberNo(RandomStringUtils.randomAlphanumeric(10));
             u.setUserName(RandomStringUtils.randomAlphabetic(5));
-            u.setUserType(Integer.parseInt(RandomStringUtils.random(1,new char[]{'1','2','3'})));
+            u.setUserType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'1', '2', '3'})));
             u.setReportDate(DateUtil.randomDate("2017-01-01", "2017-05-01"));
             u.setRegisterTime(DateUtil.randomDate("2017-01-01", "2017-05-01"));
-            u.setIsVipuser(Integer.parseInt(RandomStringUtils.random(1,new char[]{'0','1'})));
+            u.setIsVipuser(Integer.parseInt(RandomStringUtils.random(1, new char[]{'0', '1'})));
             u.setVipDate(DateUtil.randomDate("2017-01-01", "2017-05-01"));
             u.setAdvisorId(Integer.parseInt(RandomStringUtils.randomNumeric(4)));
             u.setAdvisorName(RandomStringUtils.randomAlphabetic(6));
             u.setUserMark(RandomStringUtils.randomAlphanumeric(6));
-            u.setIsPerformancePool(Integer.parseInt(RandomStringUtils.random(1,new char[]{'0','1'})));
+            u.setIsPerformancePool(Integer.parseInt(RandomStringUtils.random(1, new char[]{'0', '1'})));
             u.setCreateTime(new Date());
             u.setUpdateTime(u.getCreateTime());
             list.add(u);
