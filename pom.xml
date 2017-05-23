@@ -24,7 +24,7 @@
 		<druid.version>1.0.18</druid.version>
 		<mysql-connector-java.version>5.1.38</mysql-connector-java.version>
 		<mail.version>1.4.7</mail.version>
-		<ehcache.version>2.6.11</ehcache.version>
+		<ehcache.version>2.10.4</ehcache.version>
 
 		<!-- excel -->
 		<commons-beanutils.version>1.9.2</commons-beanutils.version>
@@ -201,7 +201,7 @@
 		</dependency>
 		<dependency>
 			<groupId>net.sf.ehcache</groupId>
-			<artifactId>ehcache-core</artifactId>
+			<artifactId>ehcache</artifactId>
 			<version>${ehcache.version}</version>
 			<exclusions>
 				<exclusion>
