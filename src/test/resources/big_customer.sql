@@ -110,8 +110,12 @@ INSERT INTO `big_customer`.`privilege` (`id`, `pid`, `title`, `type`, `state`, `
 INSERT INTO `big_customer`.`privilege` (`id`, `pid`, `title`, `type`, `state`, `sort`, `url`, `perm_code`, `icon`, `description`) VALUES ('31', '3', '警告列表', '0', '0', '1', 'abc.html', '3001', null, '警告列表');
 INSERT INTO `big_customer`.`privilege` (`id`, `pid`, `title`, `type`, `state`, `sort`, `url`, `perm_code`, `icon`, `description`) VALUES ('32', '3', '实时监控', '0', '0', '2', '/monitor/realTime.html', '3002', null, '实时监控');
 INSERT INTO `big_customer`.`privilege` (`id`, `pid`, `title`, `type`, `state`, `sort`, `url`, `perm_code`, `icon`, `description`) VALUES ('41', '4', '日志列表', '0', '0', '1', '/log/list.html', '4001', null, '日志列表');
-INSERT INTO `big_customer`.`privilege` (`id`, `pid`, `title`, `type`, `state`, `sort`, `url`, `perm_code`, `icon`, `description`) VALUES ('51', '5', '正式名单', '0', '0', '1', '/cl/final/list.html', '5001', '', '正式名单');
-
+INSERT INTO `big_customer`.`privilege` (`id`, `pid`, `title`, `type`, `state`, `sort`, `url`, `perm_code`, `icon`, `description`) VALUES ('51', '5', '正式名单', '0', '0', '1', '/clientList/finalUser/list.html', '5001', '', '正式名单');
+INSERT INTO `big_customer`.`privilege` (`id`, `pid`, `title`, `type`, `state`, `sort`, `url`, `perm_code`, `icon`, `description`) VALUES ('52', '5', '未分配的vip名单', '0', '0', '2', '/clientList/unassignedVipUser/list.html', '5002', '', '未分配的vip名单');
+INSERT INTO `big_customer`.`privilege` (`id`, `pid`, `title`, `type`, `state`, `sort`, `url`, `perm_code`, `icon`, `description`) VALUES ('53', '5', '分配/上报名单导入', '0', '0', '3', '/clientList/importUser/list.html', '5003', '', '分配/上报名单导入');
+INSERT INTO `big_customer`.`privilege` (`id`, `pid`, `title`, `type`, `state`, `sort`, `url`, `perm_code`, `icon`, `description`) VALUES ('54', '5', '业绩池名单导入', '0', '0', '4', '/clientList/performancePoolUser/list.html', '5004', '', '业绩池名单导入');
+INSERT INTO `big_customer`.`privilege` (`id`, `pid`, `title`, `type`, `state`, `sort`, `url`, `perm_code`, `icon`, `description`) VALUES ('55', '5', '历史正式名单', '0', '0', '5', '/clientList/historyFinalUser/list.html', '5005', '', '历史正式名单');
+INSERT INTO `big_customer`.`privilege` (`id`, `pid`, `title`, `type`, `state`, `sort`, `url`, `perm_code`, `icon`, `description`) VALUES ('56', '5', '历史业绩池名单', '0', '0', '6', '/clientList/historyPfmPoolUser/list.html', '5006', '', '历史业绩池名单');
 
 
 

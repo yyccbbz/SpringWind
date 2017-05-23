@@ -2,7 +2,8 @@
 <excels>
 	<!-- excel标签参看:ExcelDefinition,Field标签参看:FieldValue -->
 
-	<excel id="user" class="com.baomidou.springwind.entity.User" sheetname="用户列表" defaultColumnWidth="5000" enableStyle="true">
+	<excel id="user" class="com.baomidou.springwind.entity.User" sheetname="用户列表"
+		   defaultColumnWidth="5000" defaultAlign="center" enableStyle="true">
 		<field name="id" title="主键"/>
 		<field name="loginName" title="用户名"/>
 		<field name="password" title="密码"/>

@@ -13,7 +13,7 @@
 	<!-- cacheManager工厂类，指定ehcache.xml的位置 -->
 	<bean id="ehcacheManagerFactory"
 		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-		<property name="configLocation" value="classpath:/ehcache.xml" />
+		<property name="configLocation" value="classpath:/xml/ehcache.xml" />
 	</bean>
 	
 	<!-- 声明cacheManager -->

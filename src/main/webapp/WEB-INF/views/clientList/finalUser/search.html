@@ -113,7 +113,7 @@
     calendarWithoutTime("#reportDate");
     calendarWithoutTime("#vipDate");
 
-    /*选择日期比较*/
+    // 如果此时开始日期小于结束日期，不能提交。
     $(".startDate").change(function () {
         var startDateVal = $(".startDate").val();
         var startTimestamp = Date.parse(new Date(startDateVal));
@@ -147,11 +147,8 @@
 
     /**点击弹出层内确定按钮，将值传入父级页面并关闭弹出层*/
     $(".yesBtn").click(function () {
-
-        //TODO 如果此时开始日期小于结束日期，不能提交。
-
         var formData = window.parent.formToJsonStr($('#myForm').serialize());
-        console.log(formData);
+//        console.log(formData);
 
         //初始化列表
         var oTable1 = new window.parent.TableInit();
