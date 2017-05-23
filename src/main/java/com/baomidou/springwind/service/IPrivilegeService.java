@@ -1,9 +1,9 @@
 package com.baomidou.springwind.service;
 
 import com.baomidou.kisso.Token;
+import com.baomidou.mybatisplus.service.IService;
 import com.baomidou.springwind.entity.Privilege;
 import com.baomidou.springwind.entity.vo.MenuVO;
-import com.baomidou.mybatisplus.service.IService;
 
 import java.util.List;
 
@@ -23,6 +23,8 @@ public interface IPrivilegeService extends IService<Privilege> {
 
     List<Privilege> selectAllByUserId(Long userId );
 
+
+    List<Privilege> selectAllFlushByUserId(Long userId);
 
     /**
      * <p>

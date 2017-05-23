@@ -81,4 +81,14 @@ public class PrivilegeController extends BaseController {
         return booleanToString(privilegeService.deleteById(permId));
     }
 
+    @ResponseBody
+    @Permission("2003")
+    @RequestMapping("/flush")
+    public String flush(){
+
+        System.out.println("刷新当前用户权限缓存 = " + request.getCookies());
+
+        return Boolean.TRUE.toString();
+    }
+
 }

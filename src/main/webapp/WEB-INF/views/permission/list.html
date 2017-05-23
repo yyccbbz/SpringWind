@@ -17,9 +17,11 @@ SpringWind - 权限管理
 			</span>
         </div>-->
         <button class="btn btn-primary" onclick="editPermission(null)" type="button">
-            <i class="fa fa-pencil"></i>&nbsp;添加权限</button>
-        <!--<button class="btn btn-primary" onclick="exportExcel()" type="button">
-            <i class="fa fa-pencil"></i>&nbsp;导出列表</button>-->
+            <i class="fa fa-pencil"></i>&nbsp;添加权限
+        </button>
+        <button class="btn btn-primary" onclick="flushCache()" type="button">
+            <i class="fa fa-pencil"></i>&nbsp;刷新权限缓存
+        </button>
     </div>
 </div>
 <div class="row">
@@ -142,6 +144,23 @@ SpringWind - 权限管理
             content: url
         });
     }
+
+    function flushCache() {
+        $.ajax({
+            type: "POST",
+            url: "#springUrl('/perm/permission/flush')",
+            datatype: "text",
+            success: function (data) {
+                if(data == 'true'){
+//                    $('#dataTable').bootstrapTable('refresh',{url:dataUrl});
+                    layer.alert('刷新成功');
+                }else{
+                    layer.alert('刷新失败');
+                }
+            }
+        });
+    }
+
 </script>
 #end
 #extends("/common/framework.html")
