@@ -153,9 +153,9 @@ SpringWind - 权限管理
             success: function (data) {
                 if(data == 'true'){
 //                    $('#dataTable').bootstrapTable('refresh',{url:dataUrl});
-                    layer.alert('刷新成功');
+                    layer.msg('刷新成功');
                 }else{
-                    layer.alert('刷新失败');
+                    layer.msg('刷新失败');
                 }
             }
         });

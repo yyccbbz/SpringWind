@@ -4,14 +4,20 @@ import com.baomidou.kisso.annotation.Permission;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.entity.Privilege;
+import com.baomidou.springwind.entity.User;
 import com.baomidou.springwind.service.IPrivilegeService;
 import com.baomidou.springwind.service.IRolePrivilegeService;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+
 
 /**
  * <p>
@@ -25,6 +31,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/perm/permission")
 public class PrivilegeController extends BaseController {
 
+    @Autowired
+    private CacheManager cacheManager;
 
     @Autowired
     private IPrivilegeService privilegeService;
@@ -84,11 +92,21 @@ public class PrivilegeController extends BaseController {
     @ResponseBody
     @Permission("2003")
     @RequestMapping("/flush")
-    public String flush(){
+    public String flush() {
 
-        System.out.println("刷新当前用户权限缓存 = " + request.getCookies());
+//        System.err.println("token = " + getSSOToken().jsonToken());
 
+        Cache cache = cacheManager.getCache("permissionCache");
+
+        List<User> users = userService.selectList(null);
+
+        if (users != null && users.size() > 0) {
+            for (User user : users) {
+                cache.remove(user.getId());
+            }
+        }
         return Boolean.TRUE.toString();
     }
 
 }
+

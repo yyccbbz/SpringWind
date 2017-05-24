@@ -24,8 +24,6 @@ public interface IPrivilegeService extends IService<Privilege> {
     List<Privilege> selectAllByUserId(Long userId );
 
 
-    List<Privilege> selectAllFlushByUserId(Long userId);
-
     /**
      * <p>
      * 是否为可操作的权限

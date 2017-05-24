@@ -8,7 +8,6 @@ import com.baomidou.springwind.mapper.PrivilegeMapper;
 import com.baomidou.springwind.service.IPrivilegeService;
 import com.baomidou.springwind.service.support.BaseServiceImpl;
 import org.apache.commons.lang.StringUtils;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
@@ -81,13 +80,6 @@ public class PrivilegeServiceImpl extends BaseServiceImpl<PrivilegeMapper, Privi
     @Cacheable(value = "permissionCache", key = "#userId")
     @Override
     public List<Privilege> selectAllByUserId(Long userId) {
-        return baseMapper.selectAllByUserId(userId);
-    }
-
-
-    @CachePut(value = "permissionCache", key = "#userId")
-    @Override
-    public List<Privilege> selectAllFlushByUserId(Long userId) {
         return baseMapper.selectAllByUserId(userId);
     }
 
