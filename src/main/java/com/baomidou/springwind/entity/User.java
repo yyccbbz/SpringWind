@@ -37,7 +37,7 @@ public class User implements Serializable {
      */
 	private String email;
     /**
-     * 0、普通用户 1、管理员 2、超级管理员
+     * 2、普通用户 1、管理员 3、超级管理员
      */
 	private Integer type;
     /**

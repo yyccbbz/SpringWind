@@ -25,15 +25,15 @@
        <div class="hr-line-dashed"></div>
        <div class="form-group"><label class="col-sm-2 control-label">邮箱</label>
            <div class="col-sm-10">
-           		<input type="text" class="form-control" name="email" data-rule="邮箱:required;email">
+           		<input type="text" class="form-control" value="$!{user.email}" name="email" data-rule="邮箱:required;email">
            </div>
        </div>
        <div class="hr-line-dashed"></div>
         <div class="form-group"><label class="col-sm-2 control-label">用户角色</label>
             <div class="col-sm-10">
-            <select class="form-control m-b" name="rid">
+            <select class="form-control m-b" name="type">
             	#foreach($role in $roleList)
-                <option id="$!{role.id}">$!{role.name}</option>
+                <option id="$!{role.id}" value="$!{role.id}">$!{role.name}</option>
                 #end
             </select>
             </div>

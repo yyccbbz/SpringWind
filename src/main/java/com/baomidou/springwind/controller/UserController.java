@@ -6,14 +6,17 @@ import com.baomidou.framework.upload.UploadMultipartRequest;
 import com.baomidou.kisso.annotation.Action;
 import com.baomidou.kisso.annotation.Permission;
 import com.baomidou.kisso.common.encrypt.SaltEncoder;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.StringUtil;
 import com.baomidou.springwind.common.view.SpringMvcExcelView;
 import com.baomidou.springwind.entity.Excel;
 import com.baomidou.springwind.entity.User;
+import com.baomidou.springwind.entity.UserRole;
 import com.baomidou.springwind.excel.result.ExcelImportResult;
 import com.baomidou.springwind.service.IExcelService;
 import com.baomidou.springwind.service.IRoleService;
+import com.baomidou.springwind.service.IUserRoleService;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -43,6 +46,9 @@ public class UserController extends BaseController  {
 
     @Autowired
     private IRoleService roleService;
+
+    @Autowired
+    private IUserRoleService userRoleService;
 
     @Autowired
     private IExcelService excelService;
@@ -81,7 +87,7 @@ public class UserController extends BaseController  {
     @RequestMapping("/getUserList")
     public String getUserList(@RequestParam("_search") String _search) {
 
-        System.out.println("搜索条件 =" + _search);
+        System.out.println("用户列表搜索条件 =" + _search);
 
         Page<User> page = getPage();
         Page<User> userPage = userService.selectPageBySearch(page, StringUtil.getStrEmpty(_search));
@@ -93,14 +99,34 @@ public class UserController extends BaseController  {
     @RequestMapping("/editUser")
     public String editUser(User user) {
         boolean rlt = false;
+        boolean flag1 = false;
+        boolean flag2 = false;
+        // 操作user表的同时对user_role表维护
         if (user != null) {
             user.setPassword(SaltEncoder.md5SaltEncode(user.getLoginName(), user.getPassword()));
             if (user.getId() != null) {
-                rlt = userService.updateById(user);
+
+                UserRole exist = userRoleService.selectByUid(user.getId());
+                if(exist != null){
+                    exist.setRid((long)user.getType());
+                    flag1 = userRoleService.updateById(exist);
+                }else {
+                    UserRole userRole = new UserRole();
+                    userRole.setUid(user.getId());
+                    userRole.setRid((long)user.getType());
+                    flag1 = userRoleService.insert(userRole);
+                }
+                flag2 = userService.updateById(user);
+                rlt = flag1 & flag2;
             } else {
                 user.setCreateTime(new Date());
                 user.setLastTime(user.getCreateTime());
-                rlt = userService.insert(user);
+                flag1 = userService.insert(user);
+                UserRole userRole = new UserRole();
+                userRole.setUid(user.getId());
+                userRole.setRid((long)user.getType());
+                flag2 = userRoleService.insert(userRole);
+                rlt = flag1 & flag2;
             }
         }
         return callbackSuccess(rlt);
@@ -110,6 +136,8 @@ public class UserController extends BaseController  {
     @Permission("2001")
     @RequestMapping("/delUser/{userId}")
     public String delUser(@PathVariable Long userId) {
+        // 操作user表的同时对user_role表维护
+
         userService.deleteUser(userId);
         return Boolean.TRUE.toString();
     }

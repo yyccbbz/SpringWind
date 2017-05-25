@@ -33,14 +33,14 @@ function formatDate(time) {
 
 /**
  * 用户 User
- * '0、普通用户 1、管理员 2、超级管理员'
+ * '2、普通用户 1、管理员 3、超级管理员'
  */
 function formatUserType(type){
-    if (type == 0) {
+    if (type == 2) {
         return '普通用户';
     } else if (type == 1) {
         return '管理员';
-    } else if (type == 2) {
+    } else if (type == 3) {
         return '超级管理员';
     } else {
         return '';

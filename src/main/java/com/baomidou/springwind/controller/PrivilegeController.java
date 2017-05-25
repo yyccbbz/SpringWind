@@ -64,7 +64,7 @@ public class PrivilegeController extends BaseController {
             if (permission.getId() != null) {
                 rlt = privilegeService.updateById(permission);
             } else {
-                rlt = privilegeService.insertWithId(permission);
+                rlt = privilegeService.insertAllColumn(permission);
             }
         }
         return callbackSuccess(rlt);

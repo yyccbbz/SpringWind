@@ -24,4 +24,11 @@ public interface IUserRoleService extends IService<UserRole> {
      */
     boolean existRoleUser(Long roleId);
 
+    /**
+     * 根据 用户id 查询 用户角色
+     *
+     * @param uid
+     * @return userRole
+     */
+    UserRole selectByUid(Long uid);
 }

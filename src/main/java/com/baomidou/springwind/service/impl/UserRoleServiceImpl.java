@@ -26,4 +26,11 @@ public class UserRoleServiceImpl extends BaseServiceImpl<UserRoleMapper, UserRol
         return rlt >= 1;
     }
 
+    @Override
+    public UserRole selectByUid(Long uid) {
+        UserRole userRole = new UserRole();
+        userRole.setUid(uid);
+        return baseMapper.selectOne(userRole);
+    }
+
 }
