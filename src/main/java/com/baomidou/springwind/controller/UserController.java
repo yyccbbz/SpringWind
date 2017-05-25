@@ -6,7 +6,6 @@ import com.baomidou.framework.upload.UploadMultipartRequest;
 import com.baomidou.kisso.annotation.Action;
 import com.baomidou.kisso.annotation.Permission;
 import com.baomidou.kisso.common.encrypt.SaltEncoder;
-import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.StringUtil;
 import com.baomidou.springwind.common.view.SpringMvcExcelView;
@@ -136,8 +135,6 @@ public class UserController extends BaseController  {
     @Permission("2001")
     @RequestMapping("/delUser/{userId}")
     public String delUser(@PathVariable Long userId) {
-        // 操作user表的同时对user_role表维护
-
         userService.deleteUser(userId);
         return Boolean.TRUE.toString();
     }
