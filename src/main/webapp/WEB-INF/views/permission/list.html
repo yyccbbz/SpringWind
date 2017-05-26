@@ -17,10 +17,10 @@ SpringWind - 权限管理
 			</span>
         </div>-->
         <button class="btn btn-primary" onclick="editPermission(null)" type="button">
-            <i class="fa fa-pencil"></i>&nbsp;添加权限
+            <i class="fa fa fa-plus"></i>&nbsp;添加权限
         </button>
         <button class="btn btn-primary" onclick="flushCache()" type="button">
-            <i class="fa fa-pencil"></i>&nbsp;刷新权限缓存
+            <i class="fa fa-refresh"></i>&nbsp;刷新权限缓存
         </button>
     </div>
 </div>
@@ -55,12 +55,18 @@ SpringWind - 权限管理
         field: 'type',
         title: '类型',
         align: "center",
-        valign: "middle"
+        valign: "middle",
+        formatter: function (value, row, index) {
+            return formatPrivilegeType(row.type);
+        }
     },{
         field: 'state',
         title: '状态',
         align: "center",
-        valign: "middle"
+        valign: "middle",
+        formatter: function (value, row, index) {
+            return formatStatus(row.state);
+        }
     }, {
         field: 'url',
         title: '地址',

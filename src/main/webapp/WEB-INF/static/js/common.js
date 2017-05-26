@@ -74,6 +74,24 @@ function formatUserType(type){
     }
 }
 
+
+/**
+ * 权限 Privilege
+ *      类型：0、菜单 1、功能
+ *
+ * @param type
+ * @returns {*}
+ */
+function formatPrivilegeType(type){
+    if (type == 0) {
+        return '菜单';
+    } else if (type == 1) {
+        return '功能';
+    } else {
+        return '';
+    }
+}
+
 /**0、禁用 1、正常*/
 function formatStatus(status){
     if (status == 0) {

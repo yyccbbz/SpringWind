@@ -1,6 +1,7 @@
 package com.baomidou.springwind.controller;
 
 import com.baomidou.kisso.annotation.Permission;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.entity.SystemLog;
 import com.baomidou.springwind.service.ISystemLogService;
@@ -37,7 +38,7 @@ public class SystemLogController extends BaseController {
     @RequestMapping("/getLogList")
     public String getUserList() {
         Page<SystemLog> page = getPage();
-        return jsonPage(systemLogService.selectPage(page, null));
+        return jsonPage(systemLogService.selectPage(page, new EntityWrapper<SystemLog>().orderBy("createTime",false)));
     }
 
     @ResponseBody

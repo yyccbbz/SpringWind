@@ -27,24 +27,36 @@ SpringWind - 操作日志
 var dataUrl="#springUrl('/log/getLogList.html')";
 var dataColumns = [{
     field: 'id',
-    title: '序号'
+    title: '序号',
+    align: "center",
+    valign: "middle"
 }, {
     field: 'uid',
-    title: '用户ID'
+    title: '用户ID',
+    align: "center",
+    valign: "middle"
 }, {
     field: 'content',
-    title: '日志内容'
+    title: '日志内容',
+    align: "center",
+    valign: "middle"
 },{
     field: 'operation',
-    title: '用户操作'
+    title: '用户操作',
+    align: "center",
+    valign: "middle"
 }, {
-    field: 'crTime',
+    field: 'createTime',
     title: '创建时间',
+    align: "center",
+    valign: "middle",
     formatter: function (value, row, index) {
-        return formatDate(row.crTime);
+        return formatDateTime(row.createTime);
     }
 }, {
     title: '操作',
+    align: "center",
+    valign: "middle",
     formatter: function (value, row, index) {
         var id = row.id;
         return '<a class="btn btn-xs btn-danger" onclick="delPermission(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>';

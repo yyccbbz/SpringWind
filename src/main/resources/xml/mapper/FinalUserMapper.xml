@@ -106,6 +106,7 @@
 			</if>
 
 		</if>
+		ORDER BY report_date DESC
 		LIMIT
 			#{current}, #{size}
 	</select>

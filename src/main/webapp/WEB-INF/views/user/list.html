@@ -17,13 +17,13 @@ BigClient - 用户管理
 			</span>
 		</div>
 		<button class="btn btn-primary" onclick="editUser(null)" type="button">
-		<i class="fa fa-pencil"></i>&nbsp;添加用户</button>
+		<i class="fa fa-plus"></i>&nbsp;添加用户</button>
 		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
 		#if ($SSOPermission.isActionable("10010"))
 		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
-		<i class="fa fa-pencil"></i>&nbsp;导出查询结果</button>
+		<i class="fa fa-download"></i>&nbsp;导出查询结果</button>
 		<button class="btn btn-primary" onclick="uploadExcel()" type="button">
-		<i class="fa fa-pencil"></i>&nbsp;导入EXCEL文件</button>
+		<i class="fa fa-upload"></i>&nbsp;导入EXCEL文件</button>
 		<input type="file" id="fileExcel" name="fileExcel" accept=".xls,.xlsx" style="display: none"/>
 		#end
 	</div>
@@ -43,9 +43,9 @@ BigClient - 用户管理
 <script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
     var dataUrl = "#springUrl('/perm/user/getUserList.html')";
-    var dataColumns = [{
+    var dataColumns = [/*{
             checkbox: true
-        }, {
+        }, */{
             field: 'id',
             title: '序号',
             align: "center",

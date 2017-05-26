@@ -15,17 +15,17 @@ BigClient - 正式名单
 		</button>
 
 		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
-			<i class="fa fa-pencil"></i>&nbsp;导出名单
+			<i class="fa fa-download"></i>&nbsp;导出名单
 		</button>
 
 		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
 		#if ($SSOPermission.isActionable("10010"))
 		<button class="btn btn-primary" onclick="editUser(null)" type="button">
-			<i class="fa fa-pencil"></i>&nbsp;添加用户
+			<i class="fa fa-user-plus"></i>&nbsp;添加用户
 		</button>
 
 		<button class="btn btn-primary" onclick="addTestData()" type="button">
-			<i class="fa fa-pencil"></i>&nbsp;添加测试数据
+			<i class="fa fa-database"></i>&nbsp;添加测试数据
 		</button>
 
 		<!--<button class="btn btn-primary" onclick="uploadExcel()" type="button">-->

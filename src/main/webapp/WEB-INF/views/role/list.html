@@ -37,15 +37,23 @@ BigClient - 角色管理
 var dataUrl="#springUrl('/perm/role/getRoleList.html')";
 var dataColumns = [{
     field: 'id',
-    title: '序号'
+    title: '序号',
+    align: "center",
+    valign: "middle"
 }, {
     field: 'name',
-    title: '角色'
+    title: '角色',
+    align: "center",
+    valign: "middle"
 }, {
     field: 'description',
-    title: '描述'
+    title: '描述',
+    align: "center",
+    valign: "middle"
 }, {
     title: '操作',
+    align: "center",
+    valign: "middle",
     formatter: function (value, row, index) {
         var id = row.id;
         return '<a class="btn btn-xs btn-warning" onclick="editRole(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
