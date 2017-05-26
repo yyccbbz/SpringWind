@@ -62,10 +62,10 @@ var dataColumns = [{
     }
 }];
 function dataQueryParams(params) {
-	return {
-		_size: params.limit,  //页面大小
-		_index: params.offset, //页码
-	};
+    return {
+        _size: params.limit,  //页面大小
+        _index: params.offset, //页码
+    };
 }
 function delRole(id) {
     //询问框
@@ -77,8 +77,8 @@ function delRole(id) {
             url: "#springUrl('/perm/role/delete/')" + id,
             datatype: "text",
             success: function (data) {
-                if(data == 'true'){
-                    $('#dataTable').bootstrapTable('refresh',{url:dataUrl});
+                if (data == 'true') {
+                    $('#dataTable').bootstrapTable('refresh', {url: dataUrl});
                 }
                 layer.closeAll();
             }
@@ -88,12 +88,12 @@ function delRole(id) {
     });
 }
 function editRole(id) {
-   	var title = "新增角色";
-   	var url = "#springUrl('/perm/role/edit.html')";
-   	if(id!=null){
-   		title = "编辑角色";
-   		url = url + "?id=" + id;
-   	}
+    var title = "新增角色";
+    var url = "#springUrl('/perm/role/edit.html')";
+    if (id != null) {
+        title = "编辑角色";
+        url = url + "?id=" + id;
+    }
     layer.open({
         type: 2,
         title: title,
@@ -106,8 +106,8 @@ function editRole(id) {
     });
 }
 function assigningRole(id) {
-   	var title = "分配权限";
-   	var url = "#springUrl('/perm/role/assigning.html')?id=" + id;
+    var title = "分配权限";
+    var url = "#springUrl('/perm/role/assigning.html')?id=" + id;
     layer.open({
         type: 2,
         title: title,
