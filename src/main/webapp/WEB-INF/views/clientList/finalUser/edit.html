@@ -46,7 +46,7 @@
 
        <div class="form-group"><label class="col-sm-2 control-label">客户类别</label>
            <div class="col-sm-10">
-               <select class="form-control m-b" name="userType" value="$!{user.userType}">
+               <select class="form-control m-b" id="userType" name="userType">
                    <option value="">请选择</option>
                    <option value="1">上报</option>
                    <option value="2">分配</option>
@@ -58,7 +58,7 @@
 
        <div class="form-group"><label class="col-sm-2 control-label">上报日期</label>
            <div class="col-sm-10">
-               <input type="text" class="form-control calendarBox" name="reportDate" id="reportDate" value="$!{user.reportDate}">
+               <input type="text" class="form-control calendarBox" name="reportDate" id="reportDate">
                <div class="glyphicon glyphicon-calendar"></div>
            </div>
        </div>
@@ -66,7 +66,7 @@
 
        <div class="form-group"><label class="col-sm-2 control-label">注册时间</label>
            <div class="col-sm-10">
-               <input type="text" class="form-control calendarBox" id="registerTime" name="registerTime" value="$!{user.registerTime}">
+               <input type="text" class="form-control calendarBox" id="registerTime" name="registerTime">
                <div class="glyphicon glyphicon-calendar"></div>
            </div>
        </div>
@@ -75,10 +75,10 @@
        <div class="form-group"><label class="col-sm-2 control-label">是否vip</label>
            <div class="col-sm-10">
                <label class="checkbox-inline">
-                   <input type="radio" name="isVipuser" value="1" checked value="$!{user.isVipuser}"> 是
+                   <input type="radio" name="isVipuser" value="1" checked> 是
                </label>
                <label class="checkbox-inline">
-                   <input type="radio" name="isVipuser" value="0" value="$!{user.isVipuser}"> 否
+                   <input type="radio" name="isVipuser" value="0"> 否
                </label>
            </div>
        </div>
@@ -86,7 +86,7 @@
 
        <div class="form-group"><label class="col-sm-2 control-label">成为vip日期</label>
            <div class="col-sm-10">
-               <input type="text" class="form-control calendarBox" name="vipDate" id="vipDate" value="$!{user.vipDate}">
+               <input type="text" class="form-control calendarBox" name="vipDate" id="vipDate">
                <div class="glyphicon glyphicon-calendar"></div>
            </div>
        </div>
@@ -109,10 +109,10 @@
        <div class="form-group"><label class="col-sm-2 control-label">客户标识</label>
            <div class="col-sm-10">
                <label class="checkbox-inline">
-                   <input type="radio" name="userMark" value="DKH000" checked value="$!{user.userMark}"> DKH000
+                   <input type="radio" name="userMark" value="DKH000" checked> DKH000
                </label>
                <label class="checkbox-inline">
-                   <input type="radio" name="userMark" value="DKH001" value="$!{user.userMark}"> DKH001
+                   <input type="radio" name="userMark" value="DKH001"> DKH001
                </label>
            </div>
        </div>
@@ -121,10 +121,10 @@
        <div class="form-group"><label class="col-sm-2 control-label">是否业绩池</label>
            <div class="col-sm-10">
                <label class="checkbox-inline">
-                   <input type="radio" name="isPerformancePool" value="1" checked value="$!{user.isPerformancePool}"> 是
+                   <input type="radio" name="isPerformancePool" value="1" checked> 是
                </label>
                <label class="checkbox-inline">
-                   <input type="radio" name="isPerformancePool" value="0" value="$!{user.isPerformancePool}"> 否
+                   <input type="radio" name="isPerformancePool" value="0"> 否
                </label>
            </div>
        </div>
@@ -173,6 +173,40 @@
             });
         }
     });
+
+    /*数据回显*/
+    //日期回显
+    var reportDate="$!{user.reportDate}";
+    console.log(reportDate);
+//    var r = top.dateFtt("yyyy-MM-dd",reportDate);
+//    var r = dateFtt("yyyy-MM-dd",reportDate);
+//    console.log(r);
+//    $("#reportDate").val(r);
+
+    // Radio回显
+    $("input[type=radio][name=isVipuser]").each(function () {
+        if ($(this).val() == '$!{user.isVipuser}') {
+            $(this).attr("checked", "checked");
+        }
+    });
+    $("input[type=radio][name=userMark]").each(function () {
+        if ($(this).val() == '$!{user.userMark}') {
+            $(this).attr("checked", "checked");
+        }
+    });
+    $("input[type=radio][name=isPerformancePool]").each(function () {
+        if ($(this).val() == '$!{user.isPerformancePool}') {
+            $(this).attr("checked", "checked");
+        }
+    });
+
+    //select回显
+    $("#userType option").each(function() {
+        if ($(this).val() == '${user.userType}') {
+            $(this).attr("selected", "selected");
+        }
+    });
+
 </script>
 </body>
 </html>

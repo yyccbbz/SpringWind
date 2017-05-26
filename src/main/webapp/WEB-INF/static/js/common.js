@@ -1,12 +1,39 @@
 /**
- * 日期格式化[yyyy/MM/dd HH:mm:ss]
+ * 时间格式化处理
+ *  调用方式： xxx.dateFtt("yyyy-MM-dd hh:mm:ss",crtTime);
+ * @param fmt
+ * @param date
+ * @returns {*}
+ */
+function dateFtt(fmt,time){
+    var date = new Date(time);
+    var o = {
+        "M+" : date.getMonth()+1,                 //月份
+        "d+" : date.getDate(),                    //日
+        "h+" : date.getHours(),                   //小时
+        "m+" : date.getMinutes(),                 //分
+        "s+" : date.getSeconds(),                 //秒
+        "q+" : Math.floor((date.getMonth()+3)/3), //季度
+        "S"  : date.getMilliseconds()             //毫秒
+    };
+    if(/(y+)/.test(fmt))
+        fmt=fmt.replace(RegExp.$1, (date.getFullYear()+"").substr(4 - RegExp.$1.length));
+    for(var k in o)
+        if(new RegExp("("+ k +")").test(fmt))
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+    return fmt;
+}
+
+
+/**
+ * 日期格式化[yyyy-MM-dd HH:mm:ss]
  * @param time
  * @returns {*}
  */
 function formatDateTime(time) {
     if (time == '' || time == null || time == undefined) return '';
-    var datetime = new Date();
-    datetime.setTime(time);
+    var datetime = new Date(time);
+    // datetime.setTime(time);
     var year = datetime.getFullYear();
     var month = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
     var date = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
@@ -17,14 +44,14 @@ function formatDateTime(time) {
 }
 
 /**
- * 日期格式化[yyyy/MM/dd]
+ * 日期格式化[yyyy-MM-dd]
  * @param time
  * @returns {*}
  */
 function formatDate(time) {
     if (time == '' || time == null || time == undefined) return '';
-    var datetime = new Date();
-    datetime.setTime(time);
+    var datetime = new Date(time);
+    // datetime.setTime(time);
     var year = datetime.getFullYear();
     var month = datetime.getMonth() + 1 < 10 ? "0" + (datetime.getMonth() + 1) : datetime.getMonth() + 1;
     var date = datetime.getDate() < 10 ? "0" + datetime.getDate() : datetime.getDate();
