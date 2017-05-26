@@ -27,7 +27,11 @@ public class MailController extends BaseController {
 		if (isPost()) {
 			model.addAttribute("email", email);
 			model.addAttribute("loginName", getSSOToken().getData());
-			boolean rlt = mailHelper.sendMail(email, "SpringWind 测试邮件！", "/mail/tplSend.html", model);
+//			boolean rlt = mailHelper.sendMail(email, "SpringWind 测试邮件！", "/mail/tplSend.html", model);
+
+			boolean rlt = mailHelper.sendMail("zidane.cc", "cuican@evergrande.com", email,
+					"第一封测试邮件", "/mail/tplSend.html", model);
+
 			String tipMsg = "发送邮件至【" + email + "】失败！！";
 			if(rlt){
 				tipMsg = "已成功发送邮件至【" + email + "】注意查收！！";
