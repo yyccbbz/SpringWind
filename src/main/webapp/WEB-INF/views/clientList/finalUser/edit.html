@@ -132,7 +132,9 @@
 
        <div class="form-group">
            <div class="text-center">
+               #if(!$!{user})
                <button class="btn btn-info" type="reset">重 置</button>
+               #end
                <button class="btn btn-primary" type="submit">#if($!{user})修 改#else提 交#end</button>
            </div>
        </div>
@@ -145,6 +147,7 @@
 <script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
 
+    // 加载日期插件
     calendarWithoutTime("#reportDate");
     calendarWithTime("#registerTime");
     calendarWithoutTime("#vipDate");
