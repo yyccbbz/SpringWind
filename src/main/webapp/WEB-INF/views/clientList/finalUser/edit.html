@@ -176,12 +176,10 @@
 
     /*数据回显*/
     //日期回显
-    var reportDate="$!{user.reportDate}";
-    console.log(reportDate);
-//    var r = top.dateFtt("yyyy-MM-dd",reportDate);
-//    var r = dateFtt("yyyy-MM-dd",reportDate);
-//    console.log(r);
-//    $("#reportDate").val(r);
+    // var r = dateFtt("yyyy-MM-dd","$!{user.reportDate}");
+    $("#reportDate").val(formatDate("$!{user.reportDate}"));
+    $("#registerTime").val(formatDateTime("$!{user.registerTime}"));
+    $("#vipDate").val(formatDate("$!{user.vipDate}"));
 
     // Radio回显
     $("input[type=radio][name=isVipuser]").each(function () {
