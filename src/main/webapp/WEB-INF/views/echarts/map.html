@@ -10,8 +10,9 @@ SpringWind Echarts 测试
 <div id="main" style="padding:20px;height:400px"></div>
 #end
 #override("js")
-<!-- ECharts单文件引入 -->
-<script src="http://echarts.baidu.com/build/dist/echarts-all.js"></script>
+<!-- ECharts单文件引入 开发用完整版 -->
+<script src="#springUrl('/static/js/echarts.js')"></script>
+<!--<script src="#springUrl('/static/js/echarts.min.js')"></script>-->
 <script type="text/javascript">
    // 基于准备好的dom，初始化echarts图表
    var myChart = echarts.init(document.getElementById('main')); 
