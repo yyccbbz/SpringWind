@@ -1,10 +1,9 @@
 package com.baomidou.springwind.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.kisso.annotation.Permission;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.StringUtil;
-import com.baomidou.springwind.entity.FinalUser;
 import com.baomidou.springwind.entity.UnassignedVipUser;
 import com.baomidou.springwind.service.IUnassignedVipUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,18 +37,20 @@ public class UnassignedVipUserController extends BaseController {
     @ResponseBody
     @Permission("5001")
     @RequestMapping(value = "/getUserList")
-    public String getUserList(@RequestParam("_search") String _search) {
+    public String getUserList(@RequestParam("_userName") String _userName,@RequestParam("_mobileNo") String _mobileNo) {
 
-        System.err.println("筛选条件 formData =" + _search);
+        System.err.println("筛选条件：客户姓名_userName = " + _userName+"，手机号码_mobileNo = "+_mobileNo);
 
-        UnassignedVipUser user = null;
-        if(StringUtil.isNotEmpty(_search)){
-            user = JSONObject.parseObject(_search, UnassignedVipUser.class);
+        UnassignedVipUser user = new UnassignedVipUser();
+        if(StringUtil.isNotEmpty(_userName)){
+            user.setUserName(_userName);
+        }
+        if(StringUtil.isNotEmpty(_mobileNo)){
+            user.setUserName(_mobileNo);
         }
         Page<UnassignedVipUser> page = getPage();
-//        Page<UnassignedVipUser> userPage = unassignedVipUserService.selectPageByParams(page, user);
-//        return jsonPage(userPage);
-        return null;
+        Page<UnassignedVipUser> userPage = unassignedVipUserService.selectPage(page,new EntityWrapper<UnassignedVipUser>(user));
+        return jsonPage(userPage);
     }
 
 	
