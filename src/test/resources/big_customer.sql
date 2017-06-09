@@ -15,7 +15,7 @@ Date: 2017-05-17 18:12:14
 
 SET FOREIGN_KEY_CHECKS=0;
 
-# 客户名单---正式名单
+# 客户名单--1--正式名单
 DROP TABLE IF EXISTS `final_user`;
 CREATE TABLE `final_user` (
   `id`  bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键' ,
@@ -37,10 +37,105 @@ CREATE TABLE `final_user` (
   UNIQUE INDEX `index_mobile_no` (`mobile_no`) USING BTREE COMMENT '客户手机号唯一索引',
   UNIQUE INDEX `index_member_no` (`member_no`) USING BTREE COMMENT '客户会员号唯一索引',
   INDEX `index_user_name` (`user_name`) USING BTREE COMMENT '客户姓名一般索引'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='正式名单'
-;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='正式名单';
 
 INSERT INTO `big_customer`.`final_user` (`id`, `mobile_no`, `member_no`, `user_name`, `user_type`, `report_date`, `register_time`, `is_vipuser`, `vip_date`, `advisor_id`, `advisor_name`, `user_mark`, `is_performance_pool`, `create_time`, `update_time`) VALUES ('2', '47724480137', 'kTYAmXjant', 'QFTkD', '3', '2007-03-04', '2007-01-17 15:04:44', '0', '2007-01-22', '7081', 'sUQLUT', 'xVYL1N', '1', '2017-05-21 17:32:07', '2017-05-21 17:32:07');
+
+
+# 客户名单--2--未分配的VIP名单
+DROP TABLE IF EXISTS `unassigned_vip_user`;
+CREATE TABLE `unassigned_vip_user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `mobile_no` varchar(20) NOT NULL COMMENT '客户手机号',
+  `member_no` varchar(50) NOT NULL COMMENT '客户会员号',
+  `user_name` varchar(20) DEFAULT NULL COMMENT '客户姓名',
+  `register_time` datetime DEFAULT NULL COMMENT '注册时间',
+  `vip_date` date DEFAULT NULL COMMENT '成为vip日期',
+  `vip_trans_dingqi` int(20) DEFAULT NULL COMMENT '客户成为vip时的历史定期投资额',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_mobile_no` (`mobile_no`) USING BTREE COMMENT '客户手机号唯一索引',
+  UNIQUE KEY `index_member_no` (`member_no`) USING BTREE COMMENT '客户会员号唯一索引',
+  KEY `index_user_name` (`user_name`) USING BTREE COMMENT '客户姓名索引'
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='未分配的VIP名单';
+
+# 客户名单--3--分配/上报名单导入
+DROP TABLE IF EXISTS `assign_report_import_user`;
+CREATE TABLE `assign_report_import_user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `mobile_no` varchar(20) NOT NULL COMMENT '客户手机号',
+  `user_name` varchar(20) DEFAULT NULL COMMENT '客户姓名',
+  `user_type` varchar(20) DEFAULT NULL COMMENT '客户类别：上报/分配',
+  `report_date` date DEFAULT NULL COMMENT '上报日期',
+  `advisor_name` varchar(20) NOT NULL COMMENT '投资顾问姓名',
+  `user_mark`  varchar(10) NULL DEFAULT NULL COMMENT '用户标识：DKH000/DKH001',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_mobile_no` (`mobile_no`) USING BTREE COMMENT '客户手机号唯一索引',
+  KEY `index_user_name` (`user_name`) USING BTREE COMMENT '客户姓名索引',
+  KEY `index_user_type` (`user_type`) USING BTREE COMMENT '客户类型索引'
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='分配/上报名单导入';
+
+# 客户名单--4--业绩池名单导入
+DROP TABLE IF EXISTS `performance_pool_import_user`;
+CREATE TABLE `performance_pool_import_user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `mobile_no` varchar(20) NOT NULL COMMENT '客户手机号',
+  `user_name` varchar(20) DEFAULT NULL COMMENT '客户姓名',
+  `pfm_pool_date` date DEFAULT NULL COMMENT '纳入业绩池日期',
+  `advisor_name` varchar(20) NOT NULL COMMENT '投资顾问姓名',
+  `user_mark`  varchar(10) NULL DEFAULT NULL COMMENT '用户标识：DKH000/DKH001',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `index_mobile_no` (`mobile_no`) USING BTREE COMMENT '客户手机号唯一索引',
+  KEY `index_user_name` (`user_name`) USING BTREE COMMENT '客户姓名索引',
+  KEY `index_pfm_pool_date` (`pfm_pool_date`) USING BTREE COMMENT '纳入业绩池日期索引'
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='业绩池名单导入';
+
+# 客户名单--5--历史正式名单
+DROP TABLE IF EXISTS `history_final_user`;
+CREATE TABLE `history_final_user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `month_id` varchar(20) NOT NULL COMMENT '历史月份',
+  `mobile_no` varchar(20) NOT NULL COMMENT '客户手机号',
+  `member_no`  varchar(50) NOT NULL COMMENT '客户会员号' ,
+  `user_name` varchar(20) DEFAULT NULL COMMENT '客户姓名',
+  `user_type` int(6) DEFAULT NULL COMMENT '客户类别：1:上报,2:分配,3:未分配vip',
+  `report_date` date DEFAULT NULL COMMENT '上报日期',
+  `register_time` datetime DEFAULT NULL COMMENT '注册时间',
+  `is_vipuser`  int(6) NULL DEFAULT NULL COMMENT '是否vip：1是；0否' ,
+  `vip_date`  date NULL DEFAULT NULL COMMENT '成为vip日期' ,
+  `advisor_id`  int(6) NULL DEFAULT NULL COMMENT '投资顾问ID号' ,
+  `advisor_name`  varchar(20) NULL DEFAULT NULL COMMENT '投资顾问姓名' ,
+  `user_mark`  varchar(10) NULL DEFAULT NULL COMMENT '用户标识：DKH000/DKH001' ,
+  `is_performance_pool`  int(6) NULL DEFAULT NULL COMMENT '是否业绩池：1、是；0、否' ,
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `index_month_id` (`month_id`) USING BTREE COMMENT '历史月份索引',
+  KEY `index_mobile_no` (`mobile_no`) USING BTREE COMMENT '客户手机号索引',
+  KEY `index_member_no` (`member_no`) USING BTREE COMMENT '客户会员号索引'
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='历史正式名单';
+
+# 客户名单--6--历史业绩池名单
+DROP TABLE IF EXISTS `history_pfm_pool_user`;
+CREATE TABLE `history_pfm_pool_user` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `month_id` varchar(20) NOT NULL COMMENT '历史月份',
+  `mobile_no` varchar(20) NOT NULL COMMENT '客户手机号',
+  `user_name` varchar(20) DEFAULT NULL COMMENT '客户姓名',
+  `pfm_pool_date` date DEFAULT NULL COMMENT '纳入业绩池日期',
+  `advisor_name` varchar(20) NOT NULL COMMENT '投资顾问姓名',
+  `user_mark`  varchar(10) NULL DEFAULT NULL COMMENT '用户标识：DKH000/DKH001',
+  `create_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+  `update_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+  PRIMARY KEY (`id`),
+  KEY `index_month_id` (`month_id`) USING BTREE COMMENT '历史月份索引',
+  KEY `index_mobile_no` (`mobile_no`) USING BTREE COMMENT '客户手机号索引'
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='历史业绩池名单';
 
 
 -- ----------------------------
