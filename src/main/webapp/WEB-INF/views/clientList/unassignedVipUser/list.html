@@ -100,7 +100,7 @@ BigClient - 未分配的VIP名单
     function addTestData() {
         $.ajax({
             type: "get",
-            url: "#springUrl('/clientList/finalUser/addTestData')",
+            url: "#springUrl('/clientList/unassignedVipUser/addTestData')",
             datatype: "text",
             success: function (data) {
                 if(data == 'true'){
@@ -166,7 +166,7 @@ BigClient - 未分配的VIP名单
         }, function () {
             $.ajax({
                 type: "POST",
-                url: "#springUrl('/clientList/finalUser/delUser/')" + userId,
+                url: "#springUrl('/clientList/unassignedVipUser/delUser/')" + userId,
                 datatype: "text",
                 success: function (data) {
                     if(data == 'true'){
@@ -182,7 +182,7 @@ BigClient - 未分配的VIP名单
 
 	function editUser(id){
 		var title = "新增用户";
-		var url = "#springUrl('/clientList/finalUser/edit.html')";
+		var url = "#springUrl('/clientList/unassignedVipUser/edit.html')";
 		if(id!=null){
 			title = "编辑用户";
 			url = url + "?id=" + id;
