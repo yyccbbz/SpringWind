@@ -33,4 +33,18 @@
 		<field name="updateTime" title="更新时间" pattern="yyyy/MM/dd HH:mm:ss"/>
 	</excel>
 
+	<excel id="unassignedVipUser" class="com.baomidou.springwind.entity.UnassignedVipUser" sheetname="未分配的VIP名单"
+		   defaultColumnWidth="5000" defaultAlign="center" enableStyle="true">
+		<field name="id" title="id"/>
+		<field name="mobileNo" title="mobileNo"/>
+		<field name="memberNo" title="memberNo"/>
+		<field name="userName" title="userName"/>
+		<field name="registerTime" title="registerTime" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="vipDate" title="vipDate" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="vipTransDingqi" title="vipTransDingqi"/>
+		<field name="createTime" title="createTime" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="updateTime" title="updateTime" pattern="yyyy/MM/dd HH:mm:ss"/>
+	</excel>
+
+
 </excels>
