@@ -66,7 +66,7 @@ CREATE TABLE `assign_report_import_user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `mobile_no` varchar(20) NOT NULL COMMENT '客户手机号',
   `user_name` varchar(20) DEFAULT NULL COMMENT '客户姓名',
-  `user_type` varchar(20) DEFAULT NULL COMMENT '客户类别：上报/分配',
+  `user_type`  int(6) NULL DEFAULT NULL COMMENT '客户类别：1上报；2分配；3未分配vip' ,
   `report_date` date DEFAULT NULL COMMENT '上报日期',
   `advisor_name` varchar(20) NOT NULL COMMENT '投资顾问姓名',
   `user_mark`  varchar(10) NULL DEFAULT NULL COMMENT '用户标识：DKH000/DKH001',

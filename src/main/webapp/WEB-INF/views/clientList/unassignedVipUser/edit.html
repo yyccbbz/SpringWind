@@ -86,7 +86,7 @@
 
     // 加载日期插件
     calendarWithTime("#registerTime");
-    calendarWithoutTime("#vipDate");
+    calendarWithTime("#vipDate");
 
     $("#myForm").validator({
         valid: function (form) {
@@ -116,8 +116,9 @@
     /*数据回显*/
     //日期回显
     // var r = dateFtt("yyyy-MM-dd","$!{user.reportDate}");
+//    $("#reportDate").val(formatDate("$!{user.reportDate}"));
     $("#registerTime").val(formatDateTime("$!{user.registerTime}"));
-    $("#vipDate").val(formatDate("$!{user.vipDate}"));
+    $("#vipDate").val(formatDateTime("$!{user.vipDate}"));
 
 
 </script>

@@ -120,7 +120,7 @@ BigClient - 未分配的VIP名单
 	function downloadExcel() {
         // 模拟Ajax获取
         downLoadFile({
-            url: "#springUrl('/clientList/finalUser/downloadExcel.html')", //请求的url
+            url: "#springUrl('/clientList/unassignedVipUser/downloadExcel.html')", //请求的url
             data: {search: $("#txt_search").val()}				//要发送的数据
         });
     }

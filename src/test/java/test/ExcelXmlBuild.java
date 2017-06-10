@@ -1,6 +1,7 @@
 package test;
 
 import com.baomidou.springwind.common.utils.ReflectUtil;
+import com.baomidou.springwind.entity.AssignReportImportUser;
 import com.baomidou.springwind.entity.UnassignedVipUser;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.util.TypeUtils;
@@ -21,7 +22,7 @@ public class ExcelXmlBuild {
 	
 	//快速构建一个XML配置,看不懂直接运行
 	public static void main(String[] args) {
-		String xml = builderXml("unassignedVipUser", "未分配的VIP名单", true, UnassignedVipUser.class,5000);
+		String xml = builderXml("assignReportImportUser", "分配/上报名单导入", true, AssignReportImportUser.class,5000);
 		System.err.println(xml);
 	}
 	

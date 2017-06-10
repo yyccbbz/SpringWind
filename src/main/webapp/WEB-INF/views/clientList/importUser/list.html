@@ -10,7 +10,18 @@ BigClient - 分配/上报名单导入
 #override("content")
 <div class="row">
 	<div class="ibox-content text-right form-inline" style="background: #F3F3F4;">
-		<button type="button" class="btn btn-info" onclick="searchByCondition();" id="btn_query">
+
+		<button class="btn" type="button" disabled="disabled">
+			<i></i>&nbsp;客户姓名
+		</button>
+		<input type="text" class="form-control" id="txt_userName" name="txt_userName">
+
+		<button class="btn" type="button" disabled="disabled">
+			<i></i>&nbsp;手机号码
+		</button>
+		<input type="text" class="form-control" id="txt_mobileNo" name="txt_mobileNo">
+
+		<button type="button" id="btn_query" class="btn btn-info" onclick="queryBy();" >
 			<i class="fa fa-search-plus"></i>&nbsp;条件搜索
 		</button>
 
@@ -49,81 +60,17 @@ BigClient - 分配/上报名单导入
 <script src="#springUrl('/static/js/base_list.js')"></script>
 <script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
-    var dataUrl = "#springUrl('/clientList/finalUser/getUserList.html')";
-    var dataColumns = [/*{
-            field: 'id',
-            title: '序号',
-            align: "center",
-            valign: "middle"
-        }, */{
-            field: 'mobileNo',
-            title: '客户手机号',
-            align: "center",
-            valign: "middle"
-        }, {
-            field: 'userName',
-            title: '客户姓名',
-            align: "center",
-            valign: "middle"
-        }, {
-            field: 'userType',
-            title: '客户类别',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatFinalUserType(row.userType);
-			}
-        }, {
-            field: 'reportDate',
-            title: '上报日期',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatDate(row.reportDate);
-			}
-        }, {
-            field: 'registerTime',
-            title: '注册时间',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatDateTime(row.registerTime);
-			}
-        }, {
-            field: 'isVipuser',
-            title: '是否vip',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatWhether(row.isVipuser);
-			}
-        }, {
-            field: 'vipDate',
-            title: '成为vip日期',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatDate(row.vipDate);
-			}
-        }, {
-            field: 'advisorName',
-            title: '投资顾问',
-            align: "center",
-            valign: "middle"
-        }, {
-            field: 'userMark',
-            title: '客户标识',
-            align: "center",
-            valign: "middle"
-        }, {
-            field: 'isPerformancePool',
-            title: '是否业绩池',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatWhether(row.isPerformancePool);
-			}
-        }
+    var dataUrl = "#springUrl('/clientList/importUser/getUserList.html')";
+    var dataColumns = [
+		/*{field: 'id',title: '序号',align: "center",valign: "middle"}, */
+        {field: 'mobileNo',title: '客户手机号',align: "center",valign: "middle"},
+        {field: 'userName',title: '客户姓名',align: "center",valign: "middle"},
+        {field: 'userType',title: '客户类别',align: "center",valign: "middle",formatter: function (value, row, index)
+        { return formatImportUserType(row.userType);}},
+        {field: 'reportDate',title: '上报日期',align: "center",valign: "middle",formatter: function (value, row, index)
+        { return formatDate(row.reportDate);}},
+        {field: 'advisorName',title: '投资顾问',align: "center",valign: "middle"},
+        {field: 'userMark',title: '客户标识',align: "center",valign: "middle"}
 		<!-- 此处按钮级别权限控制,目前只有 admin 拥有该权限! -->
 		#if ($SSOPermission.isActionable("10010"))
         ,{
@@ -140,24 +87,22 @@ BigClient - 分配/上报名单导入
     	#end
     ];
 
-	function dataQueryParams(params,formData) {
-        if (formData == '' || formData == null || formData == undefined) {
-            formData = '';
-        }
-		var temp = {
-			_size: params.limit,	//页面大小
-			_index: params.offset,	//页码
-			_search: formData, 		//搜索条件
-		};
-//		console.log(temp);
-		return temp;
+    function dataQueryParams(params,formData) {
+        var temp = {
+            _size: params.limit,	//页面大小
+            _index: params.offset,	//页码
+            _userName: $("#txt_userName").val(), 	//客户姓名输入
+            _mobileNo: $("#txt_mobileNo").val(), 	//手机号码输入
+        };
+        console.log(temp);
+        return temp;
     }
 
     /*添加测试数据*/
     function addTestData() {
         $.ajax({
             type: "get",
-            url: "#springUrl('/clientList/finalUser/addTestData')",
+            url: "#springUrl('/clientList/importUser/addTestData')",
             datatype: "text",
             success: function (data) {
                 if(data == 'true'){
@@ -170,7 +115,7 @@ BigClient - 分配/上报名单导入
     /**点击搜索按钮，弹出搜索条件的弹层*/
     function searchByCondition(){
         var title = "请选择筛选条件";
-        var url = "#springUrl('/clientList/finalUser/search.html')";
+        var url = "#springUrl('/clientList/importUser/search.html')";
         layer.open({
             type: 2,
             title: title,
@@ -190,11 +135,17 @@ BigClient - 分配/上报名单导入
         });
     }
 
+    /**点击搜索*/
+    function queryBy(){
+        var oTable1 = new TableInit();
+        oTable1.Init();
+    }
+
 	/**导出Excel*/
 	function downloadExcel() {
         // 模拟Ajax获取
         downLoadFile({
-            url: "#springUrl('/clientList/finalUser/downloadExcel.html')", //请求的url
+            url: "#springUrl('/clientList/importUser/downloadExcel.html')", //请求的url
             data: {search: $("#txt_search").val()}				//要发送的数据
         });
     }
@@ -209,7 +160,7 @@ BigClient - 分配/上报名单导入
             layer.confirm('确定上传吗？', {
                 btn: ['确定', '取消'] // 按钮
             }, function () {
-                var url = "#springUrl('/clientList/finalUser/uploadExcel/')";
+                var url = "#springUrl('/clientList/importUser/uploadExcel/')";
                 var fileId = "fileExcel";
                 $.ajaxFileUpload({
                     url: url,                              //用于文件上传的服务器端请求地址
@@ -240,7 +191,7 @@ BigClient - 分配/上报名单导入
         }, function () {
             $.ajax({
                 type: "POST",
-                url: "#springUrl('/clientList/finalUser/delUser/')" + userId,
+                url: "#springUrl('/clientList/importUser/delUser/')" + userId,
                 datatype: "text",
                 success: function (data) {
                     if(data == 'true'){
@@ -256,7 +207,7 @@ BigClient - 分配/上报名单导入
 
 	function editUser(id){
 		var title = "新增用户";
-		var url = "#springUrl('/clientList/finalUser/edit.html')";
+		var url = "#springUrl('/clientList/importUser/edit.html')";
 		if(id!=null){
 			title = "编辑用户";
 			url = url + "?id=" + id;

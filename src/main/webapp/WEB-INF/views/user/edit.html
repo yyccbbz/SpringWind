@@ -54,9 +54,9 @@ $("#myForm").validator({
         var me = this;
         // 提交表单之前，hold住表单，防止重复提交
         me.holdSubmit();
+        alert($(form).serialize());
         $.ajax({
         	url: "#springUrl('/perm/user/editUser')",
-            data: $(form).serialize(),
             type: "POST",
             success: function(data){
             	var d = JSON.parse(data);

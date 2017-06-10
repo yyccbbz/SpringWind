@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author CuiCan
- * @since 2017-06-09
+ * @since 2017-06-10
  */
 @TableName("assign_report_import_user")
 public class AssignReportImportUser implements Serializable {
@@ -36,10 +36,10 @@ public class AssignReportImportUser implements Serializable {
 	@TableField("user_name")
 	private String userName;
     /**
-     * 客户类别：上报/分配
+     * 客户类别：1上报；2分配；3未分配vip
      */
 	@TableField("user_type")
-	private String userType;
+	private Integer userType;
     /**
      * 上报日期
      */
@@ -91,11 +91,11 @@ public class AssignReportImportUser implements Serializable {
 		this.userName = userName;
 	}
 
-	public String getUserType() {
+	public Integer getUserType() {
 		return userType;
 	}
 
-	public void setUserType(String userType) {
+	public void setUserType(Integer userType) {
 		this.userType = userType;
 	}
 

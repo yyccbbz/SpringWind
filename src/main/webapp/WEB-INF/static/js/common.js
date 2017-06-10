@@ -121,6 +121,25 @@ function formatFinalUserType(type){
     }
 }
 
+
+/**正式名单*/
+/**
+ * 客户类别：1上报；2分配；3未分配vip
+ * @param type
+ * @returns {*}
+ */
+function formatImportUserType(type){
+    if (type == 1) {
+        return '上报';
+    } else if (type == 2) {
+        return '分配';
+    } else if (type == 3) {
+        return '未分配vip';
+    } else {
+        return '';
+    }
+}
+
 /**
  * 是否格式化：1是、0否
  * @param isyes

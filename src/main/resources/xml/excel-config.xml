@@ -36,14 +36,27 @@
 	<excel id="unassignedVipUser" class="com.baomidou.springwind.entity.UnassignedVipUser" sheetname="未分配的VIP名单"
 		   defaultColumnWidth="5000" defaultAlign="center" enableStyle="true">
 		<field name="id" title="id"/>
-		<field name="mobileNo" title="mobileNo"/>
-		<field name="memberNo" title="memberNo"/>
-		<field name="userName" title="userName"/>
-		<field name="registerTime" title="registerTime" pattern="yyyy/MM/dd HH:mm:ss"/>
-		<field name="vipDate" title="vipDate" pattern="yyyy/MM/dd HH:mm:ss"/>
-		<field name="vipTransDingqi" title="vipTransDingqi"/>
-		<field name="createTime" title="createTime" pattern="yyyy/MM/dd HH:mm:ss"/>
-		<field name="updateTime" title="updateTime" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="mobileNo" title="客户手机号"/>
+		<field name="memberNo" title="客户会员号"/>
+		<field name="userName" title="客户姓名"/>
+		<field name="registerTime" title="注册时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="vipDate" title="成为vip日期" pattern="yyyy/MM/dd"/>
+		<field name="vipTransDingqi" title="成为VIP时的历史定期投资额"/>
+		<field name="createTime" title="创建时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="updateTime" title="更新时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+	</excel>
+
+	<excel id="assignReportImportUser" class="com.baomidou.springwind.entity.AssignReportImportUser" sheetname="分配-上报名单导入"
+		   defaultColumnWidth="5000" defaultAlign="center" enableStyle="true">
+		<field name="id" title="id"/>
+		<field name="mobileNo" title="客户手机号"/>
+		<field name="userName" title="客户姓名"/>
+		<field name="userType" title="客户类别" format="1:上报,2:分配,3:未分配vip"/>
+		<field name="reportDate" title="上报日期" pattern="yyyy/MM/dd"/>
+		<field name="advisorName" title="投资顾问"/>
+		<field name="userMark" title="客户标识"/>
+		<field name="createTime" title="创建时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="updateTime" title="更新时间" pattern="yyyy/MM/dd HH:mm:ss"/>
 	</excel>
 
 
