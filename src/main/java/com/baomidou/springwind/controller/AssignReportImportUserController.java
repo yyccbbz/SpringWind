@@ -1,5 +1,8 @@
 package com.baomidou.springwind.controller;
 
+import com.baomidou.framework.upload.UploadFile;
+import com.baomidou.framework.upload.UploadMsg;
+import com.baomidou.framework.upload.UploadMultipartRequest;
 import com.baomidou.kisso.annotation.Permission;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
@@ -7,16 +10,24 @@ import com.baomidou.springwind.common.utils.DateUtil;
 import com.baomidou.springwind.common.utils.StringUtil;
 import com.baomidou.springwind.common.view.SpringMvcExcelView;
 import com.baomidou.springwind.entity.AssignReportImportUser;
+import com.baomidou.springwind.entity.Excel;
+import com.baomidou.springwind.excel.result.ExcelImportResult;
 import com.baomidou.springwind.service.IAssignReportImportUserService;
+import com.baomidou.springwind.service.IExcelService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -34,6 +45,8 @@ public class AssignReportImportUserController extends BaseController{
     @Autowired
     private IAssignReportImportUserService assignReportImportUserService;
 
+    @Autowired
+    private IExcelService excelService;
 
     //excel-config.xml中配置的ID
     @Value("${assignReportImportUser.excelId}")
@@ -42,6 +55,9 @@ public class AssignReportImportUserController extends BaseController{
     //excel导出的字段
     @Value("${assignReportImportUser.fields}")
     private String userFields;
+
+    //限制最大上传大小--30M
+    private final static int MAX_POST_SIZE = 30 * 1024 * 1024;
 
     /**页面跳转*/
     @Permission("5003")
@@ -88,7 +104,7 @@ public class AssignReportImportUserController extends BaseController{
     @ResponseBody
     @Permission("5003")
     @RequestMapping("/editUser")
-    public String editUser(@RequestBody  AssignReportImportUser user) {
+    public String editUser(AssignReportImportUser user) {
         boolean rlt = false;
         if (user != null) {
             if (user.getId() != null) {
@@ -100,6 +116,62 @@ public class AssignReportImportUserController extends BaseController{
             }
         }
         return callbackSuccess(rlt);
+    }
+
+
+    /**
+     * Excel导入
+     */
+
+    @ResponseBody
+    @Permission("5003")
+    @RequestMapping(value = "/uploadExcel", method = RequestMethod.POST)
+    public UploadMsg uploadExcelFile(){
+        UploadMsg msg = new UploadMsg();
+        try {
+            UploadMultipartRequest umr = new UploadMultipartRequest(request, getSaveDir(), MAX_POST_SIZE);
+            umr.setFileHeaderExts("504b03.xlsx");
+            umr.upload();
+            Enumeration<?> files = umr.getFileNames();
+            while (files.hasMoreElements()) {
+                String name = (String) files.nextElement();
+                UploadFile cf = umr.getUploadFile(name);
+                if (cf != null) {
+                    /**
+                     * 上传成功
+                     */
+                    if (cf.isSuccess()) {
+                        msg.setSuccess(true);
+                        msg.setUrl(cf.getFileUrl());
+                        msg.setSize(cf.getSize());
+                        System.err.println("上传文件地址：" + msg.getUrl());
+                        System.err.println("UploadFile cf：" + cf.toString());
+                    }
+                    msg.setMsg(cf.getUploadCode().desc());
+                    /**读取Excel内容，进行写表*/
+                    Excel excel = new Excel();
+                    excel.setExcelName(cf.getOriginalFileName());
+                    excel.setExcelRealName(cf.getFilesystemName());
+                    excel.setExcelRealPath(cf.getFileUrl());
+                    excel.setUid(0L);
+                    excel.setCreateTime(new Date());
+                    excelService.insert(excel);
+
+                    FileInputStream excelStream = new FileInputStream(cf.getFileUrl());
+                    ExcelImportResult readExcel = excelContext.readExcel(userExcelId, excelStream);
+                    List<AssignReportImportUser> listBean = readExcel.getListBean();
+
+                    assignReportImportUserService.insertBatch(listBean);
+                }
+            }
+        } catch (IOException e) {
+            logger.error("uploadFile error. ", e);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        System.out.println("msg = " + toJson(msg));
+        return msg;
+
     }
 
 
@@ -166,6 +238,19 @@ public class AssignReportImportUserController extends BaseController{
         }
         Boolean b = assignReportImportUserService.insertBatch(list);
         return b.toString();
+    }
+
+    /**
+     * form表单提交 Date类型数据绑定
+     * <功能详细描述>
+     * @param binder
+     * @see [类、类#方法、类#成员]
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 
 }

@@ -30,13 +30,6 @@
        </div>
        <div class="hr-line-dashed"></div>
 
-       <div class="form-group"><label class="col-sm-2 control-label">客户会员号</label>
-           <div class="col-sm-10">
-           		<input type="text" class="form-control" value="$!{user.memberNo}" name="memberNo" data-rule="客户会员号:required;memberNo">
-           </div>
-       </div>
-       <div class="hr-line-dashed"></div>
-
        <div class="form-group"><label class="col-sm-2 control-label">客户姓名</label>
            <div class="col-sm-10">
            		<input type="text" class="form-control" value="$!{user.userName}" name="userName">
@@ -44,57 +37,10 @@
        </div>
        <div class="hr-line-dashed"></div>
 
-       <div class="form-group"><label class="col-sm-2 control-label">客户类别</label>
+       <div class="form-group"><label class="col-sm-2 control-label">纳入业绩池日期</label>
            <div class="col-sm-10">
-               <select class="form-control m-b" id="userType" name="userType">
-                   <option value="">请选择</option>
-                   <option value="1">上报</option>
-                   <option value="2">分配</option>
-                   <option value="3">未分配VIP</option>
-               </select>
-           </div>
-       </div>
-       <div class="hr-line-dashed"></div>
-
-       <div class="form-group"><label class="col-sm-2 control-label">上报日期</label>
-           <div class="col-sm-10">
-               <input type="text" class="form-control calendarBox" name="reportDate" id="reportDate">
+               <input type="text" class="form-control calendarBox" name="pfmPoolDate" id="pfmPoolDate">
                <div class="glyphicon glyphicon-calendar"></div>
-           </div>
-       </div>
-       <div class="hr-line-dashed"></div>
-
-       <div class="form-group"><label class="col-sm-2 control-label">注册时间</label>
-           <div class="col-sm-10">
-               <input type="text" class="form-control calendarBox" id="registerTime" name="registerTime">
-               <div class="glyphicon glyphicon-calendar"></div>
-           </div>
-       </div>
-       <div class="hr-line-dashed"></div>
-
-       <div class="form-group"><label class="col-sm-2 control-label">是否vip</label>
-           <div class="col-sm-10">
-               <label class="checkbox-inline">
-                   <input type="radio" name="isVipuser" value="1" checked> 是
-               </label>
-               <label class="checkbox-inline">
-                   <input type="radio" name="isVipuser" value="0"> 否
-               </label>
-           </div>
-       </div>
-       <div class="hr-line-dashed"></div>
-
-       <div class="form-group"><label class="col-sm-2 control-label">成为vip日期</label>
-           <div class="col-sm-10">
-               <input type="text" class="form-control calendarBox" name="vipDate" id="vipDate">
-               <div class="glyphicon glyphicon-calendar"></div>
-           </div>
-       </div>
-       <div class="hr-line-dashed"></div>
-
-       <div class="form-group"><label class="col-sm-2 control-label">投资顾问ID号</label>
-           <div class="col-sm-10">
-               <input type="text" class="form-control" name="advisorId" value="$!{user.advisorId}">
            </div>
        </div>
        <div class="hr-line-dashed"></div>
@@ -118,18 +64,6 @@
        </div>
        <div class="hr-line-dashed"></div>
 
-       <div class="form-group"><label class="col-sm-2 control-label">是否业绩池</label>
-           <div class="col-sm-10">
-               <label class="checkbox-inline">
-                   <input type="radio" name="isPerformancePool" value="1" checked> 是
-               </label>
-               <label class="checkbox-inline">
-                   <input type="radio" name="isPerformancePool" value="0"> 否
-               </label>
-           </div>
-       </div>
-       <div class="hr-line-dashed"></div>
-
        <div class="form-group">
            <div class="text-center">
                #if(!$!{user})
@@ -148,9 +82,8 @@
 <script type="text/javascript">
 
     // 加载日期插件
-    calendarWithoutTime("#reportDate");
-    calendarWithTime("#registerTime");
-    calendarWithoutTime("#vipDate");
+
+    calendarWithTime("#pfmPoolDate");
 
     $("#myForm").validator({
         valid: function (form) {
@@ -158,7 +91,7 @@
             // 提交表单之前，hold住表单，防止重复提交
             me.holdSubmit();
             $.ajax({
-                url: "#springUrl('/perm/user/editUser')",
+                url: "#springUrl('/clientList/pfmPoolImportUser/editUser')",
                 data: $(form).serialize(),
                 type: "POST",
                 success: function (data) {
@@ -179,24 +112,11 @@
 
     /*数据回显*/
     //日期回显
-    // var r = dateFtt("yyyy-MM-dd","$!{user.reportDate}");
-    $("#reportDate").val(formatDate("$!{user.reportDate}"));
-    $("#registerTime").val(formatDateTime("$!{user.registerTime}"));
-    $("#vipDate").val(formatDate("$!{user.vipDate}"));
+    $("#pfmPoolDate").val(formatDateTime("$!{user.pfmPoolDate}"));
 
     // Radio回显
-    $("input[type=radio][name=isVipuser]").each(function () {
-        if ($(this).val() == '$!{user.isVipuser}') {
-            $(this).attr("checked", "checked");
-        }
-    });
     $("input[type=radio][name=userMark]").each(function () {
         if ($(this).val() == '$!{user.userMark}') {
-            $(this).attr("checked", "checked");
-        }
-    });
-    $("input[type=radio][name=isPerformancePool]").each(function () {
-        if ($(this).val() == '$!{user.isPerformancePool}') {
             $(this).attr("checked", "checked");
         }
     });

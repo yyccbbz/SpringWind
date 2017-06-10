@@ -59,5 +59,16 @@
 		<field name="updateTime" title="更新时间" pattern="yyyy/MM/dd HH:mm:ss"/>
 	</excel>
 
+	<excel id="performancePoolImportUser" class="com.baomidou.springwind.entity.PerformancePoolImportUser" sheetname="业绩池名单"
+		   defaultColumnWidth="5000" defaultAlign="center" enableStyle="true">
+		<field name="id" title="id"/>
+		<field name="mobileNo" title="客户手机号"/>
+		<field name="userName" title="客户姓名"/>
+		<field name="pfmPoolDate" title="纳入业绩池日期" pattern="yyyy/MM/dd"/>
+		<field name="advisorName" title="投资顾问"/>
+		<field name="userMark" title="客户标识"/>
+		<field name="createTime" title="创建时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="updateTime" title="更新时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+	</excel>
 
 </excels>

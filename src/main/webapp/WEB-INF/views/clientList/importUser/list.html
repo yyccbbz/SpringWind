@@ -25,6 +25,10 @@ BigClient - 分配/上报名单导入
 			<i class="fa fa-search-plus"></i>&nbsp;条件搜索
 		</button>
 
+		<button class="btn btn-primary" onclick="uploadExcel()" type="button">
+			<i class="fa fa-upload"></i>&nbsp;导入EXCEL文件</button>
+		<input type="file" id="fileExcel" name="fileExcel" accept=".xls,.xlsx" style="display: none"/>
+
 		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
 			<i class="fa fa-download"></i>&nbsp;导出名单
 		</button>
