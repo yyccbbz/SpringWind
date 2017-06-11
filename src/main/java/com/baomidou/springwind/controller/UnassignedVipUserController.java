@@ -95,8 +95,8 @@ public class UnassignedVipUserController extends BaseController {
             if (user.getId() != null) {
                 rlt = unassignedVipUserService.updateById(user);
             } else {
-                user.setCreateTime(new Date());
                 user.setUpdateTime(user.getCreateTime());
+                user.setCreateTime(new Date());
                 rlt = unassignedVipUserService.insert(user);
             }
         }

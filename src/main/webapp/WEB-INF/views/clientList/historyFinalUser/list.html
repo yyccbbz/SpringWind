@@ -11,12 +11,9 @@ BigClient - 历史正式名单
 <div class="row">
 	<div class="ibox-content text-right form-inline" style="background: #F3F3F4;">
 		<div class="form-group col-xs-4">
-			<label class="form-label">客户类别</label>
-			<select class="form-control" name="userType">
-				<option value="">请选择</option>
-				<option value="1">上报</option>
-				<option value="2">分配</option>
-				<option value="3">未分配VIP</option>
+			<label class="form-label">历史月份</label>
+			<select class="form-control" name="monthId" id="monthId">
+				<option value="" selected="selected" id="selectedValue">201706</option>
 			</select>
 		</div>
 
@@ -86,7 +83,7 @@ BigClient - 历史正式名单
             title: '手机号',
             align: "center",
             valign: "middle"
-        }{
+        },{
             field: 'userName',
             title: '客户姓名',
             align: "center",
@@ -166,18 +163,17 @@ BigClient - 历史正式名单
     	#end
     ];
 
-	function dataQueryParams(params,formData) {
-        if (formData == '' || formData == null || formData == undefined) {
-            formData = '';
-        }
-		var temp = {
-			_size: params.limit,	//页面大小
-			_index: params.offset,	//页码
-			_search: formData, 		//搜索条件
-		};
-//		console.log(temp);
-		return temp;
+    function dataQueryParams(params,formData) {
+        var temp = {
+            _size: params.limit,	//页面大小
+            _index: params.offset,	//页码
+            _userName: $("#txt_userName").val(), 	//客户姓名输入
+            _mobileNo: $("#txt_mobileNo").val(), 	//手机号码输入
+        };
+        console.log(temp);
+        return temp;
     }
+
 
     /*添加测试数据*/
     function addTestData() {

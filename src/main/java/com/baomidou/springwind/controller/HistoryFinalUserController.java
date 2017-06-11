@@ -5,18 +5,22 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.DateUtil;
 import com.baomidou.springwind.common.utils.StringUtil;
+import com.baomidou.springwind.common.view.SpringMvcExcelView;
 import com.baomidou.springwind.entity.HistoryFinalUser;
 import com.baomidou.springwind.service.IHistoryFinalUserService;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * <p>
@@ -32,6 +36,14 @@ public class HistoryFinalUserController extends BaseController{
 
     @Autowired
     private IHistoryFinalUserService historyFinalUserService;
+
+    //excel-config.xml中配置的ID
+    @Value("${historyFinalUser.excelId}")
+    private String userExcelId;
+
+    //excel导出的字段
+    @Value("${historyFinalUser.fields}")
+    private String userFields;
 
     /**页面跳转*/
     @Permission("5005")
@@ -77,11 +89,64 @@ public class HistoryFinalUserController extends BaseController{
 
     @ResponseBody
     @Permission("5005")
-    @RequestMapping("addTestData")
+    @RequestMapping("/editUser")
+    public String editUser(HistoryFinalUser historyFinalUser) {
+        boolean rlt = false;
+        if (historyFinalUser!=null) {
+            if (historyFinalUser.getId() != null) {
+                rlt = historyFinalUserService.updateById(historyFinalUser);
+            } else {
+                historyFinalUser.setCreateTime(new Date());
+                historyFinalUser.setUpdateTime(historyFinalUser.getCreateTime());
+                rlt = historyFinalUserService.insert(historyFinalUser);
+            }
+        }
+        return callbackSuccess(rlt);
+    }
+
+
+    /**
+     * Excel导出列表
+     *
+     * @return
+     */
+    @Permission("5005")
+    @RequestMapping(value = "/downloadExcel",method = RequestMethod.POST)
+    public ModelAndView downloadExcel(){
+
+        /**1.执行你的业务逻辑获取数据，使用ExcelContent生成Workbook，需要四个参数:
+         *
+         * ①id 配置ID
+         * ②beans 配置class对应的List
+         * ③header 导出之前,在标题前面做出一些额外的操作,比如增加文档描述等,可以为null
+         * ④fields 指定Excel导出的字段(bean对应的字段名称),可以为null
+         */
+        Workbook workbook = null;
+        String id = userExcelId;
+        List<HistoryFinalUser> list = historyFinalUserService.selectList(null);
+        List<String> fields = Arrays.asList(userFields.split(","));
+        try {
+            workbook = excelContext.createExcel(id, list, null, fields);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        /**2.跳转到Excel下载视图*/
+        ModelAndView view = new ModelAndView("springMvcExcelView");
+        view.addObject(SpringMvcExcelView.EXCEL_NAME, "历史正式名单" + DateUtil.getCurrentTime());
+        view.addObject(SpringMvcExcelView.EXCEL_WORKBOOK, workbook);
+        view.addObject(SpringMvcExcelView.EXCEL_EMPTY_MESSAGE, "历史正式名单 没有相关数据可以导出");
+        return view;
+    }
+
+    @ResponseBody
+    @Permission("5005")
+    @RequestMapping("/addTestData")
     public String addTestData() {
         ArrayList<HistoryFinalUser> list = new ArrayList<>();
         for (int i = 1; i <= 100; i++) {
             HistoryFinalUser u = new HistoryFinalUser();
+            u.setMonthId(RandomStringUtils.random(6,"201706201820162016"));
             u.setMobileNo(RandomStringUtils.randomNumeric(11));
             u.setMemberNo(RandomStringUtils.randomAlphanumeric(10));
             u.setUserName(RandomStringUtils.randomAlphabetic(5));
@@ -101,6 +166,19 @@ public class HistoryFinalUserController extends BaseController{
         }
         Boolean b = historyFinalUserService.insertBatch(list);
         return b.toString();
+    }
+
+    /**
+     * form表单提交 Date类型数据绑定
+     * <功能详细描述>
+     * @param binder
+     * @see [类、类#方法、类#成员]
+     */
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
     }
 	
 }
