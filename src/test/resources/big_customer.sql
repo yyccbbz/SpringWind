@@ -15,6 +15,127 @@ Date: 2017-05-17 18:12:14
 
 SET FOREIGN_KEY_CHECKS=0;
 
+# 业绩报表--1--销售明细
+DROP TABLE IF EXISTS `sales_details`;
+CREATE TABLE `sales_details` (
+  `id`  bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键' ,
+  `mobile_no`  varchar(20) NOT NULL COMMENT '客户手机号' ,
+  `member_no`  varchar(50) NOT NULL COMMENT '客户会员号' ,
+  `user_name`  varchar(20) NULL DEFAULT NULL COMMENT '客户姓名' ,
+  `advisor_id`  int(6) NULL DEFAULT NULL COMMENT '投资顾问ID号' ,
+  `advisor_name`  varchar(20) NULL DEFAULT NULL COMMENT '投资顾问姓名' ,
+  `product_id`  varchar(32) NULL DEFAULT NULL COMMENT '产品ID号' ,
+  `product_name`  varchar(100) NULL DEFAULT NULL COMMENT '产品名称' ,
+  `product_type`  int(6) NULL DEFAULT NULL COMMENT '产品类型：1：定期，2：活期，3：活包定，4：转让' ,
+  `product_rate`  varchar(20) NULL DEFAULT NULL COMMENT '产品利率' ,
+  `trans_amount`  DECIMAL(20,2) NULL DEFAULT NULL COMMENT '投资金额' ,
+  `trans_time`  DATETIME NULL DEFAULT NULL COMMENT '投资时间' ,
+  `inception_date`  DATE NULL DEFAULT NULL COMMENT '定期产品成立日' ,
+  `due_date`  DATE NULL DEFAULT NULL COMMENT '定期产品到期日' ,
+  `limit_days`  INT(6) NULL DEFAULT NULL COMMENT '定期产品期限（天）' ,
+  `limit_type`  INT(6) NULL DEFAULT NULL COMMENT '定期产品期限类型：0：新人专享，1:6个月，2:12个月' ,
+  `user_type`  int(6) NULL DEFAULT NULL COMMENT '客户类别：1：上报，2：分配，3：未分配vip' ,
+  `register_time`  datetime NULL DEFAULT NULL COMMENT '客户注册时间' ,
+  `report_date`  date NULL DEFAULT NULL COMMENT '上报分配日期' ,
+  `is_vipuser`  int(6) NULL DEFAULT NULL COMMENT '是否vip：0：否，1：是' ,
+  `vip_date`  date NULL DEFAULT NULL COMMENT '成为vip日期' ,
+  `is_performance_pool`  int(6) NULL DEFAULT NULL COMMENT '是否业绩池：0：否，1：是' ,
+  `user_mark`  varchar(10) NULL DEFAULT NULL COMMENT '用户标识：1、DKH000；2、DKH001' ,
+  `create_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
+  `update_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间' ,
+  PRIMARY KEY (`id`),
+  INDEX `index_mobile_no` (`mobile_no`) USING BTREE COMMENT '客户手机号索引',
+  INDEX `index_member_no` (`member_no`) USING BTREE COMMENT '客户会员号索引',
+  INDEX `index_user_name` (`user_name`) USING BTREE COMMENT '客户姓名索引',
+  INDEX `index_advisor_id` (`advisor_id`) USING BTREE COMMENT '投资顾问ID号索引',
+  INDEX `index_advisor_name` (`advisor_name`) USING BTREE COMMENT '投资顾问姓名索引',
+  INDEX `index_product_type` (`product_type`) USING BTREE COMMENT '产品类型索引',
+  INDEX `index_trans_time` (`trans_time`) USING BTREE COMMENT '投资时间索引',
+  INDEX `index_limit_type` (`limit_type`) USING BTREE COMMENT '定期产品期限类型索引',
+  INDEX `index_user_type` (`user_type`) USING BTREE COMMENT '客户类别索引',
+  INDEX `index_is_performance_pool` (`is_performance_pool`) USING BTREE COMMENT '是否业绩池索引',
+  INDEX `index_is_user_mark` (`user_mark`) USING BTREE COMMENT '用户标识索引'
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='销售明细';
+
+# 业绩报表--2--获客信息
+DROP TABLE IF EXISTS `get_information`;
+CREATE TABLE `get_information` (
+  `id`  bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键' ,
+  `t_mobile_no`  varchar(20) NOT NULL COMMENT '推荐人手机号' ,
+  `t_member_no`  varchar(50) NOT NULL COMMENT '推荐人会员号' ,
+  `t_user_name`  varchar(20) NULL DEFAULT NULL COMMENT '推荐人姓名' ,
+  `advisor_id`  int(6) NULL DEFAULT NULL COMMENT '投资顾问ID号' ,
+  `advisor_name`  varchar(20) NULL DEFAULT NULL COMMENT '投资顾问姓名' ,
+  `t_user_type`  int(6) NULL DEFAULT NULL COMMENT '推荐人客户类别：1：上报，2：分配，3：未分配vip' ,
+  `t_report_date`  date NULL DEFAULT NULL COMMENT '推荐人上报分配日期' ,
+  `t_is_performance_pool`  int(6) NULL DEFAULT NULL COMMENT '推荐人是否业绩池：0：否，1：是' ,
+  `bt_mobile_no`  varchar(20) NOT NULL COMMENT '被推荐人手机号' ,
+  `bt_member_no`  varchar(50) NOT NULL COMMENT '被推荐人会员号' ,
+  `bt_user_name`  varchar(20) NULL DEFAULT NULL COMMENT '被推荐人姓名' ,
+  `bt_register_time`  datetime NULL DEFAULT NULL COMMENT '被推荐人注册时间' ,
+  `bt_trans_amount`  DECIMAL(20,2) NULL DEFAULT NULL COMMENT '被推荐人投资金额（不含活期和转让）' ,
+  `create_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
+  `update_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间' ,
+  PRIMARY KEY (`id`),
+  INDEX `index_t_mobile_no` (`t_mobile_no`) USING BTREE COMMENT '推荐人手机号索引',
+  INDEX `index_t_member_no` (`t_member_no`) USING BTREE COMMENT '推荐人会员号索引',
+  INDEX `index_t_user_name` (`t_user_name`) USING BTREE COMMENT '推荐人姓名索引',
+  INDEX `index_advisor_id` (`advisor_id`) USING BTREE COMMENT '投资顾问ID号索引',
+  INDEX `index_advisor_name` (`advisor_name`) USING BTREE COMMENT '投资顾问姓名索引',
+  INDEX `index_t_user_type` (`t_user_type`) USING BTREE COMMENT '推荐人客户类别索引',
+  INDEX `index_t_is_performance_pool` (`t_is_performance_pool`) USING BTREE COMMENT '推荐人是否业绩池索引',
+  INDEX `index_bt_mobile_no` (`bt_mobile_no`) USING BTREE COMMENT '被推荐人手机号索引',
+  INDEX `index_bt_member_no` (`bt_member_no`) USING BTREE COMMENT '被推荐人会员号索引',
+  INDEX `index_bt_user_name` (`bt_user_name`) USING BTREE COMMENT '被推荐人姓名索引',
+  INDEX `index_bt_register_time` (`bt_register_time`) USING BTREE COMMENT '被推荐人注册时间索引'
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='获客信息';
+
+# 业绩报表--3--获客销售明细
+DROP TABLE IF EXISTS `get_sales_details`;
+CREATE TABLE `get_sales_details` (
+  `id`  bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键' ,
+  `t_mobile_no`  varchar(20) NOT NULL COMMENT '推荐人手机号' ,
+  `t_member_no`  varchar(50) NOT NULL COMMENT '推荐人会员号' ,
+  `t_user_name`  varchar(20) NULL DEFAULT NULL COMMENT '推荐人姓名' ,
+  `advisor_id`  int(6) NULL DEFAULT NULL COMMENT '投资顾问ID号' ,
+  `advisor_name`  varchar(20) NULL DEFAULT NULL COMMENT '投资顾问姓名' ,
+  `t_user_type`  int(6) NULL DEFAULT NULL COMMENT '推荐人客户类别：1：上报，2：分配，3：未分配vip' ,
+  `t_report_date`  date NULL DEFAULT NULL COMMENT '推荐人上报分配日期' ,
+  `t_is_performance_pool`  int(6) NULL DEFAULT NULL COMMENT '推荐人是否业绩池：0：否，1：是' ,
+  `bt_mobile_no`  varchar(20) NOT NULL COMMENT '被推荐人手机号' ,
+  `bt_member_no`  varchar(50) NOT NULL COMMENT '被推荐人会员号' ,
+  `bt_user_name`  varchar(20) NULL DEFAULT NULL COMMENT '被推荐人姓名' ,
+  `bt_register_time`  datetime NULL DEFAULT NULL COMMENT '被推荐人注册时间' ,
+  `product_id`  varchar(32) NULL DEFAULT NULL COMMENT '产品ID号' ,
+  `product_name`  varchar(100) NULL DEFAULT NULL COMMENT '产品名称' ,
+  `product_type`  int(6) NULL DEFAULT NULL COMMENT '产品类型：1：定期，2：活期，3：活包定，4：转让' ,
+  `product_rate`  varchar(20) NULL DEFAULT NULL COMMENT '产品利率' ,
+  `trans_amount`  DECIMAL(20,2) NULL DEFAULT NULL COMMENT '投资金额' ,
+  `trans_time`  DATETIME NULL DEFAULT NULL COMMENT '投资时间' ,
+  `inception_date`  DATE NULL DEFAULT NULL COMMENT '定期产品成立日' ,
+  `due_date`  DATE NULL DEFAULT NULL COMMENT '定期产品到期日' ,
+  `limit_days`  INT(6) NULL DEFAULT NULL COMMENT '定期产品期限（天）' ,
+  `limit_type`  INT(6) NULL DEFAULT NULL COMMENT '定期产品期限类型：0：新人专享，1:6个月，2:12个月' ,
+  `create_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
+  `update_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间' ,
+  PRIMARY KEY (`id`),
+  INDEX `index_t_mobile_no` (`t_mobile_no`) USING BTREE COMMENT '推荐人手机号索引',
+  INDEX `index_t_member_no` (`t_member_no`) USING BTREE COMMENT '推荐人会员号索引',
+  INDEX `index_t_user_name` (`t_user_name`) USING BTREE COMMENT '推荐人姓名索引',
+  INDEX `index_advisor_id` (`advisor_id`) USING BTREE COMMENT '投资顾问ID号索引',
+  INDEX `index_advisor_name` (`advisor_name`) USING BTREE COMMENT '投资顾问姓名索引',
+  INDEX `index_t_user_type` (`t_user_type`) USING BTREE COMMENT '推荐人客户类别索引',
+  INDEX `index_bt_mobile_no` (`bt_mobile_no`) USING BTREE COMMENT '被推荐人手机号索引',
+  INDEX `index_bt_member_no` (`bt_member_no`) USING BTREE COMMENT '被推荐人会员号索引',
+  INDEX `index_bt_user_name` (`bt_user_name`) USING BTREE COMMENT '被推荐人姓名索引',
+  INDEX `index_bt_register_time` (`bt_register_time`) USING BTREE COMMENT '被推荐人注册时间索引',
+  INDEX `index_product_type` (`product_type`) USING BTREE COMMENT '产品类型索引',
+  INDEX `index_trans_time` (`trans_time`) USING BTREE COMMENT '投资时间索引',
+  INDEX `index_limit_type` (`limit_type`) USING BTREE COMMENT '定期产品期限类型索引'
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='获客销售明细';
+
+
+
 # 客户名单--1--正式名单
 DROP TABLE IF EXISTS `final_user`;
 CREATE TABLE `final_user` (

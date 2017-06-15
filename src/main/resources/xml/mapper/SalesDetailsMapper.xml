@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baomidou.springwind.mapper.SalesDetailsMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.baomidou.springwind.entity.SalesDetails">
+		<id column="id" property="id" />
+		<result column="mobile_no" property="mobileNo" />
+		<result column="member_no" property="memberNo" />
+		<result column="user_name" property="userName" />
+		<result column="advisor_id" property="advisorId" />
+		<result column="advisor_name" property="advisorName" />
+		<result column="product_id" property="productId" />
+		<result column="product_name" property="productName" />
+		<result column="product_type" property="productType" />
+		<result column="product_rate" property="productRate" />
+		<result column="trans_amount" property="transAmount" />
+		<result column="trans_time" property="transTime" />
+		<result column="inception_date" property="inceptionDate" />
+		<result column="due_date" property="dueDate" />
+		<result column="limit_days" property="limitDays" />
+		<result column="limit_type" property="limitType" />
+		<result column="user_type" property="userType" />
+		<result column="register_time" property="registerTime" />
+		<result column="report_date" property="reportDate" />
+		<result column="is_vipuser" property="isVipuser" />
+		<result column="vip_date" property="vipDate" />
+		<result column="is_performance_pool" property="isPerformancePool" />
+		<result column="user_mark" property="userMark" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+</mapper>

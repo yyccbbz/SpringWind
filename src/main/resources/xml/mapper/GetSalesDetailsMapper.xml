@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baomidou.springwind.mapper.GetSalesDetailsMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.baomidou.springwind.entity.GetSalesDetails">
+		<id column="id" property="id" />
+		<result column="t_mobile_no" property="tMobileNo" />
+		<result column="t_member_no" property="tMemberNo" />
+		<result column="t_user_name" property="tUserName" />
+		<result column="advisor_id" property="advisorId" />
+		<result column="advisor_name" property="advisorName" />
+		<result column="t_user_type" property="tUserType" />
+		<result column="t_report_date" property="tReportDate" />
+		<result column="t_is_performance_pool" property="tIsPerformancePool" />
+		<result column="bt_mobile_no" property="btMobileNo" />
+		<result column="bt_member_no" property="btMemberNo" />
+		<result column="bt_user_name" property="btUserName" />
+		<result column="bt_register_time" property="btRegisterTime" />
+		<result column="product_id" property="productId" />
+		<result column="product_name" property="productName" />
+		<result column="product_type" property="productType" />
+		<result column="product_rate" property="productRate" />
+		<result column="trans_amount" property="transAmount" />
+		<result column="trans_time" property="transTime" />
+		<result column="inception_date" property="inceptionDate" />
+		<result column="due_date" property="dueDate" />
+		<result column="limit_days" property="limitDays" />
+		<result column="limit_type" property="limitType" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+</mapper>
