@@ -1,7 +1,6 @@
 package com.baomidou.springwind.entity;
 
 import com.baomidou.mybatisplus.enums.IdType;
-import java.math.BigDecimal;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
@@ -14,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author CuiCan
- * @since 2017-06-15
+ * @since 2017-06-25
  */
 @TableName("sales_details")
 public class SalesDetails implements Serializable {
@@ -75,7 +74,7 @@ public class SalesDetails implements Serializable {
      * 投资金额
      */
 	@TableField("trans_amount")
-	private BigDecimal transAmount;
+	private Double transAmount;
     /**
      * 投资时间
      */
@@ -228,11 +227,11 @@ public class SalesDetails implements Serializable {
 		this.productRate = productRate;
 	}
 
-	public BigDecimal getTransAmount() {
+	public Double getTransAmount() {
 		return transAmount;
 	}
 
-	public void setTransAmount(BigDecimal transAmount) {
+	public void setTransAmount(Double transAmount) {
 		this.transAmount = transAmount;
 	}
 

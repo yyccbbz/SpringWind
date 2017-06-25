@@ -1,8 +1,7 @@
 package com.baomidou.springwind.mapper;
 
-import com.baomidou.mybatisplus.plugins.Page;
-import com.baomidou.springwind.entity.FinalUser;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.springwind.entity.FinalUser;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

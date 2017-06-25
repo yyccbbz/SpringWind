@@ -122,6 +122,45 @@ function formatFinalUserType(type){
 }
 
 
+/**定期产品期限类型*/
+/**
+ * 客户类别：0新人专享；6六个月；12十二个月
+ * @param type
+ * @returns {*}
+ */
+function formatLmitType(type){
+    if (type == 0) {
+        return '新人专享';
+    } else if (type == 6) {
+        return '6个月';
+    } else if (type == 12) {
+        return '12个月';
+    } else {
+        return '';
+    }
+}
+
+
+/**产品类型*/
+/**
+ * 客户类别：1定期；2活期；3活包定 4：转让
+ * @param type
+ * @returns {*}
+ */
+function formatProductType(type){
+    if (type == 1) {
+        return '定期';
+    } else if (type == 2) {
+        return '活期';
+    } else if (type == 3) {
+        return '活包定';
+    }else if (type==4){
+        return '转让';
+    }else {
+        return '';
+    }
+}
+
 /**正式名单*/
 /**
  * 客户类别：1上报；2分配；3未分配vip

@@ -9,12 +9,16 @@ import com.baomidou.springwind.excel.ExcelContext;
 import com.baomidou.springwind.service.IPrivilegeService;
 import com.baomidou.springwind.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -131,6 +135,20 @@ public class BaseController extends SuperController implements HandlerIntercepto
 			file.mkdirs();
 		}
 		return file.getPath();
+	}
+
+	/**
+	 * form表单提交 Date类型数据绑定
+	 * <功能详细描述>
+	 *
+	 * @param binder
+	 * @see [类、类#方法、类#成员]
+	 */
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		dateFormat.setLenient(false);
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
 	}
 
 }

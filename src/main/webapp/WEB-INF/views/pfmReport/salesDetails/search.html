@@ -52,21 +52,44 @@
         </div>
         <div class="row">
             <div class="form-group col-xs-4">
-                <label class="form-label">上报日期 从</label>
-                <input type="text" class="form-control calendarBox calendar startDate" id="reportDate" name="reportDate"/>
+                <label class="form-label">投资日期 从</label>
+                <input type="text" class="form-control calendarBox calendar startDate" id="transTimeStart" name="transTimeStart"/>
                 <span class="glyphicon glyphicon-calendar"></span>
             </div>
             <div class="form-group col-xs-4">
                 <label class="form-label">至</label>
-                <input type="text" class="form-control calendarBox calendar endDate" id="vipDate" name="vipDate"/>
+                <input type="text" class="form-control calendarBox calendar endDate" id="transTimeEnd" name="transTimeEnd"/>
                 <span class="glyphicon glyphicon-calendar"></span>
             </div>
             <div class="form-group col-xs-4">
-                <label class="form-label">是否为VIP</label>
-                <select class="form-control" name="isVipuser">
+                <label class="form-label">产品类别</label>
+                <select class="form-control" name="productType">
                     <option value="">请选择</option>
-                    <option value="0">否</option>
-                    <option value="1">是</option>
+                    <option value="1">定期</option>
+                    <option value="2">活期</option>
+                    <option value="3">活包定</option>
+                    <option value="4">转让</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-4">
+                <label class="form-label">投资金额大于等于</label>
+                <input type="text" class="form-control " id="transAmountSmall" name="transAmountSmall"/>
+
+            </div>
+            <div class="form-group col-xs-4">
+                <label class="form-label">小于等于</label>
+                <input type="text" class="form-control " id="transAmountBig" name="transAmountBig"/>
+
+            </div>
+            <div class="form-group col-xs-4">
+                <label class="form-label">定期产品期限类型</label>
+                <select class="form-control" name="limitType">
+                    <option value="">请选择</option>
+                    <option value="0">新人专享</option>
+                    <option value="1">6个月</option>
+                    <option value="2">12个月</option>
                 </select>
             </div>
         </div>
@@ -110,8 +133,8 @@
 <script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
     //日期插件
-    calendarWithoutTime("#reportDate");
-    calendarWithoutTime("#vipDate");
+    calendarWithoutTime("#transStartTime");
+    calendarWithoutTime("#transEndTime");
 
     // 如果此时开始日期小于结束日期，不能提交。
     $(".startDate").change(function () {

@@ -23,12 +23,156 @@
 		<result column="user_type" property="userType" />
 		<result column="register_time" property="registerTime" />
 		<result column="report_date" property="reportDate" />
-		<result column="is_vipuser" property="isVipuser" />
+		<result column="is_vipuser" property="productType" />
 		<result column="vip_date" property="vipDate" />
 		<result column="is_performance_pool" property="isPerformancePool" />
 		<result column="user_mark" property="userMark" />
 		<result column="create_time" property="createTime" />
 		<result column="update_time" property="updateTime" />
 	</resultMap>
+
+	<!-- 通用查询结果列-->
+	<sql id="Base_Column_List">
+		id,
+		mobile_no,
+		member_no,
+		user_name,
+		advisor_id,
+		advisor_name,
+		product_id,
+		product_name,
+		product_type,
+		product_rate,
+		trans_amount,
+		trans_time,
+		inception_date,
+		due_date,
+		limit_days,
+		limit_type,
+		user_type,
+		register_time,
+		report_date,
+		is_vipuser,
+		vip_date,
+		is_performance_pool,
+		user_mark,
+		create_time,
+		update_time
+	</sql>
+
+	<select id="selectCountByParams" resultType="int">
+		SELECT COUNT(*) FROM sales_details WHERE 1=1
+		<if test="salesDetailVo != null">
+
+			<if test="salesDetailVo.userName != null and salesDetailVo.userName != ''">
+				AND user_name like CONCAT('%',#{salesDetailVo.userName},'%')
+			</if>
+			<if test="salesDetailVo.mobileNo != null and salesDetailVo.mobileNo != ''">
+				AND mobile_no = #{salesDetailVo.mobileNo}
+			</if>
+			<if test="salesDetailVo.userType != null">
+				AND user_type = #{salesDetailVo.userType}
+			</if>
+			<if test="salesDetailVo.productType != null">
+				AND is_vipuser = #{salesDetailVo.productType}
+			</if>
+			<if test="salesDetailVo.limitType != null">
+				AND is_vipuser = #{salesDetailVo.limitType}
+			</if>
+			<if test="salesDetailVo.advisorName != null and salesDetailVo.advisorName != ''">
+				AND advisor_name = #{salesDetailVo.advisorName}
+			</if>
+			<if test="salesDetailVo.userMark != null and salesDetailVo.userMark != ''">
+				AND user_mark = #{salesDetailVo.userMark}
+			</if>
+			<if test="salesDetailVo.isPerformancePool != null">
+				AND is_performance_pool like #{salesDetailVo.isPerformancePool}
+			</if>
+			<!-- 日期比较有三种情况 -->
+			<if test="salesDetailVo.transTimeStart != null and salesDetailVo.transTimeEnd != null">
+				AND trans_time >= #{salesDetailVo.transTimeStart}
+				AND #{salesDetailVo.transTimeEnd} >= trans_time
+			</if>
+			<if test="salesDetailVo.transTimeStart == null and salesDetailVo.transTimeEnd != null">
+				AND #{salesDetailVo.transTimeEnd} >= trans_time
+			</if>
+			<if test="salesDetailVo.transTimeStart != null and salesDetailVo.transTimeEnd == null">
+				AND trans_time >= #{salesDetailVo.transTimeStart}
+			</if>
+			<!-- 投资金额比较有三种情况 -->
+			<if test="salesDetailVo.transAmountSmall != null and salesDetailVo.transAmountBig != null">
+				AND trans_amount >= #{salesDetailVo.transAmountSmall}
+				AND #{salesDetailVo.transAmountBig} >= trans_amount
+			</if>
+			<if test="salesDetailVo.transAmountSmall == null and salesDetailVo.transAmountBig != null">
+				AND #{salesDetailVo.transAmountBig} >= trans_amount
+			</if>
+			<if test="salesDetailVo.transAmountSmall != null and salesDetailVo.transAmountBig == null">
+				AND trans_amount >= #{salesDetailVo.transAmountSmall}
+			</if>
+
+		</if>
+
+	</select>
+
+	<select id="selectPageByParams" resultMap="BaseResultMap">
+		SELECT <include refid="Base_Column_List"/> FROM sales_details WHERE 1=1
+		<if test="salesDetailVo != null">
+
+			<if test="salesDetailVo.userName != null and salesDetailVo.userName != ''">
+				AND user_name like CONCAT('%',#{salesDetailVo.userName},'%')
+			</if>
+			<if test="salesDetailVo.mobileNo != null and salesDetailVo.mobileNo != ''">
+				AND mobile_no = #{salesDetailVo.mobileNo}
+			</if>
+			<if test="salesDetailVo.userType != null">
+				AND user_type = #{salesDetailVo.userType}
+			</if>
+			<if test="salesDetailVo.productType != null">
+				AND is_vipuser = #{salesDetailVo.productType}
+			</if>
+			<if test="salesDetailVo.limitType != null">
+				AND is_vipuser = #{salesDetailVo.limitType}
+			</if>
+			<if test="salesDetailVo.advisorName != null and salesDetailVo.advisorName != ''">
+				AND advisor_name = #{salesDetailVo.advisorName}
+			</if>
+			<if test="salesDetailVo.userMark != null and salesDetailVo.userMark != ''">
+				AND user_mark = #{salesDetailVo.userMark}
+			</if>
+			<if test="salesDetailVo.isPerformancePool != null">
+				AND is_performance_pool like #{salesDetailVo.isPerformancePool}
+			</if>
+			<!-- 日期比较有三种情况 -->
+			<if test="salesDetailVo.transTimeStart != null and salesDetailVo.transTimeEnd != null">
+				AND trans_time >= #{salesDetailVo.transTimeStart}
+				AND #{salesDetailVo.transTimeEnd} >= trans_time
+			</if>
+			<if test="salesDetailVo.transTimeStart == null and salesDetailVo.transTimeEnd != null">
+				AND #{salesDetailVo.transTimeEnd} >= trans_time
+			</if>
+			<if test="salesDetailVo.transTimeStart != null and salesDetailVo.transTimeEnd == null">
+				AND trans_time >= #{salesDetailVo.transTimeStart}
+			</if>
+			<!-- 投资金额比较有三种情况 -->
+			<if test="salesDetailVo.transAmountSmall != null and salesDetailVo.transAmountBig != null">
+				AND trans_amount >= #{salesDetailVo.transAmountSmall}
+				AND #{salesDetailVo.transAmountBig} >= trans_amount
+			</if>
+			<if test="salesDetailVo.transAmountSmall == null and salesDetailVo.transAmountBig != null">
+				AND #{salesDetailVo.transAmountBig} >= trans_amount
+			</if>
+			<if test="salesDetailVo.transAmountSmall != null and salesDetailVo.transAmountBig == null">
+				AND trans_amount >= #{salesDetailVo.transAmountSmall}
+			</if>
+
+		</if>
+		ORDER BY trans_time DESC
+		LIMIT
+		#{current}, #{size}
+	</select>
+
+
+
 
 </mapper>
