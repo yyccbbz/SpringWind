@@ -13,6 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  */
 @Controller
 @RequestMapping("/statsReport/productExpires")
-public class ProductExpiresController {
+public class ProductExpiresController extends BaseController {
 	
 }

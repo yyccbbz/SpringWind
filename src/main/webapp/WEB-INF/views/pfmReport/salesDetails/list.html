@@ -104,7 +104,10 @@ BigClient - 销售明细
             field: 'transTime',
             title: '投资时间',
             align: "center",
-            valign: "middle"
+            valign: "middle",
+			formatter: function (value, row, index) {
+				return formatDateTime(row.transTime);
+			}
         },{
             field: 'inception_date',
             title: '定期产品成立日',
@@ -145,7 +148,7 @@ BigClient - 销售明细
            align: "center",
            valign: "middle",
              formatter: function (value, row, index) {
-            return formatDateTime(row.registerTime);
+            return formatDate(row.registerTime);
         }
         },{
             field: 'isVipuser',
