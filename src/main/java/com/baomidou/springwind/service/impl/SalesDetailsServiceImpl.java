@@ -27,7 +27,7 @@ public class SalesDetailsServiceImpl extends BaseServiceImpl<SalesDetailsMapper,
     public Page<SalesDetails> selectPageByParams(Page<SalesDetails> page, SalesDetailVo salesDetailVo) {
 
         int total = baseMapper.selectCountByParams(salesDetailVo);
-        List<SalesDetails> list = baseMapper.selectPageByParams(page.getCurrent(),page.getSize(),salesDetailVo);
+        List<SalesDetails> list = baseMapper.selectPageByParams(page.getCurrent()-1,page.getSize(),salesDetailVo);
         page.setTotal(total);
         page.setRecords(list);
         return page;

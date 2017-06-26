@@ -65,7 +65,7 @@
 		<if test="salesDetailVo != null">
 
 			<if test="salesDetailVo.userName != null and salesDetailVo.userName != ''">
-				AND user_name like CONCAT('%',#{salesDetailVo.userName},'%')
+				AND user_name LIKE "%"#{salesDetailVo.userName}"%"
 			</if>
 			<if test="salesDetailVo.mobileNo != null and salesDetailVo.mobileNo != ''">
 				AND mobile_no = #{salesDetailVo.mobileNo}

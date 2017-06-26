@@ -27,7 +27,7 @@ public class FinalUserServiceImpl extends BaseServiceImpl<FinalUserMapper, Final
     public Page<FinalUser> selectPageByParams(Page<FinalUser> page, FinalUser finalUser) {
 
         int total = baseMapper.selectCountByParams(finalUser);
-        List<FinalUser> list = baseMapper.selectPageByParams(page.getCurrent(),page.getSize(), finalUser);
+        List<FinalUser> list = baseMapper.selectPageByParams(page.getCurrent()-1,page.getSize(), finalUser);
         page.setTotal(total);
         page.setRecords(list);
         return page;
