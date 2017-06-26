@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.baomidou.springwind.mapper.CustomerRegistryMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.baomidou.springwind.entity.CustomerRegistry">
+		<id column="id" property="id" />
+		<result column="mobile_no" property="mobileNo" />
+		<result column="member_no" property="memberNo" />
+		<result column="user_name" property="userName" />
+		<result column="is_register" property="isRegister" />
+		<result column="register_time" property="registerTime" />
+		<result column="t_mobile_no" property="tMobileNo" />
+		<result column="t_member_no" property="tMemberNo" />
+		<result column="t_user_name" property="tUserName" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+</mapper>

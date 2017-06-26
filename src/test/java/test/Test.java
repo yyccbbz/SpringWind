@@ -1,20 +1,31 @@
 package test;
 
-import net.sf.ehcache.Cache;
-import net.sf.ehcache.CacheManager;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.io.*;
 
-public class Test{
+public class Test {
 
-    @Autowired
-    private static CacheManager cacheManager;
+    /*{ field: 'userName', title: '客户姓名', align: 'center', valign: 'middle' },*/
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
-        Cache cache = cacheManager.getCache("permissionCache");
+        File file = new File("E:\\Users\\IdeaProjects\\SpringWind\\src\\test\\java\\test\\product_expires.txt");
 
-        int size = cache.getSize();
-        System.out.println("size = " + size);
+        if (file.isFile() && file.exists()) { //判断文件是否存在
+
+            InputStreamReader read = new InputStreamReader(new FileInputStream(file));
+            BufferedReader bufferedReader = new BufferedReader(read);
+            String lineTxt = null;
+
+            while ((lineTxt = bufferedReader.readLine()) != null) {
+                String[] strs = lineTxt.split(",");
+                String s1 = strs[0];
+                String s2 = strs[1];
+
+                String field = "{ field: '" + s1 + "', title: '" + s2 + "', align: 'center', valign: 'middle' },";
+                System.err.println(field);
+            }
+
+        }
 
 
     }

@@ -240,17 +240,4 @@ public class AssignReportImportUserController extends BaseController{
         return b.toString();
     }
 
-    /**
-     * form表单提交 Date类型数据绑定
-     * <功能详细描述>
-     * @param binder
-     * @see [类、类#方法、类#成员]
-     */
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        dateFormat.setLenient(false);
-        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-    }
-
 }

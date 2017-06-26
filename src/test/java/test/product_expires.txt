@@ -1,0 +1,17 @@
+id,主键
+mobileNo,客户手机号
+memberNo,客户会员号
+userName,客户姓名
+advisorId,投资顾问ID号
+advisorName,投资顾问姓名
+isPerformancePool,是否业绩池
+productId,产品ID号
+productName,产品名称
+transAmount,投资金额
+inceptionDate,定期产品成立日
+dueDate,定期产品到期日
+limitDays,定期产品期限（天）
+limitType,定期产品期限类型
+productRate,产品利率
+createTime,创建时间
+updateTime,更新时间

@@ -15,6 +15,91 @@ Date: 2017-05-17 18:12:14
 
 SET FOREIGN_KEY_CHECKS=0;
 
+#统计报表--1--产品到期表 product_expires
+DROP TABLE IF EXISTS `product_expires`;
+CREATE TABLE `product_expires` (
+  `id`  bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键' ,
+  `mobile_no`  varchar(20) NOT NULL COMMENT '客户手机号' ,
+  `member_no`  varchar(50) NOT NULL COMMENT '客户会员号' ,
+  `user_name`  varchar(20) NULL DEFAULT NULL COMMENT '客户姓名' ,
+  `advisor_id`  int(6) NULL DEFAULT NULL COMMENT '投资顾问ID号' ,
+  `advisor_name`  varchar(20) NULL DEFAULT NULL COMMENT '投资顾问姓名' ,
+  `is_performance_pool`  int(6) NULL DEFAULT NULL COMMENT '是否业绩池：0：否，1：是' ,
+  `product_id`  varchar(32) NULL DEFAULT NULL COMMENT '产品ID号' ,
+  `product_name`  varchar(100) NULL DEFAULT NULL COMMENT '产品名称' ,
+  `trans_amount`  DOUBLE(20,2) NULL DEFAULT NULL COMMENT '投资金额' ,
+  `inception_date`  DATE NULL DEFAULT NULL COMMENT '定期产品成立日' ,
+  `due_date`  DATE NULL DEFAULT NULL COMMENT '定期产品到期日' ,
+  `limit_days`  INT(6) NULL DEFAULT NULL COMMENT '定期产品期限（天）' ,
+  `limit_type`  INT(6) NULL DEFAULT NULL COMMENT '定期产品期限类型：0：新人专享，1:6个月，2:12个月' ,
+  `product_rate`  varchar(20) NULL DEFAULT NULL COMMENT '产品利率' ,
+  `create_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
+  `update_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间' ,
+  PRIMARY KEY (`id`),
+  INDEX `index_mobile_no` (`mobile_no`) USING BTREE COMMENT '客户手机号索引',
+  INDEX `index_member_no` (`member_no`) USING BTREE COMMENT '客户会员号索引',
+  INDEX `index_user_name` (`user_name`) USING BTREE COMMENT '客户姓名索引',
+  INDEX `index_advisor_id` (`advisor_id`) USING BTREE COMMENT '投资顾问ID号索引',
+  INDEX `index_advisor_name` (`advisor_name`) USING BTREE COMMENT '投资顾问姓名索引',
+  INDEX `index_due_date` (`due_date`) USING BTREE COMMENT '定期产品到期日索引',
+  INDEX `index_limit_type` (`limit_type`) USING BTREE COMMENT '定期产品期限类型索引'
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='产品到期表';
+
+
+#统计报表--2--资产余额表 assets_balance
+DROP TABLE IF EXISTS `assets_balance`;
+CREATE TABLE `assets_balance` (
+  `id`  bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键' ,
+  `mobile_no`  varchar(20) NOT NULL COMMENT '客户手机号' ,
+  `member_no`  varchar(50) NOT NULL COMMENT '客户会员号' ,
+  `user_name`  varchar(20) NULL DEFAULT NULL COMMENT '客户姓名' ,
+  `user_type`  int(6) NULL DEFAULT NULL COMMENT '客户类别：1：上报，2：分配，3：未分配vip' ,
+  `register_time`  datetime NULL DEFAULT NULL COMMENT '客户注册时间' ,
+  `dingqi_aum`  DOUBLE(20,2) NULL DEFAULT NULL COMMENT '纯定期AUM' ,
+  `huoqi_aum`  DOUBLE(20,2) NULL DEFAULT NULL COMMENT '活期AUM' ,
+  `huobaoding_aum`  DOUBLE(20,2) NULL DEFAULT NULL COMMENT '活包定AUM' ,
+  `secondmarket_aum`  DOUBLE(20,2) NULL DEFAULT NULL COMMENT '二级市场转让AUM' ,
+  `trans_aum`  DOUBLE(20,2) NULL DEFAULT NULL COMMENT '持有理财AUM' ,
+  `account_aum`  DOUBLE(20,2) NULL DEFAULT NULL COMMENT '账户余额AUM' ,
+  `aum_date`  DATE NULL DEFAULT NULL COMMENT 'AUM更新日期' ,
+  `is_performance_pool`  int(6) NULL DEFAULT NULL COMMENT '是否业绩池：0：否，1：是' ,
+  `create_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
+  `update_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间' ,
+  PRIMARY KEY (`id`),
+  INDEX `index_mobile_no` (`mobile_no`) USING BTREE COMMENT '客户手机号索引',
+  INDEX `index_member_no` (`member_no`) USING BTREE COMMENT '客户会员号索引',
+  INDEX `index_user_name` (`user_name`) USING BTREE COMMENT '客户姓名索引',
+  INDEX `index_user_type` (`user_type`) USING BTREE COMMENT '客户类别索引',
+  INDEX `index_trans_aum` (`trans_aum`) USING BTREE COMMENT '持有理财AUM索引',
+  INDEX `index_is_performance_pool` (`is_performance_pool`) USING BTREE COMMENT '是否业绩池索引'
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='资产余额表';
+
+
+#统计报表--3--客户注册情况 customer_registry
+DROP TABLE IF EXISTS `customer_registry`;
+CREATE TABLE `customer_registry` (
+  `id`  bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键' ,
+  `mobile_no`  varchar(20) NOT NULL COMMENT '客户手机号' ,
+  `member_no`  varchar(50) NOT NULL COMMENT '客户会员号' ,
+  `user_name`  varchar(20) NULL DEFAULT NULL COMMENT '客户姓名' ,
+  `is_register`  int(6) NULL DEFAULT NULL COMMENT '是否注册：0：否，1：是' ,
+  `register_time`  datetime NULL DEFAULT NULL COMMENT '客户注册时间' ,
+  `t_mobile_no`  varchar(20) NOT NULL COMMENT '推荐人手机号' ,
+  `t_member_no`  varchar(50) NOT NULL COMMENT '推荐人会员号' ,
+  `t_user_name`  varchar(20) NULL DEFAULT NULL COMMENT '推荐人姓名' ,
+  `create_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
+  `update_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间' ,
+  PRIMARY KEY (`id`),
+  INDEX `index_mobile_no` (`mobile_no`) USING BTREE COMMENT '客户手机号索引',
+  INDEX `index_member_no` (`member_no`) USING BTREE COMMENT '客户会员号索引',
+  INDEX `index_user_name` (`user_name`) USING BTREE COMMENT '客户姓名索引',
+  INDEX `index_is_register` (`is_register`) USING BTREE COMMENT '是否注册索引',
+  INDEX `index_t_mobile_no` (`t_mobile_no`) USING BTREE COMMENT '推荐人手机号索引',
+  INDEX `index_t_member_no` (`t_member_no`) USING BTREE COMMENT '推荐人会员号索引',
+  INDEX `index_t_user_name` (`t_user_name`) USING BTREE COMMENT '推荐人姓名索引'
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='客户注册情况';
+
+
 # 业绩报表--1--销售明细
 DROP TABLE IF EXISTS `sales_details`;
 CREATE TABLE `sales_details` (
@@ -28,7 +113,7 @@ CREATE TABLE `sales_details` (
   `product_name`  varchar(100) NULL DEFAULT NULL COMMENT '产品名称' ,
   `product_type`  int(6) NULL DEFAULT NULL COMMENT '产品类型：1：定期，2：活期，3：活包定，4：转让' ,
   `product_rate`  varchar(20) NULL DEFAULT NULL COMMENT '产品利率' ,
-  `trans_amount`  DECIMAL(20,2) NULL DEFAULT NULL COMMENT '投资金额' ,
+  `trans_amount`  DOUBLE(20,2) NULL DEFAULT NULL COMMENT '投资金额' ,
   `trans_time`  DATETIME NULL DEFAULT NULL COMMENT '投资时间' ,
   `inception_date`  DATE NULL DEFAULT NULL COMMENT '定期产品成立日' ,
   `due_date`  DATE NULL DEFAULT NULL COMMENT '定期产品到期日' ,
@@ -73,7 +158,7 @@ CREATE TABLE `get_information` (
   `bt_member_no`  varchar(50) NOT NULL COMMENT '被推荐人会员号' ,
   `bt_user_name`  varchar(20) NULL DEFAULT NULL COMMENT '被推荐人姓名' ,
   `bt_register_time`  datetime NULL DEFAULT NULL COMMENT '被推荐人注册时间' ,
-  `bt_trans_amount`  DECIMAL(20,2) NULL DEFAULT NULL COMMENT '被推荐人投资金额（不含活期和转让）' ,
+  `bt_trans_amount`  DOUBLE(20,2) NULL DEFAULT NULL COMMENT '被推荐人投资金额（不含活期和转让）' ,
   `create_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
   `update_time`  timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间' ,
   PRIMARY KEY (`id`),
@@ -110,7 +195,7 @@ CREATE TABLE `get_sales_details` (
   `product_name`  varchar(100) NULL DEFAULT NULL COMMENT '产品名称' ,
   `product_type`  int(6) NULL DEFAULT NULL COMMENT '产品类型：1：定期，2：活期，3：活包定，4：转让' ,
   `product_rate`  varchar(20) NULL DEFAULT NULL COMMENT '产品利率' ,
-  `trans_amount`  DECIMAL(20,2) NULL DEFAULT NULL COMMENT '投资金额' ,
+  `trans_amount`  DOUBLE(20,2) NULL DEFAULT NULL COMMENT '投资金额' ,
   `trans_time`  DATETIME NULL DEFAULT NULL COMMENT '投资时间' ,
   `inception_date`  DATE NULL DEFAULT NULL COMMENT '定期产品成立日' ,
   `due_date`  DATE NULL DEFAULT NULL COMMENT '定期产品到期日' ,

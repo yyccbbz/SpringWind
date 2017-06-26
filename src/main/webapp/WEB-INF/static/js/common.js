@@ -59,6 +59,25 @@ function formatDate(time) {
 }
 
 /**
+ * 保留两位小数
+ * @param str
+ */
+function getDouble(str) {
+
+    if (str.indexOf('.') != -1) {
+        var num = str.length - str.indexOf('.') - 1;
+        if (num > 2)
+            str = str.substring(0, str.indexOf('.') + 2 + 1);
+        if (num < 2)
+            str += "0"
+    } else {
+        str += ".00"
+    }
+    return str;
+}
+
+
+/**
  * 用户 User
  * '2、普通用户 1、管理员 3、超级管理员'
  */
