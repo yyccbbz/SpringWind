@@ -31,7 +31,9 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/pfmReport/salesDetails")
-public class SalesDetailsController extends BaseController {
+public class
+
+SalesDetailsController extends BaseController {
 
     @Autowired
     private ISalesDetailsService salesDetailsService;

@@ -32,7 +32,7 @@
 		<if test="finalUser != null">
 
 			<if test="finalUser.userName != null and finalUser.userName != ''">
-				AND user_name like CONCAT('%',#{finalUser.userName},'%')
+				AND user_name like CONCAT(CONCAT('%',#{finalUser.userName}),'%')
 			</if>
 			<if test="finalUser.mobileNo != null and finalUser.mobileNo != ''">
 				AND mobile_no = #{finalUser.mobileNo}
@@ -73,7 +73,7 @@
 		<if test="finalUser != null">
 
 			<if test="finalUser.userName != null and finalUser.userName != ''">
-				AND user_name like #{finalUser.userName}
+				AND user_name like CONCAT(CONCAT('%',#{finalUser.userName}),'%')
 			</if>
 			<if test="finalUser.mobileNo != null and finalUser.mobileNo != ''">
 				AND mobile_no = #{finalUser.mobileNo}
