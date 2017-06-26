@@ -50,7 +50,7 @@
 				AND user_mark = #{finalUser.userMark}
 			</if>
 			<if test="finalUser.isPerformancePool != null">
-				AND is_performance_pool like #{finalUser.isPerformancePool}
+				AND is_performance_pool = #{finalUser.isPerformancePool}
 			</if>
 			<!-- 日期比较有三种情况 -->
 			<if test="finalUser.reportDate != null and finalUser.vipDate != null">
@@ -73,7 +73,7 @@
 		<if test="finalUser != null">
 
 			<if test="finalUser.userName != null and finalUser.userName != ''">
-				AND user_name like CONCAT(CONCAT('%',#{finalUser.userName}),'%')
+				AND user_name like #{finalUser.userName}
 			</if>
 			<if test="finalUser.mobileNo != null and finalUser.mobileNo != ''">
 				AND mobile_no = #{finalUser.mobileNo}

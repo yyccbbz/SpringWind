@@ -61,7 +61,7 @@
 	</sql>
 
 	<select id="selectCountByParams" resultType="int">
-		SELECT COUNT(*) FROM sales_details WHERE 1=1
+		SELECT COUNT(1) FROM sales_details WHERE 1=1
 		<if test="salesDetailVo != null">
 
 			<if test="salesDetailVo.userName != null and salesDetailVo.userName != ''">
@@ -86,7 +86,7 @@
 				AND user_mark = #{salesDetailVo.userMark}
 			</if>
 			<if test="salesDetailVo.isPerformancePool != null">
-				AND is_performance_pool like #{salesDetailVo.isPerformancePool}
+				AND is_performance_pool = #{salesDetailVo.isPerformancePool}
 			</if>
 			<!-- 日期比较有三种情况 -->
 			<if test="salesDetailVo.transTimeStart != null and salesDetailVo.transTimeEnd != null">
@@ -120,7 +120,7 @@
 		<if test="salesDetailVo != null">
 
 			<if test="salesDetailVo.userName != null and salesDetailVo.userName != ''">
-				AND user_name like CONCAT(CONCAT('%',#{salesDetailVo.userName}),'%')
+				AND user_name like CONCAT('%',#{salesDetailVo.userName},'%')
 			</if>
 			<if test="salesDetailVo.mobileNo != null and salesDetailVo.mobileNo != ''">
 				AND mobile_no = #{salesDetailVo.mobileNo}
