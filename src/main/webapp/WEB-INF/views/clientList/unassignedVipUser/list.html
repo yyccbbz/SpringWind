@@ -65,17 +65,15 @@ BigClient - 未分配的VIP名单
         /*{field: 'id',title: '序号',align: "center",valign: "middle"}, */
         {field: 'mobileNo',title: '客户手机号',align: "center",valign: "middle"},
         {field: 'userName',title: '客户姓名',align: "center",valign: "middle"},
-        {field: 'registerTime',title: '注册时间',align: "center",valign: "middle",formatter: function (value, row, index)
-        {return formatDateTime(row.registerTime);}},
-        {field: 'vipDate',title: '成为vip日期',align: "center",valign: "middle",formatter: function (value, row, index)
-        {return formatDate(row.vipDate);}},
+        {field: 'registerTime',title: '注册时间',align: "center",valign: "middle",
+			formatter: function (value, row, index) {return formatDateTime(row.registerTime);}},
+        {field: 'vipDate',title: '成为vip日期',align: "center",valign: "middle",
+			formatter: function (value, row, index) {return formatDate(row.vipDate);}},
         {field: 'vipTransDingqi',title: '成为VIP时的历史定期投资额',align: "center",valign: "middle"},
 		<!-- 此处按钮级别权限控制,目前只有 admin 拥有该权限! -->
 		#if ($SSOPermission.isActionable("10010"))
         {
-            title: '操作',
-            align: "center",
-            valign: "middle",
+            title: '操作', align: "center", valign: "middle",
             formatter: function (value, row, index) {
                 var id = row.id;
                 return '<a class="btn btn-xs btn-warning" onclick="editUser(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
