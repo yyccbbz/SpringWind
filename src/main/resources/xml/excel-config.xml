@@ -2,8 +2,8 @@
 <excels>
 	<!-- excel标签参看:ExcelDefinition,Field标签参看:FieldValue -->
 
-	<excel id="user" class="com.baomidou.springwind.entity.User" sheetname="用户列表"
-		   defaultColumnWidth="5000" defaultAlign="center" enableStyle="true">
+	<excel id="user" class="com.baomidou.springwind.entity.User"
+		   sheetname="用户列表" defaultColumnWidth="5000" defaultAlign="center" enableStyle="true">
 		<field name="id" title="主键"/>
 		<field name="loginName" title="用户名"/>
 		<field name="password" title="密码"/>
@@ -60,8 +60,8 @@
 		<field name="updateTime" title="更新时间" pattern="yyyy/MM/dd HH:mm:ss"/>
 	</excel>
 
-	<excel id="performancePoolImportUser" class="com.baomidou.springwind.entity.PerformancePoolImportUser" sheetname="业绩池名单"
-		   defaultColumnWidth="5000" defaultAlign="center" enableStyle="true">
+	<excel id="performancePoolImportUser" class="com.baomidou.springwind.entity.PerformancePoolImportUser"
+		   sheetname="业绩池名单" defaultColumnWidth="5000" defaultAlign="center" enableStyle="true">
 		<field name="id" title="id"/>
 		<field name="mobileNo" title="客户手机号"/>
 		<field name="userName" title="客户姓名"/>
@@ -72,8 +72,8 @@
 		<field name="updateTime" title="更新时间" pattern="yyyy/MM/dd HH:mm:ss"/>
 	</excel>
 
-	<excel id="historyPfmPoolUser" class="com.baomidou.springwind.entity.HistoryPfmPoolUser" sheetname="历史正式名单"
-		   defaultColumnWidth="5000" defaultAlign="center" enableStyle="true">
+	<excel id="historyPfmPoolUser" class="com.baomidou.springwind.entity.HistoryPfmPoolUser"
+		   sheetname="历史正式名单" defaultColumnWidth="5000" defaultAlign="center" enableStyle="true">
 		<field name="id" title="id"/>
 		<field name="monthId" title="历史月份"/>
 		<field name="mobileNo" title="客户手机号"/>
@@ -113,6 +113,28 @@
 		<field name="userMark" title="客户标识"/>
 		<field name="createTime" title="记录创建时间" pattern="yyyy/MM/dd HH:mm:ss"/>
 		<field name="updateTime" title="记录更新时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+	</excel>
+
+	<!-- 统计报表 -->
+	<excel id="productExpires" class="com.baomidou.springwind.entity.ProductExpires"
+		   sheetname="产品到期" defaultColumnWidth="5000" defaultAlign="center" enableStyle="true">
+		<field name="id" title="id"/>
+		<field name="mobileNo" title="mobileNo"/>
+		<field name="memberNo" title="memberNo"/>
+		<field name="userName" title="userName"/>
+		<field name="advisorId" title="advisorId"/>
+		<field name="advisorName" title="advisorName"/>
+		<field name="isPerformancePool" title="isPerformancePool" format="1:是,0:否"/>
+		<field name="productId" title="productId"/>
+		<field name="productName" title="productName"/>
+		<field name="transAmount" title="transAmount"/>
+		<field name="inceptionDate" title="inceptionDate" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="dueDate" title="dueDate" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="limitDays" title="limitDays"/>
+		<field name="limitType" title="limitType" format="0:新人专享,1:6个月,2:12个月"/>
+		<field name="productRate" title="productRate"/>
+		<field name="createTime" title="createTime" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="updateTime" title="updateTime" pattern="yyyy/MM/dd HH:mm:ss"/>
 	</excel>
 
 </excels>
