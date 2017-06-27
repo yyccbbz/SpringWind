@@ -17,7 +17,7 @@ BigClient - 销售明细
 		</button>
 
 		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
-			<i class="fa fa-download"></i>&nbsp;导出名单
+			<i class="fa fa-download"></i>&nbsp;导出销售明细
 		</button>
 
 		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
@@ -51,7 +51,7 @@ BigClient - 销售明细
 <script src="#springUrl('/static/js/base_list.js')"></script>
 <script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
-    var dataUrl = "#springUrl('/pfmReport/salesDetails/getUserList.html')";
+    var dataUrl = "#springUrl('/pfmReport/salesDetails/getSalesDetailList.html')";
     var dataColumns = [/*{
             field: 'id',
             title: '序号',
@@ -109,10 +109,13 @@ BigClient - 销售明细
 				return formatDateTime(row.transTime);
 			}
         },{
-            field: 'inception_date',
+            field: 'inceptionDate',
             title: '定期产品成立日',
             align: "center",
-            valign: "middle"
+            valign: "middle",
+        formatter: function (value, row, index) {
+            return formatDate(row.inceptionDate);
+        }
         },{
             field: 'limitDays',
             title: '定期产品期限',
@@ -148,7 +151,7 @@ BigClient - 销售明细
            align: "center",
            valign: "middle",
              formatter: function (value, row, index) {
-            return formatDate(row.registerTime);
+            return formatDate(row.reportDate);
         }
         },{
             field: 'isVipuser',

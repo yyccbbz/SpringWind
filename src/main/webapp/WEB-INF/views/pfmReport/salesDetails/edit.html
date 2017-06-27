@@ -148,9 +148,9 @@
 <script type="text/javascript">
 
     // 加载日期插件
-    calendarWithoutTime("#reportDate");
+    calendarWitHTime("#reportDate");
     calendarWithTime("#registerTime");
-    calendarWithoutTime("#vipDate");
+    calendarWithTime("#vipDate");
 
     $("#myForm").validator({
         valid: function (form) {
@@ -158,7 +158,7 @@
             // 提交表单之前，hold住表单，防止重复提交
             me.holdSubmit();
             $.ajax({
-                url: "#springUrl('/perm/user/editUser')",
+                url: "#springUrl('/pfmReport/salesDetails/editSalesDetail')",
                 data: $(form).serialize(),
                 type: "POST",
                 success: function (data) {
