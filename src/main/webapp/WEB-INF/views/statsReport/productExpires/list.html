@@ -137,8 +137,8 @@ BigClient - 产品到期表
 	function downloadExcel() {
         // 模拟Ajax获取
         downLoadFile({
-            url: "#springUrl('/statsReport/productExpires/downloadExcel.html')", //请求的url
-            data: {search: $("#txt_search").val()}				//要发送的数据
+            url: "#springUrl('/statsReport/productExpires/downloadExcel.html')", 	//请求的url
+            data: {search: $("#txt_search").val()}									//要发送的数据
         });
     }
 
@@ -155,12 +155,12 @@ BigClient - 产品到期表
                 var url = "#springUrl('/statsReport/productExpires/uploadExcel/')";
                 var fileId = "fileExcel";
                 $.ajaxFileUpload({
-                    url: url,                              //用于文件上传的服务器端请求地址
-                    type: "post",                          //post请求方式
-                    secureuri: false,                      //一般设置为false
-                    fileElementId: fileId,            	   //文件上传空间的id属性
-                    dataType: "json",                      //返回值类型 一般设置为json
-                    success: function (data, status) {     //服务器成功响应处理函数
+                    url: url,                          //用于文件上传的服务器端请求地址
+                    type: "post",                      //post请求方式
+                    secureuri: false,                  //一般设置为false
+                    fileElementId: fileId,             //文件上传空间的id属性
+                    dataType: "json",                  //返回值类型 一般设置为json
+                    success: function (data, status) { //服务器成功响应处理函数
                         layer.closeAll();
 						console.log(data);
 						console.log(data.success);

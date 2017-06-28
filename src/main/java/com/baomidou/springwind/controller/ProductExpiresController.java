@@ -33,18 +33,23 @@ import java.util.List;
 @Controller
 @RequestMapping("/statsReport/productExpires")
 public class ProductExpiresController extends BaseController {
+
     @Autowired
     private IProductExpiresService productExpiresService;
 
-    //excel-config.xml中配置的ID
+    /**
+     * excel导出相关
+     */
+    @Value("${productExpires.excelName}")
+    private String excelName;
     @Value("${productExpires.excelId}")
-    private String userExcelId;
-
-    //excel导出的字段
+    private String excelId;
     @Value("${productExpires.fields}")
-    private String userFields;
+    private String excelFields;
 
-    /**页面跳转*/
+    /**
+     * 页面跳转
+     */
     @Permission("8001")
     @RequestMapping("/list")
     public String list(Model model) {
@@ -67,7 +72,9 @@ public class ProductExpiresController extends BaseController {
     }
 
 
-    /**CRUD*/
+    /**
+     * CRUD
+     */
     @ResponseBody
     @Permission("8001")
     @RequestMapping(value = "/getUserList")
@@ -76,7 +83,7 @@ public class ProductExpiresController extends BaseController {
         System.err.println("筛选条件 formData =" + _search);
 
         ProductExpires pe = null;
-        if(StringUtil.isNotEmpty(_search)){
+        if (StringUtil.isNotEmpty(_search)) {
             pe = JSONObject.parseObject(_search, ProductExpires.class);
         }
         Page<ProductExpires> page = getPage();
@@ -109,41 +116,21 @@ public class ProductExpiresController extends BaseController {
 //        Boolean rlt = productExpiresService.deleteById(userId);
 //        return rlt.toString();
 //    }
-//
-//
-//    /**
-//     * Excel导出列表
-//     *
-//     * @return
-//     */
-//    @Permission("8001")
-//    @RequestMapping(value = "/downloadExcel",method = RequestMethod.POST)
-//    public ModelAndView downloadExcel(){
-//
-//        /**1.执行你的业务逻辑获取数据，使用ExcelContent生成Workbook，需要四个参数:
-//         *
-//         * ①id 配置ID
-//         * ②beans 配置class对应的List
-//         * ③header 导出之前,在标题前面做出一些额外的操作,比如增加文档描述等,可以为null
-//         * ④fields 指定Excel导出的字段(bean对应的字段名称),可以为null
-//         */
-//        Workbook workbook = null;
-//        String id = userExcelId;
-//        List<ProductExpires> list = productExpiresService.selectList(null);
-//        List<String> fields = Arrays.asList(userFields.split(","));
-//        try {
-//            workbook = excelContext.createExcel(id, list, null, fields);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        /**2.跳转到Excel下载视图*/
-//        ModelAndView view = new ModelAndView("springMvcExcelView");
-//        view.addObject(SpringMvcExcelView.EXCEL_NAME, "正式名单" + DateUtil.getCurrentTime());
-//        view.addObject(SpringMvcExcelView.EXCEL_WORKBOOK, workbook);
-//        view.addObject(SpringMvcExcelView.EXCEL_EMPTY_MESSAGE, "正式名单 没有相关数据可以导出");
-//        return view;
-//    }
+
+
+    /**
+     * Excel导出列表
+     *
+     * @return
+     */
+    @Permission("8001")
+    @RequestMapping(value = "/downloadExcel", method = RequestMethod.POST)
+    public ModelAndView downloadExcel() {
+
+        List<String> fields = Arrays.asList(excelFields.split(","));
+        List<ProductExpires> beans = productExpiresService.selectList(null);
+        return exportExcel(excelId, beans, null, fields, excelName);
+    }
 
     @ResponseBody
     @Permission("8001")
@@ -165,14 +152,22 @@ public class ProductExpiresController extends BaseController {
             pe.setAdvisorId(Integer.parseInt(RandomStringUtils.randomNumeric(4)));
             pe.setAdvisorName(RandomStringUtils.randomAlphabetic(6));
             pe.setIsPerformancePool(Integer.parseInt(RandomStringUtils.random(1, new char[]{'0', '1'})));
-            pe.setProductId("产品id" + i);
-            pe.setProductName("产品" + i);
-            pe.setTransAmount(0.00 + i);
+            pe.setProductId(RandomStringUtils.randomNumeric(5));
+            pe.setProductName(RandomStringUtils.random(5, "abcd"));
+            pe.setTransAmount(Double.parseDouble(RandomStringUtils.randomNumeric(5)));
             pe.setInceptionDate(DateUtil.randomDate("2017-01-01", "2017-06-01"));
             pe.setDueDate(DateUtil.randomDate("2017-01-01", "2017-06-01"));
-            pe.setLimitDays(Integer.parseInt(RandomStringUtils.randomNumeric(3)));
-            pe.setLimitType( Integer.parseInt(RandomStringUtils.random(1, new char[]{'1', '2', '0'})) );
-            pe.setProductRate("利率"+i);
+            pe.setLimitDays(Integer.parseInt(RandomStringUtils.randomNumeric(2)));
+
+            if (i % 3 == 0) {
+                pe.setLimitType(0);
+            } else if (i % 3 == 1) {
+                pe.setLimitType(6);
+            } else {
+                pe.setLimitType(12);
+            }
+
+            pe.setProductRate(""+i);
             pe.setCreateTime(new Date());
             pe.setUpdateTime(pe.getCreateTime());
             list.add(pe);

@@ -5,9 +5,13 @@ import com.baomidou.framework.common.util.DateUtil;
 import com.baomidou.framework.controller.SuperController;
 import com.baomidou.framework.mail.MailHelper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.springwind.common.view.SpringMvcExcelView;
+import com.baomidou.springwind.entity.ProductExpires;
 import com.baomidou.springwind.excel.ExcelContext;
+import com.baomidou.springwind.excel.parsing.ExcelHeader;
 import com.baomidou.springwind.service.IPrivilegeService;
 import com.baomidou.springwind.service.IUserService;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.web.bind.WebDataBinder;
@@ -19,7 +23,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -119,6 +125,31 @@ public class BaseController extends SuperController implements HandlerIntercepto
 	protected String booleanToString(boolean rlt) {
 		return rlt ? "true" : "false";
 	}
+
+	protected ModelAndView exportExcel(String id, List<?> beans, ExcelHeader header, List<String> fields ,String excelName){
+
+		/**1.执行你的业务逻辑获取数据，使用ExcelContent生成Workbook，需要四个参数:
+		 *
+		 * ①id 配置ID
+		 * ②beans 配置class对应的List
+		 * ③header 导出之前,在标题前面做出一些额外的操作,比如增加文档描述等,可以为null
+		 * ④fields 指定Excel导出的字段(bean对应的字段名称),可以为null
+		 */
+		Workbook workbook = null;
+		try {
+			workbook = excelContext.createExcel(id, beans, null, fields);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		/**2.跳转到Excel下载视图*/
+		ModelAndView view = new ModelAndView("springMvcExcelView");
+		view.addObject(SpringMvcExcelView.EXCEL_NAME, excelName + com.baomidou.springwind.common.utils.DateUtil.getCurrentTime());
+		view.addObject(SpringMvcExcelView.EXCEL_WORKBOOK, workbook);
+		view.addObject(SpringMvcExcelView.EXCEL_EMPTY_MESSAGE, excelName+" 没有相关数据可以导出");
+		return view;
+	}
+
 
 	/**
 	 * <p>

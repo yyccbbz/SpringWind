@@ -18,16 +18,16 @@ SET FOREIGN_KEY_CHECKS=0;
 #功能模块--1--投资顾问表
 DROP TABLE IF EXISTS `advisor`;
 CREATE TABLE `advisor` (
-  `id` INT(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `serial_number` VARCHAR(20) DEFAULT NULL COMMENT '投顾编号',
-  `job_title` VARCHAR(20) DEFAULT NULL COMMENT '投顾级别',
-  `login_name` VARCHAR(20) DEFAULT NULL COMMENT '系统登录名',
-  `actual_name` VARCHAR(20) DEFAULT NULL COMMENT '投顾姓名',
-  `mobile_no` VARCHAR(20) DEFAULT NULL COMMENT '手机号码',
-  `email` VARCHAR(100) DEFAULT NULL COMMENT '电子邮箱',
-  `is_valid` INT(4) NOT NULL DEFAULT 1 COMMENT '是否有效{1:有效,0:无效}',
-  `is_leader` INT(4) DEFAULT NULL COMMENT '是否组长{0:否,1:是}',
-  `remark` VARCHAR(200) DEFAULT NULL COMMENT '备注信息',
+  `id` INT(20) NOT NULL AUTO_INCREMENT COMMENT '主键' ,
+  `serial_no` VARCHAR(20) DEFAULT NULL COMMENT '投顾编号' ,
+  `job_title` VARCHAR(20) DEFAULT NULL COMMENT '投顾级别' ,
+  `login_name` VARCHAR(20) DEFAULT NULL COMMENT '系统用户名' ,
+  `actual_name` VARCHAR(20) DEFAULT NULL COMMENT '投顾姓名' ,
+  `mobile_no` VARCHAR(20) DEFAULT NULL COMMENT '手机号码' ,
+  `email` VARCHAR(100) DEFAULT NULL COMMENT '电子邮箱' ,
+  `is_valid` INT(4) NOT NULL DEFAULT 1 COMMENT '是否有效{1:有效,0:无效}' ,
+  `is_leader` INT(4) DEFAULT NULL COMMENT '是否组长{0:否,1:是}' ,
+  `remark` VARCHAR(200) DEFAULT NULL COMMENT '备注信息' ,
   `create_time`  TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
   `update_time`  TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间' ,
   PRIMARY KEY (`id`)
@@ -36,11 +36,12 @@ CREATE TABLE `advisor` (
 #功能模块--2--投资顾问团队表
 DROP TABLE IF EXISTS `team`;
 CREATE TABLE `team` (
-  `id` INT(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `team_name` VARCHAR(20) DEFAULT NULL COMMENT '团队名称',
-  `team_leader_id` INT(20) DEFAULT NULL COMMENT '团队长ID{advisor.id}',
-  `location` VARCHAR(20) DEFAULT NULL COMMENT '所在地',
-  `remark` VARCHAR(200) DEFAULT NULL COMMENT '备注信息',
+  `id` INT(20) NOT NULL AUTO_INCREMENT COMMENT '主键' ,
+  `team_name` VARCHAR(20) DEFAULT NULL COMMENT '团队名称' ,
+  `team_leader_id` INT(20) DEFAULT NULL COMMENT '团队长ID{advisor.id}' ,
+  `location` VARCHAR(20) DEFAULT NULL COMMENT '所在地' ,
+  `is_valid` INT(4) NOT NULL DEFAULT 1 COMMENT '是否有效{1:有效,0:无效}' ,
+  `remark` VARCHAR(200) DEFAULT NULL COMMENT '备注信息' ,
   `create_time`  TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
   `update_time`  TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间' ,
   PRIMARY KEY (`id`)
@@ -49,11 +50,9 @@ CREATE TABLE `team` (
 #功能模块--3--投顾团队关联表
 DROP TABLE IF EXISTS `advisor_team`;
 CREATE TABLE `advisor_team` (
-  `id` INT(20) NOT NULL AUTO_INCREMENT COMMENT '主键',
-  `aid` INT(20) DEFAULT NULL COMMENT '投资顾问id',
-  `tid` INT(20) DEFAULT NULL COMMENT '团队id',
-  `create_time`  TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间' ,
-  `update_time`  TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间' ,
+  `id` INT(20) NOT NULL AUTO_INCREMENT COMMENT '主键' ,
+  `aid` INT(20) DEFAULT NULL COMMENT '投资顾问id' ,
+  `tid` INT(20) DEFAULT NULL COMMENT '团队id' ,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='投顾团队关联表';
 
