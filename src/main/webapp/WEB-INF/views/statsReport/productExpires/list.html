@@ -56,14 +56,16 @@ BigClient - 产品到期表
         {field: 'mobileNo', title: '客户手机号', align: 'center', valign: 'middle'},
         {field: 'advisorName', title: '投资顾问姓名', align: 'center', valign: 'middle'},
         {field: 'isPerformancePool', title: '是否业绩池', align: 'center', valign: 'middle',
-			formatter: function (value, row, index) { return formatFinalUserType(row.isPerformancePool); }},
+			formatter: function (value, row, index) { return formatWhether(row.isPerformancePool); }},
         {field: 'productName', title: '到期产品名称', align: 'center', valign: 'middle'},
         {field: 'transAmount', title: '交易金额', align: 'center', valign: 'middle'},
-        {field: 'inceptionDate', title: '产品成立日', align: 'center', valign: 'middle'},
-        {field: 'dueDate', title: '产品到期日', align: 'center', valign: 'middle'},
+        {field: 'inceptionDate', title: '产品成立日', align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatDate(row.inceptionDate); }},
+        {field: 'dueDate', title: '产品到期日', align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatDate(row.dueDate); }},
         {field: 'limitDays', title: '产品期限（天）', align: 'center', valign: 'middle'},
         {field: 'limitType', title: '产品期限类型', align: 'center', valign: 'middle',
-            formatter: function (value, row, index) { return formatFinalUserType(row.isPerformancePool); }},
+            formatter: function (value, row, index) { return formatLmitType(row.limitType); }},
         {field: 'productRate', title: '产品利率', align: 'center', valign: 'middle'}
 		<!-- 此处按钮级别权限控制,目前只有 admin 拥有该权限! -->
 		#if ($SSOPermission.isActionable("10010"))

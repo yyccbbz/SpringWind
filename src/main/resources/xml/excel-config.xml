@@ -103,7 +103,7 @@
 		<field name="inceptionDate" title="定期产品成立日" pattern="yyyy/MM/dd "/>
 		<field name="dueDate" title="定期产品到期日" pattern="yyyy/MM/dd "/>
 		<field name="limitDays" title="定期产品期限"/>
-		<field name="limitType" title="定期产品期限类型" format="0:新人专享,1:6个月,2:12个月"/>
+		<field name="limitType" title="定期产品期限类型" format="0:新人专享,6:6个月,12:12个月"/>
 		<field name="userType" title="客户类别"/>
 		<field name="registerTime" title="注册时间" pattern="yyyy/MM/dd "/>
 		<field name="reportDate" title="注册时间" pattern="yyyy/MM/dd "/>
@@ -131,7 +131,7 @@
 		<field name="inceptionDate" title="inceptionDate" pattern="yyyy/MM/dd HH:mm:ss"/>
 		<field name="dueDate" title="dueDate" pattern="yyyy/MM/dd HH:mm:ss"/>
 		<field name="limitDays" title="limitDays"/>
-		<field name="limitType" title="limitType" format="0:新人专享,1:6个月,2:12个月"/>
+		<field name="limitType" title="limitType" format="0:新人专享,6:6个月,12:12个月"/>
 		<field name="productRate" title="productRate"/>
 		<field name="createTime" title="createTime" pattern="yyyy/MM/dd HH:mm:ss"/>
 		<field name="updateTime" title="updateTime" pattern="yyyy/MM/dd HH:mm:ss"/>

@@ -37,23 +37,23 @@ public class ProductExpiresController extends BaseController {
     private IProductExpiresService productExpiresService;
 
     //excel-config.xml中配置的ID
-    @Value("${finalUser.excelId}")
+    @Value("${productExpires.excelId}")
     private String userExcelId;
 
     //excel导出的字段
-    @Value("${finalUser.fields}")
+    @Value("${productExpires.fields}")
     private String userFields;
 
     /**页面跳转*/
     @Permission("8001")
     @RequestMapping("/list")
-    public String list() {
+    public String list(Model model) {
         return "/statsReport/productExpires/list";
     }
 
     @Permission("8001")
     @RequestMapping("/search")
-    public String search() {
+    public String search(Model model) {
         return "/statsReport/productExpires/search";
     }
 
@@ -149,27 +149,34 @@ public class ProductExpiresController extends BaseController {
     @Permission("8001")
     @RequestMapping("addTestData")
     public String addTestData() {
+
+//        Boolean boo = productExpiresService.deleteAll();
+
         ArrayList<ProductExpires> list = new ArrayList<>();
         for (int i = 1; i <= 100; i++) {
-            ProductExpires u = new ProductExpires();
-            u.setMobileNo(RandomStringUtils.randomNumeric(11));
-            u.setMemberNo(RandomStringUtils.randomAlphanumeric(10));
-            u.setUserName(RandomStringUtils.randomAlphabetic(5));
-            u.setProductId("产品id"+i);
-            u.setProductName("产品"+i);
-            u.setProductRate("利率"+i);
-//            u.setUserType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'1', '2', '3'})));
-//            u.setReportDate(DateUtil.randomDate("2017-01-01", "2017-05-01"));
-//            u.setRegisterTime(DateUtil.randomDate("2017-01-01", "2017-05-01"));
-//            u.setIsVipuser(Integer.parseInt(RandomStringUtils.random(1, new char[]{'0', '1'})));
-//            u.setVipDate(DateUtil.randomDate("2017-01-01", "2017-05-01"));
-            u.setAdvisorId(Integer.parseInt(RandomStringUtils.randomNumeric(4)));
-            u.setAdvisorName(RandomStringUtils.randomAlphabetic(6));
-            u.setIsPerformancePool(Integer.parseInt(RandomStringUtils.random(1, new char[]{'0', '1'})));
-            u.setCreateTime(new Date());
-            u.setUpdateTime(u.getCreateTime());
-            list.add(u);
-            System.err.println(u);
+            ProductExpires pe = new ProductExpires();
+            /*
+                id,mobileNo,memberNo,userName,advisorId,advisorName,isPerformancePool,productId,productName,
+                transAmount,inceptionDate,dueDate,limitDays,limitType,productRate,createTime,updateTime
+            */
+            pe.setMobileNo(RandomStringUtils.randomNumeric(11));
+            pe.setMemberNo(RandomStringUtils.randomAlphanumeric(10));
+            pe.setUserName(RandomStringUtils.randomAlphabetic(5));
+            pe.setAdvisorId(Integer.parseInt(RandomStringUtils.randomNumeric(4)));
+            pe.setAdvisorName(RandomStringUtils.randomAlphabetic(6));
+            pe.setIsPerformancePool(Integer.parseInt(RandomStringUtils.random(1, new char[]{'0', '1'})));
+            pe.setProductId("产品id" + i);
+            pe.setProductName("产品" + i);
+            pe.setTransAmount(0.00 + i);
+            pe.setInceptionDate(DateUtil.randomDate("2017-01-01", "2017-06-01"));
+            pe.setDueDate(DateUtil.randomDate("2017-01-01", "2017-06-01"));
+            pe.setLimitDays(Integer.parseInt(RandomStringUtils.randomNumeric(3)));
+            pe.setLimitType( Integer.parseInt(RandomStringUtils.random(1, new char[]{'1', '2', '0'})) );
+            pe.setProductRate("利率"+i);
+            pe.setCreateTime(new Date());
+            pe.setUpdateTime(pe.getCreateTime());
+            list.add(pe);
+            System.err.println(pe);
         }
         Boolean b = productExpiresService.insertBatch(list);
         return b.toString();
