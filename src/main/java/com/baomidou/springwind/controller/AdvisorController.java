@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * </p>
  *
  * @author CuiCan
- * @since 2017-06-28
+ * @since 2017-06-30
  */
 @Controller
 @RequestMapping("/features/advisor")
-public class AdvisorController {
+public class AdvisorController extends BaseController {
 
     @Autowired
     private IAdvisorService advisorService;
-    
+
+
 }

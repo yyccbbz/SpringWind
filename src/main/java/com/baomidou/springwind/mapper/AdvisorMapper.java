@@ -9,7 +9,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * </p>
  *
  * @author CuiCan
- * @since 2017-06-28
+ * @since 2017-06-30
  */
 public interface AdvisorMapper extends BaseMapper<Advisor> {
 

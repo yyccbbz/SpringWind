@@ -1,7 +1,7 @@
 package com.baomidou.springwind.mapper;
 
-import com.baomidou.springwind.entity.ProductExpires;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import com.baomidou.springwind.entity.ProductExpires;
 
 /**
  * <p>
@@ -12,5 +12,4 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @since 2017-06-25
  */
 public interface ProductExpiresMapper extends BaseMapper<ProductExpires> {
-
 }

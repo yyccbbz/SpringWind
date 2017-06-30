@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author CuiCan
- * @since 2017-06-28
+ * @since 2017-06-30
  */
 public class Advisor implements Serializable {
 
@@ -52,6 +52,26 @@ public class Advisor implements Serializable {
      * 电子邮箱
      */
 	private String email;
+    /**
+     * 所属团队
+     */
+	@TableField("team_name")
+	private String teamName;
+    /**
+     * 团队组长
+     */
+	@TableField("team_leader")
+	private String teamLeader;
+    /**
+     * 团队总人数
+     */
+	@TableField("team_total_no")
+	private Integer teamTotalNo;
+    /**
+     * 团队所在地
+     */
+	@TableField("team_location")
+	private String teamLocation;
     /**
      * 是否有效{1:有效,0:无效}
      */
@@ -132,6 +152,38 @@ public class Advisor implements Serializable {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getTeamName() {
+		return teamName;
+	}
+
+	public void setTeamName(String teamName) {
+		this.teamName = teamName;
+	}
+
+	public String getTeamLeader() {
+		return teamLeader;
+	}
+
+	public void setTeamLeader(String teamLeader) {
+		this.teamLeader = teamLeader;
+	}
+
+	public Integer getTeamTotalNo() {
+		return teamTotalNo;
+	}
+
+	public void setTeamTotalNo(Integer teamTotalNo) {
+		this.teamTotalNo = teamTotalNo;
+	}
+
+	public String getTeamLocation() {
+		return teamLocation;
+	}
+
+	public void setTeamLocation(String teamLocation) {
+		this.teamLocation = teamLocation;
 	}
 
 	public Integer getIsValid() {
