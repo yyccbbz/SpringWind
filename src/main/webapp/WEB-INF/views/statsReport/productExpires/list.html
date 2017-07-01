@@ -16,7 +16,7 @@ BigClient - 产品到期表
 		</button>
 
 		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
-			<i class="fa fa-download"></i>&nbsp;导出名单
+			<i class="fa fa-download"></i>&nbsp;导出产品到期表
 		</button>
 
 		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
@@ -75,8 +75,8 @@ BigClient - 产品到期表
             valign: "middle",
             formatter: function (value, row, index) {
                 var id = row.id;
-                return '<a class="btn btn-xs btn-warning" onclick="editUser(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
-					+'<a class="btn btn-xs btn-danger" onclick="delUser(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
+                return '<a class="btn btn-xs btn-warning" onclick="editPe(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
+					+'<a class="btn btn-xs btn-danger" onclick="delPe(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
 
             }
         }
@@ -176,14 +176,14 @@ BigClient - 产品到期表
         });
     }
 
-    function delUser(userId) {
+    function delPe(peId) {
         // 询问框
         layer.confirm('确定删除吗？', {
             btn: ['确定', '取消'] // 按钮
         }, function () {
             $.ajax({
                 type: "POST",
-                url: "#springUrl('/statsReport/productExpires/delUser/')" + userId,
+                url: "#springUrl('/statsReport/productExpires/delOne/')" + peId,
                 datatype: "text",
                 success: function (data) {
                     if(data == 'true'){
@@ -197,11 +197,11 @@ BigClient - 产品到期表
         });
     }
 
-	function editUser(id){
-		var title = "新增用户";
+	function editPe(id){
+		var title = "新增产品到期";
 		var url = "#springUrl('/statsReport/productExpires/edit.html')";
 		if(id!=null){
-			title = "编辑用户";
+			title = "编辑产品到期";
 			url = url + "?id=" + id;
 		}
 		layer.open({

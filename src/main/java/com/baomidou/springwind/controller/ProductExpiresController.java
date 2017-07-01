@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -95,30 +92,31 @@ public class ProductExpiresController extends BaseController {
         return jsonPage(page);
     }
 
-//    @ResponseBody
-//    @Permission("8001")
-//    @RequestMapping("/editUser")
-//    public String editUser(ProductExpires pe) {
-//        boolean rlt = false;
-//        if (pe != null) {
-//            if (pe.getId() != null) {
-//                rlt = productExpiresService.updateById(pe);
-//            } else {
-//                pe.setCreateTime(new Date());
-//                pe.setUpdateTime(pe.getCreateTime());
-//                rlt = productExpiresService.insert(pe);
-//            }
-//        }
-//        return callbackSuccess(rlt);
-//    }
-//
-//    @ResponseBody
-//    @Permission("8001")
-//    @RequestMapping("/delUser/{userId}")
-//    public String delUser(@PathVariable Long userId) {
-//        Boolean rlt = productExpiresService.deleteById(userId);
-//        return rlt.toString();
-//    }
+    @ResponseBody
+    @Permission("8001")
+    @RequestMapping("/editOne")
+    public String editUser(ProductExpires pe) {
+        boolean rlt = false;
+        if (pe != null) {
+            if (pe.getId() != null) {
+                rlt = productExpiresService.updateById(pe);
+            } else {
+                pe.setCreateTime(new Date());
+                pe.setUpdateTime(pe.getCreateTime());
+                rlt = productExpiresService.insert(pe);
+            }
+        }
+        return callbackSuccess(rlt);
+    }
+
+
+    @ResponseBody
+    @Permission("8001")
+    @RequestMapping("/delOne/{peId}")
+    public String delUser(@PathVariable Long peId) {
+        Boolean rlt = productExpiresService.deleteById(peId);
+        return rlt.toString();
+    }
 
 
     /**
