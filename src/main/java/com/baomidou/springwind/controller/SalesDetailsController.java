@@ -2,12 +2,13 @@ package com.baomidou.springwind.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.kisso.annotation.Permission;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.DateUtil;
 import com.baomidou.springwind.common.utils.StringUtil;
 import com.baomidou.springwind.common.view.SpringMvcExcelView;
 import com.baomidou.springwind.entity.SalesDetails;
-import com.baomidou.springwind.entity.vo.SalesDetailVo;
+import com.baomidou.springwind.entity.vo.SalesDetailsVO;
 import com.baomidou.springwind.service.ISalesDetailsService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -75,20 +76,21 @@ public class SalesDetailsController extends BaseController {
      */
     @ResponseBody
     @Permission("6001")
-    @RequestMapping(value = "/getSalesDetailList")
+    @RequestMapping(value = "/getList")
     public String getUserList(@RequestParam("_search") String _search) {
 
         System.err.println("筛选条件 formData =" + _search);
 
-
-        SalesDetailVo salesDetailVo = null;
-
-        if (StringUtil.isNotEmpty(_search)) {
-            salesDetailVo = JSONObject.parseObject(_search, SalesDetailVo.class);
-        }
         Page<SalesDetails> page = getPage();
-        Page<SalesDetails> userPage = salesDetailsService.selectPageByParams(page, salesDetailVo);
-        return jsonPage(userPage);
+        if (StringUtil.isNotEmpty(_search)) {
+            //transAmountSmall=transAmount transAmountBig=accountAum
+            SalesDetailsVO sdVO = JSONObject.parseObject(_search, SalesDetailsVO.class);
+            page = salesDetailsService.selectPageByParams(page, sdVO);
+        } else {
+            page = salesDetailsService.selectPage(page,
+                    new EntityWrapper<SalesDetails>().orderBy("trans_time", false));
+        }
+        return jsonPage(page);
     }
 
     @ResponseBody
@@ -155,34 +157,50 @@ public class SalesDetailsController extends BaseController {
     @Permission("6001")
     @RequestMapping("addTestData")
     public String addTestData() {
+
+        salesDetailsService.deleteAll();
+
         ArrayList<SalesDetails> list = new ArrayList<>();
         for (int i = 1; i <= 100; i++) {
-            SalesDetails u = new SalesDetails();
-            u.setMobileNo(RandomStringUtils.randomNumeric(11));
-            u.setMemberNo(RandomStringUtils.randomAlphanumeric(10));
-            u.setUserName(RandomStringUtils.randomAlphabetic(5));
-            u.setProductName(RandomStringUtils.randomAlphanumeric(6));
-            u.setProductType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'1', '2', '3', '4'})));
-            u.setProductRate(RandomStringUtils.randomAlphanumeric(10));
-            u.setTransAmount((Double.valueOf(RandomStringUtils.randomNumeric(6))));
-            u.setTransTime(DateUtil.randomDate("2017-01-01", "2017-06-01"));
-            u.setInceptionDate(DateUtil.randomDate("2017-06-01", "2017-10-01"));
-            u.setDueDate(DateUtil.randomDate("2017-10-01", "2018-01-01"));
-            u.setLimitDays(Integer.parseInt(RandomStringUtils.randomNumeric(3)));
-            u.setLimitType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'0', '1', '2'})));
-            u.setUserType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'1', '2', '3'})));
-            u.setReportDate(DateUtil.randomDate("2017-01-01", "2017-05-01"));
-            u.setRegisterTime(DateUtil.randomDate("2017-01-01", "2017-05-01"));
-            u.setIsVipuser(Integer.parseInt(RandomStringUtils.random(1, new char[]{'0', '1'})));
-            u.setVipDate(DateUtil.randomDate("2017-01-01", "2017-05-01"));
-            u.setAdvisorId(Integer.parseInt(RandomStringUtils.randomNumeric(4)));
-            u.setAdvisorName(RandomStringUtils.randomAlphabetic(6));
-            u.setUserMark(RandomStringUtils.randomAlphanumeric(6));
-            u.setIsPerformancePool(Integer.parseInt(RandomStringUtils.random(1, new char[]{'0', '1'})));
-            u.setCreateTime(new Date());
-            u.setUpdateTime(u.getCreateTime());
-            list.add(u);
-            System.err.println(u);
+            SalesDetails sd = new SalesDetails();
+            /*
+id,mobileNo,memberNo,userName,advisorId,
+advisorName,productId,productName,productType,productRate,transAmount,transTime,
+inceptionDate,dueDate,limitDays,limitType,userType,registerTime,reportDate,
+isVipuser,vipDate,isPerformancePool,userMark,createTime,updateTime,
+            */
+            sd.setMobileNo(RandomStringUtils.randomNumeric(11));
+            sd.setMemberNo(RandomStringUtils.randomAlphanumeric(10));
+            sd.setUserName(RandomStringUtils.randomAlphabetic(5));
+            sd.setAdvisorId(Integer.parseInt(RandomStringUtils.randomAlphanumeric(4)));
+            sd.setAdvisorName(RandomStringUtils.randomAlphabetic(5));
+            sd.setProductId(RandomStringUtils.randomAlphanumeric(4));
+            sd.setProductName(RandomStringUtils.randomAlphanumeric(6));
+            sd.setProductType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'1', '2', '3', '4'})));
+            sd.setProductRate(RandomStringUtils.randomAlphanumeric(2));
+            sd.setTransAmount((Double.valueOf(RandomStringUtils.randomNumeric(6))));
+            sd.setTransTime(DateUtil.randomDate("2017-01-01", "2017-07-01"));
+            sd.setInceptionDate(DateUtil.randomDate("2017-06-01", "2017-10-01"));
+            sd.setDueDate(DateUtil.randomDate("2017-10-01", "2018-01-01"));
+            sd.setLimitDays(Integer.parseInt(RandomStringUtils.randomNumeric(3)));
+            if (i % 3 == 0) {
+                sd.setLimitType(0);
+            } else if (i % 3 == 1) {
+                sd.setLimitType(6);
+            } else {
+                sd.setLimitType(12);
+            }
+            sd.setUserType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'1', '2', '3'})));
+            sd.setRegisterTime(DateUtil.randomDate("2017-01-01", "2017-05-01"));
+            sd.setReportDate(DateUtil.randomDate("2017-01-01", "2017-05-01"));
+            sd.setIsVipuser(Integer.parseInt(RandomStringUtils.random(1, new char[]{'0', '1'})));
+            sd.setVipDate(DateUtil.randomDate("2017-01-01", "2017-05-01"));
+            sd.setIsPerformancePool(Integer.parseInt(RandomStringUtils.random(1, new char[]{'0', '1'})));
+            sd.setUserMark(RandomStringUtils.randomAlphanumeric(6));
+            sd.setCreateTime(new Date());
+            sd.setUpdateTime(sd.getCreateTime());
+            list.add(sd);
+            System.err.println(sd);
         }
         Boolean b = salesDetailsService.insertBatch(list);
         return b.toString();

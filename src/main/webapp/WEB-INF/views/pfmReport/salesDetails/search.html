@@ -50,6 +50,7 @@
                 </select>
             </div>
         </div>
+
         <div class="row">
             <div class="form-group col-xs-4">
                 <label class="form-label">投资日期 从</label>
@@ -71,10 +72,12 @@
                     <option value="4">转让</option>
                 </select>
             </div>
+
         </div>
+
         <div class="row">
             <div class="form-group col-xs-4">
-                <label class="form-label">投资金额大于等于</label>
+                <label class="form-label">投资金额 大于等于</label>
                 <input type="text" class="form-control " id="transAmountSmall" name="transAmountSmall"/>
 
             </div>
@@ -88,23 +91,18 @@
                 <select class="form-control" name="limitType">
                     <option value="">请选择</option>
                     <option value="0">新人专享</option>
-                    <option value="1">6个月</option>
-                    <option value="2">12个月</option>
+                    <option value="6">6个月</option>
+                    <option value="12">12个月</option>
                 </select>
             </div>
+            <span id="startSpan" style="opacity: 0;"></span>
+            <span id="endSpan" style="opacity: 0;"></span>
         </div>
+
         <div class="row">
             <div class="form-group col-xs-4">
                 <label class="form-label">投资顾问</label>
                 <input type="text" class="form-control" name="advisorName"/>
-            </div>
-            <div class="form-group col-xs-4">
-                <label class="form-label">客户标识</label>
-                <select class="form-control" name="userMark">
-                    <option value="">请选择</option>
-                    <option value="DHK000">DHK000</option>
-                    <option value="DHK001">DHK001</option>
-                </select>
             </div>
             <div class="form-group col-xs-4">
                 <label class="form-label">是否业绩池</label>
@@ -114,9 +112,14 @@
                     <option value="1">是</option>
                 </select>
             </div>
-
-            <span id="startSpan" style="opacity: 0;"></span>
-            <span id="endSpan" style="opacity: 0;"></span>
+            <div class="form-group col-xs-4">
+                <label class="form-label">客户标识</label>
+                <select class="form-control" name="userMark">
+                    <option value="">请选择</option>
+                    <option value="DHK000">DHK000</option>
+                    <option value="DHK001">DHK001</option>
+                </select>
+            </div>
         </div>
 
         <div class="row btns">

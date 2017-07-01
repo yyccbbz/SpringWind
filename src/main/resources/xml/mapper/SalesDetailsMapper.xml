@@ -62,53 +62,53 @@
 
 	<select id="selectCountByParams" resultType="int">
 		SELECT COUNT(1) FROM sales_details WHERE 1=1
-		<if test="salesDetailVo != null">
+		<if test="salesDetailsVO != null">
 
-			<if test="salesDetailVo.userName != null and salesDetailVo.userName != ''">
-				AND user_name LIKE CONCAT(CONCAT('%',#{salesDetailVo.userName}),'%')
+			<if test="salesDetailsVO.userName != null and salesDetailsVO.userName != ''">
+				AND user_name LIKE CONCAT(CONCAT('%',#{salesDetailsVO.userName}),'%')
 			</if>
-			<if test="salesDetailVo.mobileNo != null and salesDetailVo.mobileNo != ''">
-				AND mobile_no = #{salesDetailVo.mobileNo}
+			<if test="salesDetailsVO.mobileNo != null and salesDetailsVO.mobileNo != ''">
+				AND mobile_no = #{salesDetailsVO.mobileNo}
 			</if>
-			<if test="salesDetailVo.userType != null">
-				AND user_type = #{salesDetailVo.userType}
+			<if test="salesDetailsVO.userType != null">
+				AND user_type = #{salesDetailsVO.userType}
 			</if>
-			<if test="salesDetailVo.productType != null">
-				AND is_vipuser = #{salesDetailVo.productType}
+			<if test="salesDetailsVO.productType != null">
+				AND is_vipuser = #{salesDetailsVO.productType}
 			</if>
-			<if test="salesDetailVo.limitType != null">
-				AND is_vipuser = #{salesDetailVo.limitType}
+			<if test="salesDetailsVO.limitType != null">
+				AND is_vipuser = #{salesDetailsVO.limitType}
 			</if>
-			<if test="salesDetailVo.advisorName != null and salesDetailVo.advisorName != ''">
-				AND advisor_name = #{salesDetailVo.advisorName}
+			<if test="salesDetailsVO.advisorName != null and salesDetailsVO.advisorName != ''">
+				AND advisor_name = #{salesDetailsVO.advisorName}
 			</if>
-			<if test="salesDetailVo.userMark != null and salesDetailVo.userMark != ''">
-				AND user_mark = #{salesDetailVo.userMark}
+			<if test="salesDetailsVO.userMark != null and salesDetailsVO.userMark != ''">
+				AND user_mark = #{salesDetailsVO.userMark}
 			</if>
-			<if test="salesDetailVo.isPerformancePool != null">
-				AND is_performance_pool = #{salesDetailVo.isPerformancePool}
+			<if test="salesDetailsVO.isPerformancePool != null">
+				AND is_performance_pool = #{salesDetailsVO.isPerformancePool}
 			</if>
 			<!-- 日期比较有三种情况 -->
-			<if test="salesDetailVo.transTimeStart != null and salesDetailVo.transTimeEnd != null">
-				AND trans_time >= #{salesDetailVo.transTimeStart}
-				AND #{salesDetailVo.transTimeEnd} >= trans_time
+			<if test="salesDetailsVO.transTimeStart != null and salesDetailsVO.transTimeEnd != null">
+				AND trans_time >= #{salesDetailsVO.transTimeStart}
+				AND #{salesDetailsVO.transTimeEnd} >= trans_time
 			</if>
-			<if test="salesDetailVo.transTimeStart == null and salesDetailVo.transTimeEnd != null">
-				AND #{salesDetailVo.transTimeEnd} >= trans_time
+			<if test="salesDetailsVO.transTimeStart == null and salesDetailsVO.transTimeEnd != null">
+				AND #{salesDetailsVO.transTimeEnd} >= trans_time
 			</if>
-			<if test="salesDetailVo.transTimeStart != null and salesDetailVo.transTimeEnd == null">
-				AND trans_time >= #{salesDetailVo.transTimeStart}
+			<if test="salesDetailsVO.transTimeStart != null and salesDetailsVO.transTimeEnd == null">
+				AND trans_time >= #{salesDetailsVO.transTimeStart}
 			</if>
 			<!-- 投资金额比较有三种情况 -->
-			<if test="salesDetailVo.transAmountSmall != null and salesDetailVo.transAmountBig != null">
-				AND trans_amount >= #{salesDetailVo.transAmountSmall}
-				AND #{salesDetailVo.transAmountBig} >= trans_amount
+			<if test="salesDetailsVO.transAmountSmall != null and salesDetailsVO.transAmountBig != null">
+				AND trans_amount >= #{salesDetailsVO.transAmountSmall}
+				AND #{salesDetailsVO.transAmountBig} >= trans_amount
 			</if>
-			<if test="salesDetailVo.transAmountSmall == null and salesDetailVo.transAmountBig != null">
-				AND #{salesDetailVo.transAmountBig} >= trans_amount
+			<if test="salesDetailsVO.transAmountSmall == null and salesDetailsVO.transAmountBig != null">
+				AND #{salesDetailsVO.transAmountBig} >= trans_amount
 			</if>
-			<if test="salesDetailVo.transAmountSmall != null and salesDetailVo.transAmountBig == null">
-				AND trans_amount >= #{salesDetailVo.transAmountSmall}
+			<if test="salesDetailsVO.transAmountSmall != null and salesDetailsVO.transAmountBig == null">
+				AND trans_amount >= #{salesDetailsVO.transAmountSmall}
 			</if>
 
 		</if>
@@ -117,53 +117,53 @@
 
 	<select id="selectPageByParams" resultMap="BaseResultMap">
 		SELECT <include refid="Base_Column_List"/> FROM sales_details WHERE 1=1
-		<if test="salesDetailVo != null">
+		<if test="salesDetailsVO != null">
 
-			<if test="salesDetailVo.userName != null and salesDetailVo.userName != ''">
-				AND user_name like CONCAT('%',#{salesDetailVo.userName},'%')
+			<if test="salesDetailsVO.userName != null and salesDetailsVO.userName != ''">
+				AND user_name like CONCAT('%',#{salesDetailsVO.userName},'%')
 			</if>
-			<if test="salesDetailVo.mobileNo != null and salesDetailVo.mobileNo != ''">
-				AND mobile_no = #{salesDetailVo.mobileNo}
+			<if test="salesDetailsVO.mobileNo != null and salesDetailsVO.mobileNo != ''">
+				AND mobile_no = #{salesDetailsVO.mobileNo}
 			</if>
-			<if test="salesDetailVo.userType != null">
-				AND user_type = #{salesDetailVo.userType}
+			<if test="salesDetailsVO.userType != null">
+				AND user_type = #{salesDetailsVO.userType}
 			</if>
-			<if test="salesDetailVo.productType != null">
-				AND is_vipuser = #{salesDetailVo.productType}
+			<if test="salesDetailsVO.productType != null">
+				AND is_vipuser = #{salesDetailsVO.productType}
 			</if>
-			<if test="salesDetailVo.limitType != null">
-				AND is_vipuser = #{salesDetailVo.limitType}
+			<if test="salesDetailsVO.limitType != null">
+				AND is_vipuser = #{salesDetailsVO.limitType}
 			</if>
-			<if test="salesDetailVo.advisorName != null and salesDetailVo.advisorName != ''">
-				AND advisor_name = #{salesDetailVo.advisorName}
+			<if test="salesDetailsVO.advisorName != null and salesDetailsVO.advisorName != ''">
+				AND advisor_name = #{salesDetailsVO.advisorName}
 			</if>
-			<if test="salesDetailVo.userMark != null and salesDetailVo.userMark != ''">
-				AND user_mark = #{salesDetailVo.userMark}
+			<if test="salesDetailsVO.userMark != null and salesDetailsVO.userMark != ''">
+				AND user_mark = #{salesDetailsVO.userMark}
 			</if>
-			<if test="salesDetailVo.isPerformancePool != null">
-				AND is_performance_pool like #{salesDetailVo.isPerformancePool}
+			<if test="salesDetailsVO.isPerformancePool != null">
+				AND is_performance_pool like #{salesDetailsVO.isPerformancePool}
 			</if>
 			<!-- 日期比较有三种情况 -->
-			<if test="salesDetailVo.transTimeStart != null and salesDetailVo.transTimeEnd != null">
-				AND trans_time >= #{salesDetailVo.transTimeStart}
-				AND #{salesDetailVo.transTimeEnd} >= trans_time
+			<if test="salesDetailsVO.transTimeStart != null and salesDetailsVO.transTimeEnd != null">
+				AND trans_time >= #{salesDetailsVO.transTimeStart}
+				AND #{salesDetailsVO.transTimeEnd} >= trans_time
 			</if>
-			<if test="salesDetailVo.transTimeStart == null and salesDetailVo.transTimeEnd != null">
-				AND #{salesDetailVo.transTimeEnd} >= trans_time
+			<if test="salesDetailsVO.transTimeStart == null and salesDetailsVO.transTimeEnd != null">
+				AND #{salesDetailsVO.transTimeEnd} >= trans_time
 			</if>
-			<if test="salesDetailVo.transTimeStart != null and salesDetailVo.transTimeEnd == null">
-				AND trans_time >= #{salesDetailVo.transTimeStart}
+			<if test="salesDetailsVO.transTimeStart != null and salesDetailsVO.transTimeEnd == null">
+				AND trans_time >= #{salesDetailsVO.transTimeStart}
 			</if>
 			<!-- 投资金额比较有三种情况 -->
-			<if test="salesDetailVo.transAmountSmall != null and salesDetailVo.transAmountBig != null">
-				AND trans_amount >= #{salesDetailVo.transAmountSmall}
-				AND #{salesDetailVo.transAmountBig} >= trans_amount
+			<if test="salesDetailsVO.transAmountSmall != null and salesDetailsVO.transAmountBig != null">
+				AND trans_amount >= #{salesDetailsVO.transAmountSmall}
+				AND #{salesDetailsVO.transAmountBig} >= trans_amount
 			</if>
-			<if test="salesDetailVo.transAmountSmall == null and salesDetailVo.transAmountBig != null">
-				AND #{salesDetailVo.transAmountBig} >= trans_amount
+			<if test="salesDetailsVO.transAmountSmall == null and salesDetailsVO.transAmountBig != null">
+				AND #{salesDetailsVO.transAmountBig} >= trans_amount
 			</if>
-			<if test="salesDetailVo.transAmountSmall != null and salesDetailVo.transAmountBig == null">
-				AND trans_amount >= #{salesDetailVo.transAmountSmall}
+			<if test="salesDetailsVO.transAmountSmall != null and salesDetailsVO.transAmountBig == null">
+				AND trans_amount >= #{salesDetailsVO.transAmountSmall}
 			</if>
 
 		</if>

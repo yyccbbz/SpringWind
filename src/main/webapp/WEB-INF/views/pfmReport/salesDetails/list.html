@@ -22,7 +22,7 @@ BigClient - 销售明细
 
 		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
 		#if ($SSOPermission.isActionable("10010"))
-		<button class="btn btn-primary" onclick="editSalesDetail(null)" type="button">
+		<button class="btn btn-primary" onclick="editOne(null)" type="button">
 			<i class="fa fa-user-plus"></i>&nbsp;添加销售明细
 		</button>
 
@@ -51,149 +51,46 @@ BigClient - 销售明细
 <script src="#springUrl('/static/js/base_list.js')"></script>
 <script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
-    var dataUrl = "#springUrl('/pfmReport/salesDetails/getSalesDetailList.html')";
-    var dataColumns = [/*{
-            field: 'id',
-            title: '序号',
-            align: "center",
-            valign: "middle"
-        }, */{
-            field: 'mobileNo',
-            title: '客户手机号',
-            align: "center",
-            valign: "middle"
-        },{
-            field: 'userName',
-            title: '客户姓名',
-            align: "center",
-            valign: "middle"
-        },{
-           field: 'advisorName',
-           title: '投资顾问姓名',
-           align: "center",
-           valign: "middle"
-	    },{
-            field: 'productName',
-            title: '产品名称',
-            align: "center",
-            valign: "middle"
-        },{
-           field: 'productType',
-           title: '产品类型',
-           align: "center",
-           valign: "middle",
-        formatter: function (value, row, index) {
-            return formatFinalUserType(row.userType);
-        }
-    },{
-            field: 'productType',
-            title: '产品类型',
-            align: "center",
-            valign: "middle"
-        },{
-            field: 'productRate',
-            title: '产品利率',
-            align: "center",
-            valign: "middle"
-        },{
-            field: 'transAmount',
-            title: '投资金额',
-            align: "center",
-            valign: "middle"
-        },{
-            field: 'transTime',
-            title: '投资时间',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatDateTime(row.transTime);
-			}
-        },{
-            field: 'inceptionDate',
-            title: '定期产品成立日',
-            align: "center",
-            valign: "middle",
-        formatter: function (value, row, index) {
-            return formatDate(row.inceptionDate);
-        }
-        },{
-            field: 'limitDays',
-            title: '定期产品期限',
-            align: "center",
-            valign: "middle"
-        },{
-            field: 'limitType',
-            title: '定期产品期限类型',
-            align: "center",
-            valign: "middle",
-           formatter: function (value, row, index) {
-            return formatLmitType(row.limitType);
-          }
-        },{
-           field: 'userType',
-           title: '客户类别',
-           align: "center",
-           valign: "middle",
-             formatter: function (value, row, index) {
-            return formatFinalUserType(row.userType);
-         }
-         },{
-		   field: 'registerTime',
-           title: '注册时间',
-           align: "center",
-           valign: "middle",
-            formatter: function (value, row, index) {
-            return formatDateTime(row.registerTime);
-          }
-        },{
-           field: 'reportDate',
-           title: '上报分配日期',
-           align: "center",
-           valign: "middle",
-             formatter: function (value, row, index) {
-            return formatDate(row.reportDate);
-        }
-        },{
-            field: 'isVipuser',
-            title: '是否vip',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatWhether(row.isVipuser);
-			}
-        }, {
-            field: 'vipDate',
-            title: '成为vip日期',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatDate(row.vipDate);
-			}
-        },{
-            field: 'isPerformancePool',
-            title: '是否业绩池',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatWhether(row.isPerformancePool);
-			}
-        },{
-           field: 'userMark',
-           title: '客户标识',
-           align: "center",
-           valign: "middle"
-        }
+    var dataUrl = "#springUrl('/pfmReport/salesDetails/getList.html')";
+    var dataColumns = [
+        { field: 'userName', title: '客户姓名', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'mobileNo', title: '客户手机号', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'advisorName', title: '投资顾问', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'productName', title: '产品名称', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'productType', title: '产品类型', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatProductType(row.productType); } },
+        { field: 'productRate', title: '产品利率', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'transAmount', title: '投资金额', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'transTime', title: '投资时间', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatDateTime(row.transTime);}},
+        { field: 'inceptionDate', title: '产品成立日', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatDate(row.inceptionDate); } },
+        { field: 'dueDate', title: '产品到期日', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatDate(row.dueDate); } },
+        { field: 'limitDays', title: '产品期限（天）', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'limitType', title: '产品期限类型', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatLmitType(row.limitType); }},
+        { field: 'userType', title: '客户类别', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatFinalUserType(row.userType); } },
+        { field: 'registerTime', title: '客户注册时间', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatDateTime(row.registerTime);}},
+        { field: 'reportDate', title: '上报分配日期', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatDate(row.reportDate); } },
+        { field: 'isVipuser', title: '是否vip', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatWhether(row.isVipuser); } },
+        { field: 'vipDate', title: '成为vip日期', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatDate(row.vipDate); } },
+        { field: 'isPerformancePool', title: '是否业绩池', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatWhether(row.isPerformancePool); } },
+        { field: 'userMark', title: '用户标识', sortable:'true',  align: 'center', valign: 'middle' }
 		<!-- 此处按钮级别权限控制,目前只有 admin 拥有该权限! -->
 		#if ($SSOPermission.isActionable("10010"))
         ,{
-            title: '操作',
-            align: "center",
-            valign: "middle",
+            title: '操作', align: "center", valign: "middle",
             formatter: function (value, row, index) {
                 var id = row.id;
-                return '<a class="btn btn-xs btn-warning" onclick="editSalesDetail(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
-					+'<a class="btn btn-xs btn-danger" onclick="delSalesDetail(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
-
+                return '<a class="btn btn-xs btn-warning" onclick="editOne(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
+					+'<a class="btn btn-xs btn-danger" onclick="delOne(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
             }
         }
     	#end
@@ -212,14 +109,7 @@ BigClient - 销售明细
             area: ['600px', '435px'],
             fix: false,
             maxmin: true,
-            content: url/*,
-			 end: function(index){
-			 layer.close(index);
-			 layer.msg('雅蠛蝶 O.o', {
-			 icon: 6,
-			 btn: ['嗷','嗷','嗷']
-			 });
-			 }*/
+            content: url
         });
     }
 
@@ -271,7 +161,7 @@ BigClient - 销售明细
             layer.confirm('确定上传吗？', {
                 btn: ['确定', '取消'] // 按钮
             }, function () {
-                var url = "#springUrl('/pfmReport/salesDetails/uploadExcel/')";
+                var url = "#springUrl('/pfmReport/salesDetails/uploadExcel')";
                 var fileId = "fileExcel";
                 $.ajaxFileUpload({
                     url: url,                              //用于文件上传的服务器端请求地址
@@ -295,7 +185,7 @@ BigClient - 销售明细
         });
     }
 
-    function delSalesDetail(id) {
+    function delOne(id) {
         // 询问框
         layer.confirm('确定删除吗？', {
             btn: ['确定', '取消'] // 按钮
@@ -305,8 +195,8 @@ BigClient - 销售明细
                 url: "#springUrl('/pfmReport/salesDetails/delOne/')" + id,
                 datatype: "text",
                 success: function (data) {
-                    if(data == 'true'){
-                        $('#dataTable').bootstrapTable('refresh',{url:dataUrl});
+                    if (data == 'true') {
+                        $('#dataTable').bootstrapTable('refresh', {url: dataUrl});
                     }
                     layer.closeAll();
                 }
@@ -316,24 +206,24 @@ BigClient - 销售明细
         });
     }
 
-	function editSalesDetail(id){
-		var title = "新增销售明细";
-		var url = "#springUrl('/pfmReport/salesDetails/edit.html')";
-		if(id!=null){
-			title = "编辑销售明细";
-			url = url + "?id=" + id;
-		}
-		layer.open({
-			type: 2,
-			title: title,
-			shadeClose: true,
-			shade: 0.8,
-			area: ['600px', '430px'],
-			fix: false,
-			maxmin: true,
-			content: url
-		});
-	}
+    function editOne(id) {
+        var title = "新增销售明细";
+        var url = "#springUrl('/pfmReport/salesDetails/edit.html')";
+        if (id != null) {
+            title = "编辑销售明细";
+            url = url + "?id=" + id;
+        }
+        layer.open({
+            type: 2,
+            title: title,
+            shadeClose: true,
+            shade: 0.8,
+            area: ['600px', '430px'],
+            fix: false,
+            maxmin: true,
+            content: url
+        });
+    }
 </script>
 #end
 #extends("/common/framework.html")

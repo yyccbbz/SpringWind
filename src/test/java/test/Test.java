@@ -9,7 +9,7 @@ public class Test {
     public static void main(String[] args) throws IOException {
 
 //        File file = new File("E:\\Workspace\\IdeaProjects\\SpringWind\\src\\test\\java\\test\\product_expires.txt");
-        File file = new File("E:\\Users\\IdeaProjects\\SpringWind\\src\\test\\java\\test\\customer_registry.txt");
+        File file = new File("E:\\Users\\IdeaProjects\\SpringWind\\src\\test\\java\\test\\salesDetails.txt");
 
         if (file.isFile() && file.exists()) { //判断文件是否存在
 

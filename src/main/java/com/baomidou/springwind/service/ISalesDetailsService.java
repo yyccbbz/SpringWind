@@ -3,7 +3,7 @@ package com.baomidou.springwind.service;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.entity.SalesDetails;
 import com.baomidou.mybatisplus.service.IService;
-import com.baomidou.springwind.entity.vo.SalesDetailVo;
+import com.baomidou.springwind.entity.vo.SalesDetailsVO;
 
 /**
  * <p>
@@ -15,5 +15,7 @@ import com.baomidou.springwind.entity.vo.SalesDetailVo;
  */
 public interface ISalesDetailsService extends IService<SalesDetails> {
 
-    Page<SalesDetails> selectPageByParams(Page<SalesDetails> page, SalesDetailVo salesDetailVo);
+    Page<SalesDetails> selectPageByParams(Page<SalesDetails> page, SalesDetailsVO adVO);
+
+    void deleteAll();
 }

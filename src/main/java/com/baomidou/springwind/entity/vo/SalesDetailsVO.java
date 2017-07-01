@@ -6,7 +6,7 @@ import java.util.Date;
 /**
  * Created by on 2017/6/25.
  */
-public class SalesDetailVo implements Serializable {
+public class SalesDetailsVO implements Serializable {
 
     private static final long serialVersionUID = -3712601135541524085L;
 
