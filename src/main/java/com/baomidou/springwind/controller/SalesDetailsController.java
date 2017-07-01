@@ -80,8 +80,6 @@ public class SalesDetailsController extends BaseController {
 
         System.err.println("筛选条件 formData =" + _search);
 
-        Map<String, Object> params = new HashMap<>();
-
         SalesDetailVo salesDetailVo = null;
 
         if (StringUtil.isNotEmpty(_search)) {
