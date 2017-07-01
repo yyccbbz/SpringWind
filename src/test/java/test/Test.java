@@ -9,7 +9,7 @@ public class Test {
     public static void main(String[] args) throws IOException {
 
 //        File file = new File("E:\\Workspace\\IdeaProjects\\SpringWind\\src\\test\\java\\test\\product_expires.txt");
-        File file = new File("E:\\Users\\IdeaProjects\\SpringWind\\src\\test\\java\\test\\assets_balance.txt");
+        File file = new File("E:\\Users\\IdeaProjects\\SpringWind\\src\\test\\java\\test\\customer_registry.txt");
 
         if (file.isFile() && file.exists()) { //判断文件是否存在
 
@@ -27,7 +27,7 @@ public class Test {
 
                 String field = "{ field: '" + s3 + "', title: '" + s1 + "', sortable:'true',  align: 'center', valign: 'middle' },";
                 System.err.println(field);
-                sb.append(s2);
+                sb.append(s3);
                 sb.append(",");
 
             }

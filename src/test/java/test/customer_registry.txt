@@ -1,0 +1,11 @@
+主键,id,id
+客户手机号,mobile_no,mobileNo
+客户会员号,member_no,memberNo
+客户姓名,user_name,userName
+是否注册,is_register,isRegister
+客户注册时间,register_time,registerTime
+推荐人手机号,t_mobile_no,tMobileNo
+推荐人会员号,t_member_no,tMemberNo
+推荐人姓名,t_user_name,tUserName
+创建时间,create_time,createTime
+更新时间,up_time,upTime

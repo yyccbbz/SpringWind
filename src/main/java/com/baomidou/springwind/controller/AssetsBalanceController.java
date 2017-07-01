@@ -133,7 +133,7 @@ public class AssetsBalanceController extends BaseController {
 
         List<String> fields = Arrays.asList(excelFields.split(","));
         List<AssetsBalance> beans = assetsBalanceService.selectList(null);
-        return exportExcel(excelId, beans, null, fields, excelName);
+        return super.exportExcel(excelId, beans, null, fields, excelName);
     }
 
     @ResponseBody

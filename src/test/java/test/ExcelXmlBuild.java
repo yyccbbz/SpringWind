@@ -1,7 +1,7 @@
 package test;
 
 import com.baomidou.springwind.common.utils.ReflectUtil;
-import com.baomidou.springwind.entity.ProductExpires;
+import com.baomidou.springwind.entity.CustomerRegistry;
 import org.apache.commons.lang.ArrayUtils;
 import org.springframework.util.TypeUtils;
 
@@ -21,7 +21,7 @@ public class ExcelXmlBuild {
 
     //快速构建一个XML配置,看不懂直接运行
     public static void main(String[] args) {
-        String xml = builderXml("productExpires", "产品到期", true, ProductExpires.class, 5000);
+        String xml = builderXml("customerRegistry", "客户注册情况", true, CustomerRegistry.class, 5000);
         System.err.println(xml);
     }
 
