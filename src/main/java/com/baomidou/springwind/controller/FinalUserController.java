@@ -2,6 +2,7 @@ package com.baomidou.springwind.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.kisso.annotation.Permission;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.DateUtil;
 import com.baomidou.springwind.common.utils.StringUtil;
@@ -76,12 +77,14 @@ public class FinalUserController extends BaseController {
 
         System.err.println("筛选条件 formData =" + _search);
 
-        FinalUser finalUser = null;
-        if(StringUtil.isNotEmpty(_search)){
-             finalUser = JSONObject.parseObject(_search, FinalUser.class);
-        }
+        Page<FinalUser> userPage = null;
         Page<FinalUser> page = getPage();
-        Page<FinalUser> userPage = finalUserService.selectPageByParams(page, finalUser);
+        if(StringUtil.isNotEmpty(_search)){
+            FinalUser finalUser = JSONObject.parseObject(_search, FinalUser.class);
+            userPage = finalUserService.selectPageByParams(page, finalUser);
+        }else {
+            userPage = finalUserService.selectPage(page, new EntityWrapper<FinalUser>().orderBy("report_date",false));
+        }
         return jsonPage(userPage);
     }
 
