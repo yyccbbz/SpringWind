@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * @since 2017-06-15
  */
 @Controller
-@RequestMapping("/springwind/getSalesDetails")
-public class GetSalesDetailsController {
+@RequestMapping("/pfmReport/getSalesDetails")
+public class GetSalesDetailsController extends BaseController {
 	
 }

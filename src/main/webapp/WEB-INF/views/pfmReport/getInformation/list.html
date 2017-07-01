@@ -1,0 +1,213 @@
+#override("title")
+BigClient - 获客信息
+#end
+#override("css")
+<link href="#springUrl('/static/css/plugins/bootstrap-table/bootstrap-table.min.css')" rel="stylesheet">
+#end
+#override("breadcrumb")
+<li><a>业绩报表</a></li><li class="active"><strong>获客信息</strong></li>
+#end
+#override("content")
+<div class="row">
+	<div class="ibox-content text-right form-inline" style="background: #F3F3F4;">
+
+
+		<button type="button" class="btn btn-info" onclick="searchByCondition();" id="btn_query">
+			<i class="fa fa-search-plus"></i>&nbsp;条件搜索
+		</button>
+
+		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
+			<i class="fa fa-download"></i>&nbsp;导出获客信息
+		</button>
+
+		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
+		#if ($SSOPermission.isActionable("10010"))
+		<button class="btn btn-primary" onclick="editOne(null)" type="button">
+			<i class="fa fa-user-plus"></i>&nbsp;添加获客信息
+		</button>
+
+		<button class="btn btn-primary" onclick="addTestData()" type="button">
+			<i class="fa fa-database"></i>&nbsp;添加测试数据
+		</button>
+
+		<!--<button class="btn btn-primary" onclick="uploadExcel()" type="button">-->
+		<!--<i class="fa fa-pencil"></i>&nbsp;导入EXCEL文件</button>-->
+		<!--<input type="file" id="fileExcel" name="fileExcel" accept=".xls,.xlsx" style="display: none"/>-->
+		#end
+	</div>
+</div>
+
+<div class="row">
+    <div class="col-sm-12" id="tableDiv">
+        <!--<table id="dataTable"></table>-->
+    </div>
+</div>
+#end
+#override("js")
+<script src="#springUrl('/static/js/plugins/bootstrap-table/bootstrap-table.min.js')"></script>
+<script src="#springUrl('/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js')"></script>
+<script src="#springUrl('/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js')"></script>
+<script src="#springUrl('/static/plugins/layer-v3.0.3/layer/layer.js')"></script>
+<script src="#springUrl('/static/js/base_list.js')"></script>
+<script src="#springUrl('/static/js/common.js')"></script>
+<script type="text/javascript">
+    var dataUrl = "#springUrl('/pfmReport/getInformation/getList.html')";
+    var dataColumns = [
+        { field: 'tUserName', title: '推荐人姓名', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'tMobileNo', title: '推荐人手机号', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'advisorName', title: '投资顾问', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'tUserType', title: '推荐人客户类别', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatFinalUserType(row.tUserType); } },
+        { field: 'tReportDate', title: '推荐人上报分配日期', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatDate(row.tReportDate); } },
+        { field: 'tIsPerformancePool', title: '推荐人是否业绩池', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatWhether(row.tIsPerformancePool); } },
+        { field: 'btUserName', title: '被推荐人姓名', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'btMobileNo', title: '被推荐人手机号', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'btRegisterTime', title: '被推荐人注册时间', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatDateTime(row.btRegisterTime);}},
+        { field: 'btTransAmount', title: '被推荐人投资金额（不含活期和转让）', sortable:'true',  align: 'center', valign: 'middle' }
+		<!-- 此处按钮级别权限控制,目前只有 admin 拥有该权限! -->
+		#if ($SSOPermission.isActionable("10010"))
+        ,{
+            title: '操作', align: "center", valign: "middle",
+            formatter: function (value, row, index) {
+                var id = row.id;
+                return '<a class="btn btn-xs btn-warning" onclick="editOne(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
+					+'<a class="btn btn-xs btn-danger" onclick="delOne(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
+            }
+        }
+    	#end
+    ];
+
+
+    /**点击搜索按钮，弹出搜索条件的弹层*/
+    function searchByCondition(){
+        var title = "请选择筛选条件";
+        var url = "#springUrl('/pfmReport/getInformation/search.html')";
+        layer.open({
+            type: 2,
+            title: title,
+            shadeClose: true,
+            shade: 0.8,
+            area: ['600px', '435px'],
+            fix: false,
+            maxmin: true,
+            content: url
+        });
+    }
+
+
+    function dataQueryParams(params,formData) {
+        if (formData == '' || formData == null || formData == undefined) {
+            formData = '';
+        }
+        var temp = {
+            _size: params.limit,	//页面大小
+            _index: params.offset,	//页码
+            _search: formData, 		//搜索条件
+        };
+//		console.log(temp);
+        return temp;
+    }
+
+
+    /*添加测试数据*/
+    function addTestData() {
+        $.ajax({
+            type: "get",
+            url: "#springUrl('/pfmReport/getInformation/addTestData')",
+            datatype: "text",
+            success: function (data) {
+                if(data == 'true'){
+                    $('#dataTable').bootstrapTable('refresh',{url:dataUrl});
+                }
+            }
+        });
+    }
+
+	/**导出Excel*/
+	function downloadExcel() {
+        // 模拟Ajax获取
+        downLoadFile({
+            url: "#springUrl('/pfmReport/getInformation/downloadExcel.html')", //请求的url
+            data: {search: $("#txt_search").val()}				//要发送的数据
+        });
+    }
+
+    /**导入excel*/
+    function uploadExcel() {
+        // 触发input的点击事件，弹出文件选择窗口
+        $("#fileExcel").click();
+        // 选择文件后，触发
+        $('#fileExcel').change(function () {
+            // 询问框
+            layer.confirm('确定上传吗？', {
+                btn: ['确定', '取消'] // 按钮
+            }, function () {
+                var url = "#springUrl('/pfmReport/getInformation/uploadExcel')";
+                var fileId = "fileExcel";
+                $.ajaxFileUpload({
+                    url: url,                              //用于文件上传的服务器端请求地址
+                    type: "post",                          //post请求方式
+                    secureuri: false,                      //一般设置为false
+                    fileElementId: fileId,            	   //文件上传空间的id属性
+                    dataType: "json",                      //返回值类型 一般设置为json
+                    success: function (data, status) {     //服务器成功响应处理函数
+                        layer.closeAll();
+						console.log(data);
+						console.log(data.success);
+                        if(data.success == 'true'){
+                            $('#dataTable').bootstrapTable('refresh',{url:dataUrl});
+                        }
+                    },
+                    error: function (data, status, e) {     //服务器响应失败处理函数
+                        console.log(data);
+                    }
+                });
+            });
+        });
+    }
+
+    function delOne(id) {
+        // 询问框
+        layer.confirm('确定删除吗？', {
+            btn: ['确定', '取消'] // 按钮
+        }, function () {
+            $.ajax({
+                type: "POST",
+                url: "#springUrl('/pfmReport/getInformation/delOne/')" + id,
+                datatype: "text",
+                success: function (data) {
+                    if (data == 'true') {
+                        $('#dataTable').bootstrapTable('refresh', {url: dataUrl});
+                    }
+                    layer.closeAll();
+                }
+            });
+        }, function () {
+            return;
+        });
+    }
+
+    function editOne(id) {
+        var title = "新增获客信息";
+        var url = "#springUrl('/pfmReport/getInformation/edit.html')";
+        if (id != null) {
+            title = "编辑获客信息";
+            url = url + "?id=" + id;
+        }
+        layer.open({
+            type: 2,
+            title: title,
+            shadeClose: true,
+            shade: 0.8,
+            area: ['600px', '430px'],
+            fix: false,
+            maxmin: true,
+            content: url
+        });
+    }
+</script>
+#end
+#extends("/common/framework.html")

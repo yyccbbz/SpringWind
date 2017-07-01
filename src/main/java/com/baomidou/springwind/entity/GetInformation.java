@@ -90,7 +90,7 @@ public class GetInformation implements Serializable {
      * 被推荐人投资金额（不含活期和转让）
      */
 	@TableField("bt_trans_amount")
-	private BigDecimal btTransAmount;
+	private Double btTransAmount;
     /**
      * 创建时间
      */
@@ -207,11 +207,11 @@ public class GetInformation implements Serializable {
 		this.btRegisterTime = btRegisterTime;
 	}
 
-	public BigDecimal getBtTransAmount() {
+	public Double getBtTransAmount() {
 		return btTransAmount;
 	}
 
-	public void setBtTransAmount(BigDecimal btTransAmount) {
+	public void setBtTransAmount(Double btTransAmount) {
 		this.btTransAmount = btTransAmount;
 	}
 

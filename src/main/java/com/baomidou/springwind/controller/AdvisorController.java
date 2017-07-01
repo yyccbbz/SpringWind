@@ -1,7 +1,5 @@
 package com.baomidou.springwind.controller;
 
-import com.baomidou.springwind.service.IAdvisorService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -11,14 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * </p>
  *
  * @author CuiCan
- * @since 2017-06-30
+ * @since 2017-07-02
  */
 @Controller
 @RequestMapping("/features/advisor")
 public class AdvisorController extends BaseController {
-
-    @Autowired
-    private IAdvisorService advisorService;
-
-
+	
 }

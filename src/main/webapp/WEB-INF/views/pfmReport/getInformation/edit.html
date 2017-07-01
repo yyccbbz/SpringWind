@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>INSPINIA | Basic Form</title>
+	<link href="#springUrl('/static/css/bootstrap.min.css')" rel="stylesheet">
+	<link href="#springUrl('/static/css/style.css')" rel="stylesheet">
+    <link href="#springUrl('/static/plugins/foundation-datepicker-1.5.6/css/foundation-datepicker.css')" rel="stylesheet">
+    <style>
+        .calendarBox {
+            position: relative;
+        }
+        .glyphicon-calendar {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+        }
+    </style>
+</head>
+<body class="white-bg">
+<div class="ibox-content" style="width: 430px;">
+   <form id="myForm" class="form-horizontal" autocomplete="off" data-validator-option="{theme:'default'}">
+   	   <input type="hidden" name="id" value="$!{pojo.id}">
+
+       <div class="form-group"><label class="col-sm-2 control-label">客户手机号</label>
+           <div class="col-sm-10">
+           		<input type="text" class="form-control" value="$!{pojo.mobileNo}" name="mobileNo" data-rule="客户手机号:required;mobileNo">
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+
+       <div class="form-group"><label class="col-sm-2 control-label">客户会员号</label>
+           <div class="col-sm-10">
+           		<input type="text" class="form-control" value="$!{pojo.memberNo}" name="memberNo" data-rule="客户会员号:required;memberNo">
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+
+       <div class="form-group"><label class="col-sm-2 control-label">客户姓名</label>
+           <div class="col-sm-10">
+           		<input type="text" class="form-control" value="$!{pojo.userName}" name="userName">
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+
+       <div class="form-group"><label class="col-sm-2 control-label">客户类别</label>
+           <div class="col-sm-10">
+               <select class="form-control m-b" id="userType" name="userType">
+                   <option value="">请选择</option>
+                   <option value="1">上报</option>
+                   <option value="2">分配</option>
+                   <option value="3">未分配VIP</option>
+               </select>
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+
+       <div class="form-group"><label class="col-sm-2 control-label">上报日期</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control calendarBox" name="reportDate" id="reportDate">
+               <div class="glyphicon glyphicon-calendar"></div>
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+
+       <div class="form-group"><label class="col-sm-2 control-label">注册时间</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control calendarBox" id="registerTime" name="registerTime">
+               <div class="glyphicon glyphicon-calendar"></div>
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+
+       <div class="form-group"><label class="col-sm-2 control-label">是否vip</label>
+           <div class="col-sm-10">
+               <label class="checkbox-inline">
+                   <input type="radio" name="isVipuser" value="1" checked> 是
+               </label>
+               <label class="checkbox-inline">
+                   <input type="radio" name="isVipuser" value="0"> 否
+               </label>
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+
+       <div class="form-group"><label class="col-sm-2 control-label">成为vip日期</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control calendarBox" name="vipDate" id="vipDate">
+               <div class="glyphicon glyphicon-calendar"></div>
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+
+       <div class="form-group"><label class="col-sm-2 control-label">投资顾问ID号</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control" name="advisorId" value="$!{pojo.advisorId}">
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+
+       <div class="form-group"><label class="col-sm-2 control-label">投资顾问姓名</label>
+           <div class="col-sm-10">
+               <input type="text" class="form-control" name="advisorName" value="$!{pojo.advisorName}">
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+
+       <div class="form-group"><label class="col-sm-2 control-label">客户标识</label>
+           <div class="col-sm-10">
+               <label class="checkbox-inline">
+                   <input type="radio" name="userMark" value="DKH000" checked> DKH000
+               </label>
+               <label class="checkbox-inline">
+                   <input type="radio" name="userMark" value="DKH001"> DKH001
+               </label>
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+
+       <div class="form-group"><label class="col-sm-2 control-label">是否业绩池</label>
+           <div class="col-sm-10">
+               <label class="checkbox-inline">
+                   <input type="radio" name="isPerformancePool" value="1" checked> 是
+               </label>
+               <label class="checkbox-inline">
+                   <input type="radio" name="isPerformancePool" value="0"> 否
+               </label>
+           </div>
+       </div>
+       <div class="hr-line-dashed"></div>
+
+       <div class="form-group">
+           <div class="text-center">
+               #if(!$!{pojo})
+               <button class="btn btn-info" type="reset">重 置</button>
+               #end
+               <button class="btn btn-primary" type="submit">#if($!{pojo})修 改#else提 交#end</button>
+           </div>
+       </div>
+   </form>
+</div>
+<script src="#springUrl('/static/js/jquery-2.2.4.js')"></script>
+<script src="#springUrl('/static/plugins/nice-validator-1.0.10/jquery.validator.js?local=zh-CN')"></script>
+<script src="#springUrl('/static/plugins/foundation-datepicker-1.5.6/js/foundation-datepicker.js')"></script>
+<script src="#springUrl('/static/plugins/foundation-datepicker-1.5.6/js/locales/foundation-datepicker.zh-CN.js')"></script>
+<script src="#springUrl('/static/js/common.js')"></script>
+<script type="text/javascript">
+
+    // 加载日期插件
+    calendarWithTime("#reportDate");
+    calendarWithTime("#registerTime");
+    calendarWithTime("#vipDate");
+
+    $("#myForm").validator({
+        valid: function (form) {
+            var me = this;
+            // 提交表单之前，hold住表单，防止重复提交
+            me.holdSubmit();
+            $.ajax({
+                url: "#springUrl('/pfmReport/salesDetails/editOne')",
+                data: $(form).serialize(),
+                type: "POST",
+                success: function (data) {
+                    var d = JSON.parse(data);
+                    if (d.success && d.data) {
+                        window.parent.location.reload();
+                        //当你在iframe页面关闭自身时
+                        //var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        //parent.layer.close(index); //再执行关闭
+                    } else {
+                        //失败，提交表单成功后，释放hold，如果不释放hold，就变成了只能提交一次的表单
+                        me.holdSubmit(false);
+                    }
+                }
+            });
+        }
+    });
+
+    /*数据回显*/
+    //日期回显
+    // var r = dateFtt("yyyy-MM-dd","$!{pojo.reportDate}");
+    $("#reportDate").val(formatDateTime("$!{pojo.reportDate}"));
+    $("#registerTime").val(formatDateTime("$!{pojo.registerTime}"));
+    $("#vipDate").val(formatDateTime("$!{pojo.vipDate}"));
+
+    // Radio回显
+    $("input[type=radio][name=isVipuser]").each(function () {
+        if ($(this).val() == '$!{pojo.isVipuser}') {
+            $(this).attr("checked", "checked");
+        }
+    });
+    $("input[type=radio][name=userMark]").each(function () {
+        if ($(this).val() == '$!{pojo.userMark}') {
+            $(this).attr("checked", "checked");
+        }
+    });
+    $("input[type=radio][name=isPerformancePool]").each(function () {
+        if ($(this).val() == '$!{pojo.isPerformancePool}') {
+            $(this).attr("checked", "checked");
+        }
+    });
+
+    //select回显
+    $("#userType option").each(function() {
+        if ($(this).val() == '${pojo.userType}') {
+            $(this).attr("selected", "selected");
+        }
+    });
+
+</script>
+</body>
+</html>

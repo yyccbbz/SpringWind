@@ -13,11 +13,8 @@
 		<result column="email" property="email" />
 		<result column="team_name" property="teamName" />
 		<result column="team_leader" property="teamLeader" />
-		<result column="team_total_no" property="teamTotalNo" />
 		<result column="team_location" property="teamLocation" />
 		<result column="is_valid" property="isValid" />
-		<result column="is_leader" property="isLeader" />
-		<result column="remark" property="remark" />
 		<result column="create_time" property="createTime" />
 		<result column="update_time" property="updateTime" />
 	</resultMap>

@@ -1,0 +1,16 @@
+主键,id,id
+推荐人手机号,t_mobile_no,tMobileNo
+推荐人会员号,t_member_no,tMemberNo
+推荐人姓名,t_user_name,tUserName
+投资顾问ID号,advisor_id,advisorId
+投资顾问姓名,advisor_name,advisorName
+推荐人客户类别,t_user_type,tUserType
+推荐人上报分配日期,t_report_date,tReportDate
+推荐人是否业绩池,t_is_performance_pool,tIsPerformancePool
+被推荐人手机号,bt_mobile_no,btMobileNo
+被推荐人会员号,bt_member_no,btMemberNo
+被推荐人姓名,bt_user_name,btUserName
+被推荐人注册时间,bt_register_time,btRegisterTime
+被推荐人投资金额（不含活期和转让）,bt_trans_amount,btTransAmount
+创建时间,create_time,createTime
+更新时间,update_time,updateTime

@@ -39,13 +39,15 @@ public class SalesDetailsController extends BaseController {
     @Autowired
     private ISalesDetailsService salesDetailsService;
 
-    //excel-config.xml中配置的ID
+    /**
+     * excel导出相关
+     */
+    @Value("${salesDetails.excelName}")
+    private String excelName;
     @Value("${salesDetails.excelId}")
-    private String salesDetailsExcelId;
-
-    //excel导出的字段
+    private String excelId;
     @Value("${salesDetails.fields}")
-    private String salesDetailsFields;
+    private String excelFields;
 
     /**
      * 页面跳转
@@ -83,7 +85,6 @@ public class SalesDetailsController extends BaseController {
 
         Page<SalesDetails> page = getPage();
         if (StringUtil.isNotEmpty(_search)) {
-            //transAmountSmall=transAmount transAmountBig=accountAum
             SalesDetailsVO sdVO = JSONObject.parseObject(_search, SalesDetailsVO.class);
             page = salesDetailsService.selectPageByParams(page, sdVO);
         } else {
@@ -128,29 +129,9 @@ public class SalesDetailsController extends BaseController {
     @RequestMapping(value = "/downloadExcel",method = RequestMethod.POST)
     public ModelAndView downloadExcel(){
 
-        /**1.执行你的业务逻辑获取数据，使用ExcelContent生成Workbook，需要四个参数:
-         *
-         * ①id 配置ID
-         * ②beans 配置class对应的List
-         * ③header 导出之前,在标题前面做出一些额外的操作,比如增加文档描述等,可以为null
-         * ④fields 指定Excel导出的字段(bean对应的字段名称),可以为null
-         */
-        Workbook workbook = null;
-        String id = salesDetailsExcelId;
-        List<SalesDetails> list = salesDetailsService.selectList(null);
-        List<String> fields = Arrays.asList(salesDetailsFields.split(","));
-        try {
-            workbook = excelContext.createExcel(id, list, null, fields);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        /**2.跳转到Excel下载视图*/
-        ModelAndView view = new ModelAndView("springMvcExcelView");
-        view.addObject(SpringMvcExcelView.EXCEL_NAME, "销售明细" + DateUtil.getCurrentTime());
-        view.addObject(SpringMvcExcelView.EXCEL_WORKBOOK, workbook);
-        view.addObject(SpringMvcExcelView.EXCEL_EMPTY_MESSAGE, "销售明细 没有相关数据可以导出");
-        return view;
+        List<String> fields = Arrays.asList(excelFields.split(","));
+        List<SalesDetails> beans = salesDetailsService.selectList(null);
+        return super.exportExcel(excelId, beans, null, fields, excelName);
     }
 
     @ResponseBody
@@ -172,9 +153,10 @@ isVipuser,vipDate,isPerformancePool,userMark,createTime,updateTime,
             sd.setMobileNo(RandomStringUtils.randomNumeric(11));
             sd.setMemberNo(RandomStringUtils.randomAlphanumeric(10));
             sd.setUserName(RandomStringUtils.randomAlphabetic(5));
-            sd.setAdvisorId(Integer.parseInt(RandomStringUtils.randomAlphanumeric(4)));
+            sd.setAdvisorId(Integer.parseInt(RandomStringUtils.randomNumeric(4)));
             sd.setAdvisorName(RandomStringUtils.randomAlphabetic(5));
             sd.setProductId(RandomStringUtils.randomAlphanumeric(4));
+
             sd.setProductName(RandomStringUtils.randomAlphanumeric(6));
             sd.setProductType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'1', '2', '3', '4'})));
             sd.setProductRate(RandomStringUtils.randomAlphanumeric(2));

@@ -2,6 +2,7 @@ package com.baomidou.springwind.mapper;
 
 import com.baomidou.springwind.entity.GetInformation;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * <p>
@@ -13,4 +14,6 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface GetInformationMapper extends BaseMapper<GetInformation> {
 
+    @Update("TRUNCATE TABLE get_information")
+    void truncateTable();
 }

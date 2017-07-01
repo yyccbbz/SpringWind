@@ -1,5 +1,6 @@
 package com.baomidou.springwind.service;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.entity.GetInformation;
 import com.baomidou.mybatisplus.service.IService;
 
@@ -12,5 +13,8 @@ import com.baomidou.mybatisplus.service.IService;
  * @since 2017-06-15
  */
 public interface IGetInformationService extends IService<GetInformation> {
-	
+
+    Page<GetInformation> selectPageByParams(Page<GetInformation> page, GetInformation getInformation);
+
+    void deleteAll();
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
  * </p>
  *
  * @author CuiCan
- * @since 2017-06-30
+ * @since 2017-07-02
  */
 @Service
 public class AdvisorServiceImpl extends BaseServiceImpl<AdvisorMapper, Advisor> implements IAdvisorService {

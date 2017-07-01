@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author CuiCan
- * @since 2017-06-30
+ * @since 2017-07-02
  */
 public class Advisor implements Serializable {
 
@@ -63,29 +63,15 @@ public class Advisor implements Serializable {
 	@TableField("team_leader")
 	private String teamLeader;
     /**
-     * 团队总人数
-     */
-	@TableField("team_total_no")
-	private Integer teamTotalNo;
-    /**
      * 团队所在地
      */
 	@TableField("team_location")
 	private String teamLocation;
     /**
-     * 是否有效{1:有效,0:无效}
+     * 是否有效{1:有效、0:无效}
      */
 	@TableField("is_valid")
 	private Integer isValid;
-    /**
-     * 是否组长{0:否,1:是}
-     */
-	@TableField("is_leader")
-	private Integer isLeader;
-    /**
-     * 备注信息
-     */
-	private String remark;
     /**
      * 创建时间
      */
@@ -170,14 +156,6 @@ public class Advisor implements Serializable {
 		this.teamLeader = teamLeader;
 	}
 
-	public Integer getTeamTotalNo() {
-		return teamTotalNo;
-	}
-
-	public void setTeamTotalNo(Integer teamTotalNo) {
-		this.teamTotalNo = teamTotalNo;
-	}
-
 	public String getTeamLocation() {
 		return teamLocation;
 	}
@@ -192,22 +170,6 @@ public class Advisor implements Serializable {
 
 	public void setIsValid(Integer isValid) {
 		this.isValid = isValid;
-	}
-
-	public Integer getIsLeader() {
-		return isLeader;
-	}
-
-	public void setIsLeader(Integer isLeader) {
-		this.isLeader = isLeader;
-	}
-
-	public String getRemark() {
-		return remark;
-	}
-
-	public void setRemark(String remark) {
-		this.remark = remark;
 	}
 
 	public Date getCreateTime() {
