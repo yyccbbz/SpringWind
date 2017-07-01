@@ -2,6 +2,7 @@ package com.baomidou.springwind.mapper;
 
 import com.baomidou.mybatisplus.mapper.BaseMapper;
 import com.baomidou.springwind.entity.ProductExpires;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * <p>
@@ -12,4 +13,7 @@ import com.baomidou.springwind.entity.ProductExpires;
  * @since 2017-06-25
  */
 public interface ProductExpiresMapper extends BaseMapper<ProductExpires> {
+
+    @Update("TRUNCATE TABLE product_expires")
+    void truncateTable();
 }

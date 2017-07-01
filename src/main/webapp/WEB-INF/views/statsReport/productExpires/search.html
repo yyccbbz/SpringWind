@@ -37,36 +37,33 @@
                 <input type="text" class="form-control" name="userName"/>
             </div>
             <div class="form-group col-xs-4">
-                <label class="form-label">手机号</label>
+                <label class="form-label">客户手机号</label>
                 <input type="text" class="form-control" name="mobileNo"/>
             </div>
             <div class="form-group col-xs-4">
-                <label class="form-label">客户类别</label>
-                <select class="form-control" name="userType">
-                    <option value="">请选择</option>
-                    <option value="1">上报</option>
-                    <option value="2">分配</option>
-                    <option value="3">未分配VIP</option>
-                </select>
+                <label class="form-label">投资顾问</label>
+                <input type="text" class="form-control" name="advisorName"/>
             </div>
         </div>
+
         <div class="row">
             <div class="form-group col-xs-4">
-                <label class="form-label">持有理财AUM 大于等于</label>
-                <input type="text" class="form-control calendarBox calendar startDate" id="reportDate" name="reportDate"/>
+                <label class="form-label">定期产品到期日 从</label>
+                <input type="text" class="form-control calendarBox calendar startDate" id="dueDate" name="dueDate"/>
                 <span class="glyphicon glyphicon-calendar"></span>
             </div>
             <div class="form-group col-xs-4">
-                <label class="form-label">小于等于</label>
-                <input type="text" class="form-control calendarBox calendar endDate" id="vipDate" name="vipDate"/>
+                <label class="form-label">至</label>
+                <input type="text" class="form-control calendarBox calendar endDate" id="inceptionDate" name="inceptionDate"/>
                 <span class="glyphicon glyphicon-calendar"></span>
             </div>
             <div class="form-group col-xs-4">
-                <label class="form-label">是否业绩池</label>
-                <select class="form-control" name="isPerformancePool">
+                <label class="form-label">定期产品期限类型</label><!--定期产品期限类型：0：新人专享，1:6个月，2:12个月-->
+                <select class="form-control" name="limitType">
                     <option value="">请选择</option>
-                    <option value="0">否</option>
-                    <option value="1">是</option>
+                    <option value="0">新人专享</option>
+                    <option value="6">6个月</option>
+                    <option value="12">12个月</option>
                 </select>
             </div>
             <span id="startSpan" style="opacity: 0;"></span>
@@ -87,8 +84,8 @@
 <script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
     //日期插件
-    calendarWithoutTime("#reportDate");
-    calendarWithoutTime("#vipDate");
+    calendarWithoutTime("#dueDate");
+    calendarWithoutTime("#inceptionDate");
 
     // 如果此时开始日期小于结束日期，不能提交。
     $(".startDate").change(function () {

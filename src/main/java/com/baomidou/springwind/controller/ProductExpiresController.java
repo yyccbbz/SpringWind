@@ -2,19 +2,21 @@ package com.baomidou.springwind.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.kisso.annotation.Permission;
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.DateUtil;
 import com.baomidou.springwind.common.utils.StringUtil;
-import com.baomidou.springwind.common.view.SpringMvcExcelView;
 import com.baomidou.springwind.entity.ProductExpires;
 import com.baomidou.springwind.service.IProductExpiresService;
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -82,14 +84,15 @@ public class ProductExpiresController extends BaseController {
 
         System.err.println("筛选条件 formData =" + _search);
 
-        ProductExpires pe = null;
-        if (StringUtil.isNotEmpty(_search)) {
-            pe = JSONObject.parseObject(_search, ProductExpires.class);
-        }
         Page<ProductExpires> page = getPage();
-//        Page<ProductExpires> userPage = productExpiresService.selectPageByParams(page, pe);
-        Page<ProductExpires> selectPage = productExpiresService.selectPage(page, null);
-        return jsonPage(selectPage);
+        if (StringUtil.isNotEmpty(_search)) {
+            ProductExpires pe = JSONObject.parseObject(_search, ProductExpires.class);
+            page = productExpiresService.selectPageByParams(page, pe);
+        } else {
+            page = productExpiresService.selectPage(page,
+                    new EntityWrapper<ProductExpires>().orderBy("due_date", false));
+        }
+        return jsonPage(page);
     }
 
 //    @ResponseBody
@@ -137,7 +140,7 @@ public class ProductExpiresController extends BaseController {
     @RequestMapping("addTestData")
     public String addTestData() {
 
-//        Boolean boo = productExpiresService.deleteAll();
+        productExpiresService.deleteAll();
 
         ArrayList<ProductExpires> list = new ArrayList<>();
         for (int i = 1; i <= 100; i++) {
@@ -167,7 +170,7 @@ public class ProductExpiresController extends BaseController {
                 pe.setLimitType(12);
             }
 
-            pe.setProductRate(""+i);
+            pe.setProductRate("" + i);
             pe.setCreateTime(new Date());
             pe.setUpdateTime(pe.getCreateTime());
             list.add(pe);
