@@ -1,0 +1,16 @@
+主键,id,id
+客户手机号,mobile_no,memberNo
+客户会员号,member_no,memberNo
+客户姓名,user_name,userName
+客户类别,user_type,userType
+客户注册时间,register_time,registerTime
+纯定期AUM,dingqi_aum,dingqiAum
+活期AUM,huoqi_aum,huoqiAum
+活包定AUM,huobaoding_aum,huobaodingAum
+二级市场转让AUM,secondmarket_aum,secondmarketAum
+持有理财AUM,trans_aum,transAum
+账户余额AUM,account_aum,accountAum
+AUM更新日期,aum_date,aumDate
+是否业绩池,is_performance_pool,isPerformancePool
+创建时间,create_time,createTime
+更新时间,update_time,updateTime

@@ -8,7 +8,8 @@ public class Test {
 
     public static void main(String[] args) throws IOException {
 
-        File file = new File("E:\\Workspace\\IdeaProjects\\SpringWind\\src\\test\\java\\test\\product_expires.txt");
+//        File file = new File("E:\\Workspace\\IdeaProjects\\SpringWind\\src\\test\\java\\test\\product_expires.txt");
+        File file = new File("E:\\Users\\IdeaProjects\\SpringWind\\src\\test\\java\\test\\assets_balance.txt");
 
         if (file.isFile() && file.exists()) { //判断文件是否存在
 
@@ -20,12 +21,13 @@ public class Test {
 
             while ((lineTxt = bufferedReader.readLine()) != null) {
                 String[] strs = lineTxt.split(",");
-                String s1 = strs[0];
-                String s2 = strs[1];
+                String s1 = strs[0];//中文
+                String s2 = strs[1];//表字段
+                String s3 = strs[2];//类属性
 
-                String field = "{ field: '" + s1 + "', title: '" + s2 + "', align: 'center', valign: 'middle' },";
+                String field = "{ field: '" + s3 + "', title: '" + s1 + "', sortable:'true',  align: 'center', valign: 'middle' },";
                 System.err.println(field);
-                sb.append(s1);
+                sb.append(s2);
                 sb.append(",");
 
             }

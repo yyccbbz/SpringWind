@@ -1,5 +1,8 @@
 package com.baomidou.springwind.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.springwind.common.utils.StringUtil;
 import com.baomidou.springwind.entity.AssetsBalance;
 import com.baomidou.springwind.mapper.AssetsBalanceMapper;
 import com.baomidou.springwind.service.IAssetsBalanceService;
@@ -16,5 +19,38 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AssetsBalanceServiceImpl extends BaseServiceImpl<AssetsBalanceMapper, AssetsBalance> implements IAssetsBalanceService {
-	
+
+    @Override
+    public Page<AssetsBalance> selectPageByParams(Page<AssetsBalance> page, AssetsBalance ab) {
+
+        EntityWrapper<AssetsBalance> ew = new EntityWrapper<>();
+
+        if (StringUtil.isNotEmpty(ab.getUserName())) {
+            ew.like("user_name", ab.getUserName());
+        }
+        if (StringUtil.isNotEmpty(ab.getMobileNo())) {
+            ew.eq("mobile_no", ab.getMobileNo());
+        }
+        if (ab.getUserType() != null) {
+            ew.eq("user_type", ab.getUserType());
+        }
+        if (ab.getTransAum() != null) {
+            ew.gt("trans_aum", ab.getTransAum());
+        }
+        if (ab.getAccountAum() != null) {
+            ew.lt("trans_aum", ab.getAccountAum());
+        }
+        if (ab.getIsPerformancePool() != null) {
+            ew.eq("is_performance_pool", ab.getIsPerformancePool());
+        }
+
+        ew.orderBy("aum_date", false);
+        System.err.println(ew.getSqlSegment());
+        return selectPage(page, ew);
+    }
+
+    @Override
+    public void deleteAll() {
+        baseMapper.truncateTable();
+    }
 }

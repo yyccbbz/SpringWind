@@ -1,5 +1,6 @@
 package com.baomidou.springwind.service.impl;
 
+import com.baomidou.framework.annotations.Log;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.StringUtil;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ProductExpiresServiceImpl extends BaseServiceImpl<ProductExpiresMapper, ProductExpires> implements IProductExpiresService {
 
+    @Log("分页条件查询产品到期列表")
     @Override
     public Page<ProductExpires> selectPageByParams(Page<ProductExpires> page, ProductExpires pe) {
 
