@@ -65,7 +65,7 @@ public class SalesDetailsController extends BaseController {
     @RequestMapping("/edit")
     public String edit(Model model, Long id) {
         if (id != null) {
-            model.addAttribute("sd", salesDetailsService.selectById(id));
+            model.addAttribute("pojo", salesDetailsService.selectById(id));
         }
         return "/pfmReport/salesDetails/edit";
     }
@@ -93,7 +93,7 @@ public class SalesDetailsController extends BaseController {
 
     @ResponseBody
     @Permission("6001")
-    @RequestMapping(value = "/editSalesDetail")
+    @RequestMapping(value = "/editOne")
     public String editSalesDetail(SalesDetails salesDetails) {
         boolean rlt = false;
         if (salesDetails != null) {
@@ -111,9 +111,9 @@ public class SalesDetailsController extends BaseController {
 
     @ResponseBody
     @Permission("6001")
-    @RequestMapping("/delSalesDetail/{sdId}")
-    public String delUser(@PathVariable Long sdId) {
-        Boolean rlt = salesDetailsService.deleteById(sdId);
+    @RequestMapping("/delOne/{id}")
+    public String delUser(@PathVariable Long id) {
+        Boolean rlt = salesDetailsService.deleteById(id);
         return rlt.toString();
     }
 

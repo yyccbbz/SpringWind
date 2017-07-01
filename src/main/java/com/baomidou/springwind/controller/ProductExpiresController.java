@@ -65,7 +65,7 @@ public class ProductExpiresController extends BaseController {
     @RequestMapping("/edit")
     public String edit(Model model, Long id) {
         if (id != null) {
-            model.addAttribute("pe", productExpiresService.selectById(id));
+            model.addAttribute("pojo", productExpiresService.selectById(id));
         }
         return "/statsReport/productExpires/edit";
     }
@@ -112,9 +112,9 @@ public class ProductExpiresController extends BaseController {
 
     @ResponseBody
     @Permission("8001")
-    @RequestMapping("/delOne/{peId}")
-    public String delUser(@PathVariable Long peId) {
-        Boolean rlt = productExpiresService.deleteById(peId);
+    @RequestMapping("/delOne/{id}")
+    public String delUser(@PathVariable Long id) {
+        Boolean rlt = productExpiresService.deleteById(id);
         return rlt.toString();
     }
 

@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -51,23 +48,23 @@ public class CustomerRegistryController extends BaseController {
     /**
      * 页面跳转
      */
-    @Permission("8002")
+    @Permission("8003")
     @RequestMapping("/list")
     public String list(Model model) {
         return "/statsReport/customerRegistry/list";
     }
 
-    @Permission("8002")
+    @Permission("8003")
     @RequestMapping("/search")
     public String search(Model model) {
         return "/statsReport/customerRegistry/search";
     }
 
-    @Permission("8002")
+    @Permission("8003")
     @RequestMapping("/edit")
     public String edit(Model model, Long id) {
         if (id != null) {
-            model.addAttribute("cr", customerRegistryService.selectById(id));
+            model.addAttribute("pojo", customerRegistryService.selectById(id));
         }
         return "/statsReport/customerRegistry/edit";
     }
@@ -77,7 +74,7 @@ public class CustomerRegistryController extends BaseController {
      * CRUD
      */
     @ResponseBody
-    @Permission("8002")
+    @Permission("8003")
     @RequestMapping(value = "/getList")
     public String getUserList(@RequestParam("_search") String _search) {
 
@@ -95,30 +92,30 @@ public class CustomerRegistryController extends BaseController {
         return jsonPage(page);
     }
 
-//    @ResponseBody
-//    @Permission("8002")
-//    @RequestMapping("/editUser")
-//    public String editUser(CustomerRegistry pe) {
-//        boolean rlt = false;
-//        if (pe != null) {
-//            if (pe.getId() != null) {
-//                rlt = customerRegistryService.updateById(pe);
-//            } else {
-//                pe.setCreateTime(new Date());
-//                pe.setUpdateTime(pe.getCreateTime());
-//                rlt = customerRegistryService.insert(pe);
-//            }
-//        }
-//        return callbackSuccess(rlt);
-//    }
-//
-//    @ResponseBody
-//    @Permission("8002")
-//    @RequestMapping("/delUser/{userId}")
-//    public String delUser(@PathVariable Long userId) {
-//        Boolean rlt = customerRegistryService.deleteById(userId);
-//        return rlt.toString();
-//    }
+    @ResponseBody
+    @Permission("8002")
+    @RequestMapping("/editOne")
+    public String editUser(CustomerRegistry pe) {
+        boolean rlt = false;
+        if (pe != null) {
+            if (pe.getId() != null) {
+                rlt = customerRegistryService.updateById(pe);
+            } else {
+                pe.setCreateTime(new Date());
+                pe.setUpdateTime(pe.getCreateTime());
+                rlt = customerRegistryService.insert(pe);
+            }
+        }
+        return callbackSuccess(rlt);
+    }
+
+    @ResponseBody
+    @Permission("8003")
+    @RequestMapping("/delOne/{id}")
+    public String delUser(@PathVariable Long id) {
+        Boolean rlt = customerRegistryService.deleteById(id);
+        return rlt.toString();
+    }
 
 
     /**
@@ -126,7 +123,7 @@ public class CustomerRegistryController extends BaseController {
      *
      * @return
      */
-    @Permission("8002")
+    @Permission("8003")
     @RequestMapping(value = "/downloadExcel", method = RequestMethod.POST)
     public ModelAndView downloadExcel() {
 

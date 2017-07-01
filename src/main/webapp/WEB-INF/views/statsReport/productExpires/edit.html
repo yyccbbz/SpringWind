@@ -21,25 +21,25 @@
 <body class="white-bg">
 <div class="ibox-content" style="width: 430px;">
    <form id="myForm" class="form-horizontal" autocomplete="off" data-validator-option="{theme:'default'}">
-   	   <input type="hidden" name="id" value="$!{pe.id}">
+   	   <input type="hidden" name="id" value="$!{pojo.id}">
 
        <div class="form-group"><label class="col-sm-2 control-label">客户姓名</label>
            <div class="col-sm-10">
-               <input type="text" class="form-control" value="$!{pe.userName}" name="userName">
+               <input type="text" class="form-control" value="$!{pojo.userName}" name="userName">
            </div>
        </div>
        <div class="hr-line-dashed"></div>
 
        <div class="form-group"><label class="col-sm-2 control-label">客户手机号</label>
            <div class="col-sm-10">
-           		<input type="text" class="form-control" value="$!{pe.mobileNo}" name="mobileNo" data-rule="客户手机号:required;mobileNo">
+           		<input type="text" class="form-control" value="$!{pojo.mobileNo}" name="mobileNo" data-rule="客户手机号:required;mobileNo">
            </div>
        </div>
        <div class="hr-line-dashed"></div>
 
        <div class="form-group"><label class="col-sm-2 control-label">投资顾问姓名</label>
            <div class="col-sm-10">
-               <input type="text" class="form-control" name="advisorName" value="$!{pe.advisorName}">
+               <input type="text" class="form-control" name="advisorName" value="$!{pojo.advisorName}">
            </div>
        </div>
        <div class="hr-line-dashed"></div>
@@ -58,14 +58,14 @@
 
        <div class="form-group"><label class="col-sm-2 control-label">到期产品名称</label>
            <div class="col-sm-10">
-               <input type="text" class="form-control" name="productName" value="$!{pe.productName}">
+               <input type="text" class="form-control" name="productName" value="$!{pojo.productName}">
            </div>
        </div>
        <div class="hr-line-dashed"></div>
 
        <div class="form-group"><label class="col-sm-2 control-label">交易金额</label>
            <div class="col-sm-10">
-               <input type="text" class="form-control" name="transAmount" value="$!{pe.transAmount}">
+               <input type="text" class="form-control" name="transAmount" value="$!{pojo.transAmount}">
            </div>
        </div>
        <div class="hr-line-dashed"></div>
@@ -88,7 +88,7 @@
 
        <div class="form-group"><label class="col-sm-2 control-label">产品期限（天）</label>
            <div class="col-sm-10">
-               <input type="text" class="form-control" name="limitDays" value="$!{pe.limitDays}">
+               <input type="text" class="form-control" name="limitDays" value="$!{pojo.limitDays}">
            </div>
        </div>
        <div class="hr-line-dashed"></div>
@@ -107,7 +107,7 @@
 
        <div class="form-group"><label class="col-sm-2 control-label">产品利率）</label>
            <div class="col-sm-10">
-               <input type="text" class="form-control" name="productRate" value="$!{pe.productRate}">
+               <input type="text" class="form-control" name="productRate" value="$!{pojo.productRate}">
            </div>
        </div>
        <div class="hr-line-dashed"></div>
@@ -115,9 +115,9 @@
        <div class="form-group">
            <div class="text-center">
                #if(!$!{pe})
-               <button class="btn btn-info" type="reset">重 置</button>
+               <button class="btn btn-info" typojo="reset">重 置</button>
                #end
-               <button class="btn btn-primary" type="submit">#if($!{pe})修 改#else提 交#end</button>
+               <button class="btn btn-primary" typojo="submit">#if($!{pojo})修 改#else提 交#end</button>
            </div>
        </div>
    </form>
@@ -160,20 +160,20 @@
 
     /*数据回显*/
     //日期回显
-    // var r = dateFtt("yyyy-MM-dd","$!{pe.reportDate}");
-    $("#inceptionDate").val(formatDateTime("$!{pe.inceptionDate}"));
-    $("#dueDate").val(formatDateTime("$!{pe.dueDate}"));
+    // var r = dateFtt("yyyy-MM-dd","$!{pojo.reportDate}");
+    $("#inceptionDate").val(formatDateTime("$!{pojo.inceptionDate}"));
+    $("#dueDate").val(formatDateTime("$!{pojo.dueDate}"));
 
     // Radio回显
     $("input[type=radio][name=isPerformancePool]").each(function () {
-        if ($(this).val() == '$!{pe.isPerformancePool}') {
+        if ($(this).val() == '$!{pojo.isPerformancePool}') {
             $(this).attr("checked", "checked");
         }
     });
 
     //select回显
     $("#limitType option").each(function() {
-        if ($(this).val() == '${pe.limitType}') {
+        if ($(this).val() == '${pojo.limitType}') {
             $(this).attr("selected", "selected");
         }
     });

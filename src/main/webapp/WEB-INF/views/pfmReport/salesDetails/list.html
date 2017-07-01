@@ -295,14 +295,14 @@ BigClient - 销售明细
         });
     }
 
-    function delSalesDetail(sdId) {
+    function delSalesDetail(id) {
         // 询问框
         layer.confirm('确定删除吗？', {
             btn: ['确定', '取消'] // 按钮
         }, function () {
             $.ajax({
                 type: "POST",
-                url: "#springUrl('/pfmReport/salesDetails/delSalesDetail/')" + sdId,
+                url: "#springUrl('/pfmReport/salesDetails/delOne/')" + id,
                 datatype: "text",
                 success: function (data) {
                     if(data == 'true'){

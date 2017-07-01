@@ -16,7 +16,7 @@ BigClient - 资产余额表
 		</button>
 
 		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
-			<i class="fa fa-download"></i>&nbsp;导出名单
+			<i class="fa fa-download"></i>&nbsp;导出资产余额
 		</button>
 
 		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
@@ -53,7 +53,7 @@ BigClient - 资产余额表
     var dataUrl = "#springUrl('/statsReport/assetsBalance/getList.html')";
     var dataColumns = [
         {field: 'userName', 		title: '客户姓名', 	sortable: 'true', align: 'center', valign: 'middle'},
-        {field: 'memberNo', 		title: '客户手机号', 	sortable: 'true', align: 'center', valign: 'middle'},
+        {field: 'mobileNo', 		title: '客户手机号', 	sortable: 'true', align: 'center', valign: 'middle'},
         {field: 'userType', 		title: '客户类别', 	sortable: 'true', align: 'center', valign: 'middle',
             formatter: function (value, row, index) { return formatFinalUserType(row.userType); }},
         {field: 'registerTime', 	title: '注册时间', 	sortable: 'true', align: 'center', valign: 'middle',
@@ -76,8 +76,8 @@ BigClient - 资产余额表
             valign: "middle",
             formatter: function (value, row, index) {
                 var id = row.id;
-                return '<a class="btn btn-xs btn-warning" onclick="editUser(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
-					+'<a class="btn btn-xs btn-danger" onclick="delUser(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
+                return '<a class="btn btn-xs btn-warning" onclick="editAssetsBalance(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
+					+'<a class="btn btn-xs btn-danger" onclick="delAssetsBalance(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
 
             }
         }
@@ -177,14 +177,14 @@ BigClient - 资产余额表
         });
     }
 
-    function delUser(userId) {
+    function delAssetsBalance(id) {
         // 询问框
         layer.confirm('确定删除吗？', {
             btn: ['确定', '取消'] // 按钮
         }, function () {
             $.ajax({
                 type: "POST",
-                url: "#springUrl('/statsReport/assetsBalance/delUser/')" + userId,
+                url: "#springUrl('/statsReport/assetsBalance/delOne/')" + id,
                 datatype: "text",
                 success: function (data) {
                     if(data == 'true'){
@@ -198,7 +198,7 @@ BigClient - 资产余额表
         });
     }
 
-	function editUser(id){
+	function editAssetsBalance(id){
 		var title = "新增用户";
 		var url = "#springUrl('/statsReport/assetsBalance/edit.html')";
 		if(id!=null){

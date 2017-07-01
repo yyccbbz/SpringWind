@@ -13,10 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
@@ -68,7 +65,7 @@ public class AssetsBalanceController extends BaseController {
     @RequestMapping("/edit")
     public String edit(Model model, Long id) {
         if (id != null) {
-            model.addAttribute("ab", assetsBalanceService.selectById(id));
+            model.addAttribute("pojo", assetsBalanceService.selectById(id));
         }
         return "/statsReport/assetsBalance/edit";
     }
@@ -96,30 +93,30 @@ public class AssetsBalanceController extends BaseController {
         return jsonPage(page);
     }
 
-//    @ResponseBody
-//    @Permission("8002")
-//    @RequestMapping("/editUser")
-//    public String editUser(AssetsBalance pe) {
-//        boolean rlt = false;
-//        if (pe != null) {
-//            if (pe.getId() != null) {
-//                rlt = assetsBalanceService.updateById(pe);
-//            } else {
-//                pe.setCreateTime(new Date());
-//                pe.setUpdateTime(pe.getCreateTime());
-//                rlt = assetsBalanceService.insert(pe);
-//            }
-//        }
-//        return callbackSuccess(rlt);
-//    }
-//
-//    @ResponseBody
-//    @Permission("8002")
-//    @RequestMapping("/delUser/{userId}")
-//    public String delUser(@PathVariable Long userId) {
-//        Boolean rlt = assetsBalanceService.deleteById(userId);
-//        return rlt.toString();
-//    }
+    @ResponseBody
+    @Permission("8002")
+    @RequestMapping("/editOne")
+    public String editUser(AssetsBalance pe) {
+        boolean rlt = false;
+        if (pe != null) {
+            if (pe.getId() != null) {
+                rlt = assetsBalanceService.updateById(pe);
+            } else {
+                pe.setCreateTime(new Date());
+                pe.setUpdateTime(pe.getCreateTime());
+                rlt = assetsBalanceService.insert(pe);
+            }
+        }
+        return callbackSuccess(rlt);
+    }
+
+    @ResponseBody
+    @Permission("8002")
+    @RequestMapping("/delOne/{id}")
+    public String delUser(@PathVariable Long id) {
+        Boolean rlt = assetsBalanceService.deleteById(id);
+        return rlt.toString();
+    }
 
 
     /**

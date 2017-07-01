@@ -68,8 +68,8 @@ BigClient - 客户注册情况
             valign: "middle",
             formatter: function (value, row, index) {
                 var id = row.id;
-                return '<a class="btn btn-xs btn-warning" onclick="editUser(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
-					+'<a class="btn btn-xs btn-danger" onclick="delUser(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
+                return '<a class="btn btn-xs btn-warning" onclick="editCustomerRegistry(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
+					+'<a class="btn btn-xs btn-danger" onclick="delCustomerRegistry(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
 
             }
         }
@@ -169,14 +169,14 @@ BigClient - 客户注册情况
         });
     }
 
-    function delUser(userId) {
+    function delCustomerRegistry(id) {
         // 询问框
         layer.confirm('确定删除吗？', {
             btn: ['确定', '取消'] // 按钮
         }, function () {
             $.ajax({
                 type: "POST",
-                url: "#springUrl('/statsReport/customerRegistry/delUser/')" + userId,
+                url: "#springUrl('/statsReport/customerRegistry/delOne/')" + id,
                 datatype: "text",
                 success: function (data) {
                     if(data == 'true'){
@@ -190,7 +190,7 @@ BigClient - 客户注册情况
         });
     }
 
-	function editUser(id){
+	function editCustomerRegistry(id){
 		var title = "新增用户";
 		var url = "#springUrl('/statsReport/customerRegistry/edit.html')";
 		if(id!=null){
