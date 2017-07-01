@@ -22,7 +22,7 @@ BigClient - 销售明细
 
 		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
 		#if ($SSOPermission.isActionable("10010"))
-		<button class="btn btn-primary" onclick="editUser(null)" type="button">
+		<button class="btn btn-primary" onclick="editSalesDetail(null)" type="button">
 			<i class="fa fa-user-plus"></i>&nbsp;添加销售明细
 		</button>
 
@@ -191,8 +191,8 @@ BigClient - 销售明细
             valign: "middle",
             formatter: function (value, row, index) {
                 var id = row.id;
-                return '<a class="btn btn-xs btn-warning" onclick="editUser(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
-					+'<a class="btn btn-xs btn-danger" onclick="delUser(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
+                return '<a class="btn btn-xs btn-warning" onclick="editSalesDetail(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
+					+'<a class="btn btn-xs btn-danger" onclick="delSalesDetail(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
 
             }
         }
@@ -295,14 +295,14 @@ BigClient - 销售明细
         });
     }
 
-    function delUser(userId) {
+    function delSalesDetail(sdId) {
         // 询问框
         layer.confirm('确定删除吗？', {
             btn: ['确定', '取消'] // 按钮
         }, function () {
             $.ajax({
                 type: "POST",
-                url: "#springUrl('/pfmReport/salesDetails/delUser/')" + userId,
+                url: "#springUrl('/pfmReport/salesDetails/delSalesDetail/')" + sdId,
                 datatype: "text",
                 success: function (data) {
                     if(data == 'true'){
@@ -316,7 +316,7 @@ BigClient - 销售明细
         });
     }
 
-	function editUser(id){
+	function editSalesDetail(id){
 		var title = "新增销售明细";
 		var url = "#springUrl('/pfmReport/salesDetails/edit.html')";
 		if(id!=null){

@@ -18,7 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
@@ -65,7 +65,7 @@ public class SalesDetailsController extends BaseController {
     @RequestMapping("/edit")
     public String edit(Model model, Long id) {
         if (id != null) {
-            model.addAttribute("user", salesDetailsService.selectById(id));
+            model.addAttribute("sd", salesDetailsService.selectById(id));
         }
         return "/pfmReport/salesDetails/edit";
     }
@@ -80,6 +80,7 @@ public class SalesDetailsController extends BaseController {
 
         System.err.println("筛选条件 formData =" + _search);
 
+
         SalesDetailVo salesDetailVo = null;
 
         if (StringUtil.isNotEmpty(_search)) {
@@ -92,7 +93,7 @@ public class SalesDetailsController extends BaseController {
 
     @ResponseBody
     @Permission("6001")
-    @RequestMapping(value = "/editSalesDetail", method = RequestMethod.POST)
+    @RequestMapping(value = "/editSalesDetail")
     public String editSalesDetail(SalesDetails salesDetails) {
         boolean rlt = false;
         if (salesDetails != null) {
@@ -108,14 +109,22 @@ public class SalesDetailsController extends BaseController {
     }
 
 
+    @ResponseBody
+    @Permission("6001")
+    @RequestMapping("/delSalesDetail/{sdId}")
+    public String delUser(@PathVariable Long sdId) {
+        Boolean rlt = salesDetailsService.deleteById(sdId);
+        return rlt.toString();
+    }
+
     /**
      * Excel导出列表
      *
      * @return
      */
     @Permission("6001")
-    @RequestMapping(value = "/downloadExcel", method = RequestMethod.POST)
-    public ModelAndView downloadExcel() {
+    @RequestMapping(value = "/downloadExcel",method = RequestMethod.POST)
+    public ModelAndView downloadExcel(){
 
         /**1.执行你的业务逻辑获取数据，使用ExcelContent生成Workbook，需要四个参数:
          *

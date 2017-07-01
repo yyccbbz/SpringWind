@@ -21,25 +21,25 @@
 <body class="white-bg">
 <div class="ibox-content" style="width: 430px;">
    <form id="myForm" class="form-horizontal" autocomplete="off" data-validator-option="{theme:'default'}">
-   	   <input type="hidden" name="id" value="$!{user.id}">
+   	   <input type="hidden" name="id" value="$!{sd.id}">
 
        <div class="form-group"><label class="col-sm-2 control-label">客户手机号</label>
            <div class="col-sm-10">
-           		<input type="text" class="form-control" value="$!{user.mobileNo}" name="mobileNo" data-rule="客户手机号:required;mobileNo">
+           		<input type="text" class="form-control" value="$!{sd.mobileNo}" name="mobileNo" data-rule="客户手机号:required;mobileNo">
            </div>
        </div>
        <div class="hr-line-dashed"></div>
 
        <div class="form-group"><label class="col-sm-2 control-label">客户会员号</label>
            <div class="col-sm-10">
-           		<input type="text" class="form-control" value="$!{user.memberNo}" name="memberNo" data-rule="客户会员号:required;memberNo">
+           		<input type="text" class="form-control" value="$!{sd.memberNo}" name="memberNo" data-rule="客户会员号:required;memberNo">
            </div>
        </div>
        <div class="hr-line-dashed"></div>
 
        <div class="form-group"><label class="col-sm-2 control-label">客户姓名</label>
            <div class="col-sm-10">
-           		<input type="text" class="form-control" value="$!{user.userName}" name="userName">
+           		<input type="text" class="form-control" value="$!{sd.userName}" name="userName">
            </div>
        </div>
        <div class="hr-line-dashed"></div>
@@ -94,14 +94,14 @@
 
        <div class="form-group"><label class="col-sm-2 control-label">投资顾问ID号</label>
            <div class="col-sm-10">
-               <input type="text" class="form-control" name="advisorId" value="$!{user.advisorId}">
+               <input type="text" class="form-control" name="advisorId" value="$!{sd.advisorId}">
            </div>
        </div>
        <div class="hr-line-dashed"></div>
 
        <div class="form-group"><label class="col-sm-2 control-label">投资顾问姓名</label>
            <div class="col-sm-10">
-               <input type="text" class="form-control" name="advisorName" value="$!{user.advisorName}">
+               <input type="text" class="form-control" name="advisorName" value="$!{sd.advisorName}">
            </div>
        </div>
        <div class="hr-line-dashed"></div>
@@ -132,10 +132,10 @@
 
        <div class="form-group">
            <div class="text-center">
-               #if(!$!{user})
+               #if(!$!{sd})
                <button class="btn btn-info" type="reset">重 置</button>
                #end
-               <button class="btn btn-primary" type="submit">#if($!{user})修 改#else提 交#end</button>
+               <button class="btn btn-primary" type="submit">#if($!{sd})修 改#else提 交#end</button>
            </div>
        </div>
    </form>
@@ -148,7 +148,7 @@
 <script type="text/javascript">
 
     // 加载日期插件
-    calendarWitHTime("#reportDate");
+    calendarWithTime("#reportDate");
     calendarWithTime("#registerTime");
     calendarWithTime("#vipDate");
 
@@ -179,31 +179,31 @@
 
     /*数据回显*/
     //日期回显
-    // var r = dateFtt("yyyy-MM-dd","$!{user.reportDate}");
-    $("#reportDate").val(formatDate("$!{user.reportDate}"));
-    $("#registerTime").val(formatDateTime("$!{user.registerTime}"));
-    $("#vipDate").val(formatDate("$!{user.vipDate}"));
+    // var r = dateFtt("yyyy-MM-dd","$!{sd.reportDate}");
+    $("#reportDate").val(formatDateTime("$!{sd.reportDate}"));
+    $("#registerTime").val(formatDateTime("$!{sd.registerTime}"));
+    $("#vipDate").val(formatDateTime("$!{sd.vipDate}"));
 
     // Radio回显
-    $("input[type=radio][name=isVipuser]").each(function () {
-        if ($(this).val() == '$!{user.isVipuser}') {
+    $("input[type=radio][name=isVipsd]").each(function () {
+        if ($(this).val() == '$!{sd.isVipuser}') {
             $(this).attr("checked", "checked");
         }
     });
     $("input[type=radio][name=userMark]").each(function () {
-        if ($(this).val() == '$!{user.userMark}') {
+        if ($(this).val() == '$!{sd.userMark}') {
             $(this).attr("checked", "checked");
         }
     });
     $("input[type=radio][name=isPerformancePool]").each(function () {
-        if ($(this).val() == '$!{user.isPerformancePool}') {
+        if ($(this).val() == '$!{sd.isPerformancePool}') {
             $(this).attr("checked", "checked");
         }
     });
 
     //select回显
     $("#userType option").each(function() {
-        if ($(this).val() == '${user.userType}') {
+        if ($(this).val() == '${sd.userType}') {
             $(this).attr("selected", "selected");
         }
     });
