@@ -54,7 +54,7 @@ public class GetInformationServiceImpl extends BaseServiceImpl<GetInformationMap
             ew.eq("t_is_performance_pool", gi.gettIsPerformancePool());
         }
 
-        ew.orderBy("bt_register_time", false);
+        ew.orderBy("trans_time", false);
         System.err.println(ew.getSqlSegment());
         return selectPage(page, ew);
     }

@@ -1,6 +1,8 @@
 package com.baomidou.springwind.service.impl;
 
+import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
+import com.baomidou.springwind.common.utils.StringUtil;
 import com.baomidou.springwind.entity.GetSalesDetails;
 import com.baomidou.springwind.mapper.GetSalesDetailsMapper;
 import com.baomidou.springwind.service.IGetSalesDetailsService;
@@ -19,12 +21,57 @@ import org.springframework.stereotype.Service;
 public class GetSalesDetailsServiceImpl extends BaseServiceImpl<GetSalesDetailsMapper, GetSalesDetails> implements IGetSalesDetailsService {
 
     @Override
-    public Page<GetSalesDetails> selectPageByParams(Page<GetSalesDetails> page, GetSalesDetails getSalesDetails) {
-        return null;
+    public Page<GetSalesDetails> selectPageByParams(Page<GetSalesDetails> page, GetSalesDetails gsd) {
+        EntityWrapper<GetSalesDetails> ew = new EntityWrapper<>();
+
+        if (StringUtil.isNotEmpty(gsd.gettUserName())) {
+            ew.like("t_user_name", gsd.gettUserName());
+        }
+        if (StringUtil.isNotEmpty(gsd.gettMobileNo())) {
+            ew.eq("t_mobile_no", gsd.gettMobileNo());
+        }
+        if (gsd.gettUserType() != null) {
+            ew.eq("t_user_type", gsd.gettUserType());
+        }
+
+        if (gsd.getBtUserName() != null) {
+            ew.like("bt_user_name", gsd.getBtUserName());
+        }
+        if (gsd.getBtMobileNo() != null) {
+            ew.eq("bt_mobile_no", gsd.getBtMobileNo());
+        }
+        if (gsd.getAdvisorName() != null) {
+            ew.eq("advisor_name", gsd.getAdvisorName());
+        }
+
+        if (gsd.getBtRegisterTime() != null) {
+            ew.gt("bt_register_time", gsd.getBtRegisterTime());
+        }
+        if (gsd.getUpdateTime() != null) {
+            ew.lt("bt_register_time", gsd.getUpdateTime());
+        }
+        if (gsd.getProductType() != null) {
+            ew.eq("product_type", gsd.getProductType());
+        }
+
+        if (gsd.getTransTime() != null) {
+            ew.gt("trans_time", gsd.getTransTime());
+        }
+        if (gsd.getCreateTime() != null) {
+            ew.lt("trans_time", gsd.getCreateTime());
+        }
+        if (gsd.getLimitType() != null) {
+            ew.eq("limit_type", gsd.getLimitType());
+        }
+
+        ew.orderBy("bt_register_time", false);
+        System.err.println(ew.getSqlSegment());
+        return selectPage(page, ew);
     }
+
 
     @Override
     public void deleteAll() {
-
+        baseMapper.truncateTable();
     }
 }

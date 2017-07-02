@@ -89,12 +89,12 @@ public class GetSalesDetailsController extends BaseController {
 
         Page<GetSalesDetails> page = getPage();
         if (StringUtil.isNotEmpty(_search)) {
-            //btRegisterTime-->updateTime
+            //btRegisterTime-->updateTime trans_time-->createTime
             GetSalesDetails getSalesDetails = JSONObject.parseObject(_search, GetSalesDetails.class);
             page = getSalesDetailsService.selectPageByParams(page, getSalesDetails);
         } else {
             page = getSalesDetailsService.selectPage(page,
-                    new EntityWrapper<GetSalesDetails>().orderBy("bt_register_time", false));
+                    new EntityWrapper<GetSalesDetails>().orderBy("trans_time", false));
         }
         return jsonPage(page);
     }

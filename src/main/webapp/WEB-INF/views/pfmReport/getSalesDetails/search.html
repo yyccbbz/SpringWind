@@ -97,20 +97,21 @@
         <div class="row">
             <div class="form-group col-xs-4">
                 <label class="form-label">被推荐人交易日期 从</label>
-                <input type="text" class="form-control calendarBox calendar startDate" id="transTimeStart" name="btRegisterTime"/>
+                <input type="text" class="form-control calendarBox calendar startDate" id="transTimeStart" name="trans_time"/>
                 <span class="glyphicon glyphicon-calendar"></span>
             </div>
             <div class="form-group col-xs-4">
                 <label class="form-label">至</label>
-                <input type="text" class="form-control calendarBox calendar endDate" id="transTimeEnd" name="updateTime"/>
+                <input type="text" class="form-control calendarBox calendar endDate" id="transTimeEnd" name="createTime"/>
                 <span class="glyphicon glyphicon-calendar"></span>
             </div>
             <div class="form-group col-xs-4">
                 <label class="form-label">定期产品期限类型</label>
                 <select class="form-control" name="tIsPerformancePool">
                     <option value="">请选择</option>
-                    <option value="0">否</option>
-                    <option value="1">是</option>
+                    <option value="0">新人专享</option>
+                    <option value="6">6个月</option>
+                    <option value="12">12个月</option>
                 </select>
             </div>
             <!--<span id="startSpan" style="opacity: 0;"></span>-->
@@ -131,6 +132,8 @@
 <script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
     //日期插件
+    calendarWithoutTime("#registerTimeStart");
+    calendarWithoutTime("#registerTimeEnd");
     calendarWithoutTime("#transTimeStart");
     calendarWithoutTime("#transTimeEnd");
 
