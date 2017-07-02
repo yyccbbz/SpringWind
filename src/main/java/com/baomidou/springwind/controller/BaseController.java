@@ -9,6 +9,7 @@ import com.baomidou.springwind.common.view.SpringMvcExcelView;
 import com.baomidou.springwind.entity.ProductExpires;
 import com.baomidou.springwind.excel.ExcelContext;
 import com.baomidou.springwind.excel.parsing.ExcelHeader;
+import com.baomidou.springwind.service.IAdvisorService;
 import com.baomidou.springwind.service.IPrivilegeService;
 import com.baomidou.springwind.service.IUserService;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -38,13 +39,16 @@ import java.util.List;
 public class BaseController extends SuperController implements HandlerInterceptor {
 
 	@Autowired
+	protected IAdvisorService advisorService;
+
+	@Autowired
 	protected MailHelper mailHelper;
 
 	@Autowired
 	protected IUserService userService;
 
 	@Autowired
-	private IPrivilegeService privilegeService;
+	protected IPrivilegeService privilegeService;
 
 	@Autowired
 	protected ExcelContext excelContext;

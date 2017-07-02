@@ -37,13 +37,15 @@ public class UnassignedVipUserController extends BaseController {
     @Autowired
     private IUnassignedVipUserService unassignedVipUserService;
 
-    //excel-config.xml中配置的ID
+    /**
+     * excel导出相关
+     */
+    @Value("${unassignedVipUser.excelName}")
+    private String excelName;
     @Value("${unassignedVipUser.excelId}")
-    private String userExcelId;
-
-    //excel导出的字段
+    private String excelId;
     @Value("${unassignedVipUser.fields}")
-    private String userFields;
+    private String excelFields;
 
     /**页面跳转*/
     @Permission("5002")
@@ -70,19 +72,15 @@ public class UnassignedVipUserController extends BaseController {
 
         System.err.println("筛选条件：客户姓名_userName = " + _userName+"，手机号码_mobileNo = "+_mobileNo);
 
-        Map<String,Object> params = new HashMap<>();
-
-        if(StringUtil.isNotEmpty(_userName)){
-            params.put("user_name",_userName);
+        EntityWrapper<UnassignedVipUser> ew = new EntityWrapper<>();
+        if (StringUtil.isNotEmpty(_userName)) {
+            ew.like("user_name", _userName);
         }
-
-        if(StringUtil.isNotEmpty(_mobileNo)){
-            params.put("mobile_no",_mobileNo);
+        if (StringUtil.isNotEmpty(_mobileNo)) {
+            ew.like("mobile_no", _mobileNo);
         }
-
         Page<UnassignedVipUser> page = getPage();
-        Page<UnassignedVipUser> userPage = unassignedVipUserService.selectPage(page,
-                new EntityWrapper<UnassignedVipUser>().allEq(params));
+        Page<UnassignedVipUser> userPage = unassignedVipUserService.selectPage(page, ew);
         return jsonPage(userPage);
     }
 
@@ -121,29 +119,9 @@ public class UnassignedVipUserController extends BaseController {
     @RequestMapping(value = "/downloadExcel",method = RequestMethod.POST)
     public ModelAndView downloadExcel(){
 
-        /**1.执行你的业务逻辑获取数据，使用ExcelContent生成Workbook，需要四个参数:
-         *
-         * ①id 配置ID
-         * ②beans 配置class对应的List
-         * ③header 导出之前,在标题前面做出一些额外的操作,比如增加文档描述等,可以为null
-         * ④fields 指定Excel导出的字段(bean对应的字段名称),可以为null
-         */
-        Workbook workbook = null;
-        String id = userExcelId;
-        List<UnassignedVipUser> list = unassignedVipUserService.selectList(null);
-        List<String> fields = Arrays.asList(userFields.split(","));
-        try {
-            workbook = excelContext.createExcel(id, list, null, fields);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        /**2.跳转到Excel下载视图*/
-        ModelAndView view = new ModelAndView("springMvcExcelView");
-        view.addObject(SpringMvcExcelView.EXCEL_NAME, "未分配的vip名单" + DateUtil.getCurrentTime());
-        view.addObject(SpringMvcExcelView.EXCEL_WORKBOOK, workbook);
-        view.addObject(SpringMvcExcelView.EXCEL_EMPTY_MESSAGE, "未分配的vip名单 没有相关数据可以导出");
-        return view;
+        List<String> fields = Arrays.asList(excelFields.split(","));
+        List<UnassignedVipUser> beans = unassignedVipUserService.selectList(null);
+        return super.exportExcel(excelId, beans, null, fields, excelName);
     }
 
     @ResponseBody

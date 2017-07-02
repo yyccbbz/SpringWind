@@ -6,11 +6,10 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.DateUtil;
 import com.baomidou.springwind.common.utils.StringUtil;
-import com.baomidou.springwind.common.view.SpringMvcExcelView;
+import com.baomidou.springwind.entity.Advisor;
 import com.baomidou.springwind.entity.FinalUser;
 import com.baomidou.springwind.service.IFinalUserService;
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -38,15 +37,19 @@ public class FinalUserController extends BaseController {
     @Autowired
     private IFinalUserService finalUserService;
 
-    //excel-config.xml中配置的ID
+    /**
+     * excel导出相关
+     */
+    @Value("${finalUser.excelName}")
+    private String excelName;
     @Value("${finalUser.excelId}")
-    private String userExcelId;
-
-    //excel导出的字段
+    private String excelId;
     @Value("${finalUser.fields}")
-    private String userFields;
+    private String excelFields;
 
-    /**页面跳转*/
+    /**
+     * 页面跳转
+     */
     @Permission("5001")
     @RequestMapping("/list")
     public String list() {
@@ -55,7 +58,9 @@ public class FinalUserController extends BaseController {
 
     @Permission("5001")
     @RequestMapping("/search")
-    public String search() {
+    public String search(Model model) {
+        model.addAttribute("advisors",
+                advisorService.selectList(new EntityWrapper<Advisor>().eq("is_valid", 1)));
         return "/clientList/finalUser/search";
     }
 
@@ -69,7 +74,9 @@ public class FinalUserController extends BaseController {
     }
 
 
-    /**CRUD*/
+    /**
+     * CRUD
+     */
     @ResponseBody
     @Permission("5001")
     @RequestMapping(value = "/getUserList")
@@ -79,11 +86,11 @@ public class FinalUserController extends BaseController {
 
         Page<FinalUser> userPage = null;
         Page<FinalUser> page = getPage();
-        if(StringUtil.isNotEmpty(_search)){
+        if (StringUtil.isNotEmpty(_search)) {
             FinalUser finalUser = JSONObject.parseObject(_search, FinalUser.class);
             userPage = finalUserService.selectPageByParams(page, finalUser);
-        }else {
-            userPage = finalUserService.selectPage(page, new EntityWrapper<FinalUser>().orderBy("report_date",false));
+        } else {
+            userPage = finalUserService.selectPage(page, new EntityWrapper<FinalUser>().orderBy("report_date", false));
         }
         return jsonPage(userPage);
     }
@@ -120,32 +127,12 @@ public class FinalUserController extends BaseController {
      * @return
      */
     @Permission("5001")
-    @RequestMapping(value = "/downloadExcel",method = RequestMethod.POST)
-    public ModelAndView downloadExcel(){
+    @RequestMapping(value = "/downloadExcel", method = RequestMethod.POST)
+    public ModelAndView downloadExcel() {
 
-        /**1.执行你的业务逻辑获取数据，使用ExcelContent生成Workbook，需要四个参数:
-         *
-         * ①id 配置ID
-         * ②beans 配置class对应的List
-         * ③header 导出之前,在标题前面做出一些额外的操作,比如增加文档描述等,可以为null
-         * ④fields 指定Excel导出的字段(bean对应的字段名称),可以为null
-         */
-        Workbook workbook = null;
-        String id = userExcelId;
-        List<FinalUser> list = finalUserService.selectList(null);
-        List<String> fields = Arrays.asList(userFields.split(","));
-        try {
-            workbook = excelContext.createExcel(id, list, null, fields);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        /**2.跳转到Excel下载视图*/
-        ModelAndView view = new ModelAndView("springMvcExcelView");
-        view.addObject(SpringMvcExcelView.EXCEL_NAME, "正式名单" + DateUtil.getCurrentTime());
-        view.addObject(SpringMvcExcelView.EXCEL_WORKBOOK, workbook);
-        view.addObject(SpringMvcExcelView.EXCEL_EMPTY_MESSAGE, "正式名单 没有相关数据可以导出");
-        return view;
+        List<String> fields = Arrays.asList(excelFields.split(","));
+        List<FinalUser> beans = finalUserService.selectList(null);
+        return super.exportExcel(excelId, beans, null, fields, excelName);
     }
 
     @ResponseBody
