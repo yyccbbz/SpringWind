@@ -51,7 +51,7 @@ BigClient - 获客销售明细
 <script src="#springUrl('/static/js/base_list.js')"></script>
 <script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
-    var dataUrl = "#springUrl('/pfmReport/getInformation/getList.html')";
+    var dataUrl = "#springUrl('/pfmReport/getSalesDetails/getList.html')";
     var dataColumns = [
         { field: 'tUserName', title: '推荐人姓名', sortable:'true',  align: 'center', valign: 'middle' },
         { field: 'tMobileNo', title: '推荐人手机号', sortable:'true',  align: 'center', valign: 'middle' },
@@ -66,7 +66,19 @@ BigClient - 获客销售明细
         { field: 'btMobileNo', title: '被推荐人手机号', sortable:'true',  align: 'center', valign: 'middle' },
         { field: 'btRegisterTime', title: '被推荐人注册时间', sortable:'true',  align: 'center', valign: 'middle',
             formatter: function (value, row, index) { return formatDateTime(row.btRegisterTime);}},
-        { field: 'btTransAmount', title: '被推荐人投资金额（不含活期和转让）', sortable:'true',  align: 'center', valign: 'middle' }
+        { field: 'productName', title: '产品名称', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'productType', title: '产品类型', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'productRate', title: '产品利率', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'transAmount', title: '投资金额', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'transTime', title: '投资时间', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatDateTime(row.transTime);}},
+        { field: 'inceptionDate', title: '产品成立日', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatDate(row.inceptionDate); } },
+        { field: 'dueDate', title: '产品到期日', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatDate(row.dueDate); } },
+        { field: 'limitDays', title: '产品期限（天）', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'limitType', title: '产品期限类型', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatLmitType(row.limitType);}},
 		<!-- 此处按钮级别权限控制,目前只有 admin 拥有该权限! -->
 		#if ($SSOPermission.isActionable("10010"))
         ,{
@@ -84,7 +96,7 @@ BigClient - 获客销售明细
     /**点击搜索按钮，弹出搜索条件的弹层*/
     function searchByCondition(){
         var title = "请选择筛选条件";
-        var url = "#springUrl('/pfmReport/getInformation/search.html')";
+        var url = "#springUrl('/pfmReport/getSalesDetails/search.html')";
         layer.open({
             type: 2,
             title: title,
@@ -116,7 +128,7 @@ BigClient - 获客销售明细
     function addTestData() {
         $.ajax({
             type: "get",
-            url: "#springUrl('/pfmReport/getInformation/addTestData')",
+            url: "#springUrl('/pfmReport/getSalesDetails/addTestData')",
             datatype: "text",
             success: function (data) {
                 if(data == 'true'){
@@ -130,7 +142,7 @@ BigClient - 获客销售明细
 	function downloadExcel() {
         // 模拟Ajax获取
         downLoadFile({
-            url: "#springUrl('/pfmReport/getInformation/downloadExcel.html')", //请求的url
+            url: "#springUrl('/pfmReport/getSalesDetails/downloadExcel.html')", //请求的url
             data: {search: $("#txt_search").val()}				//要发送的数据
         });
     }
@@ -145,7 +157,7 @@ BigClient - 获客销售明细
             layer.confirm('确定上传吗？', {
                 btn: ['确定', '取消'] // 按钮
             }, function () {
-                var url = "#springUrl('/pfmReport/getInformation/uploadExcel')";
+                var url = "#springUrl('/pfmReport/getSalesDetails/uploadExcel')";
                 var fileId = "fileExcel";
                 $.ajaxFileUpload({
                     url: url,                              //用于文件上传的服务器端请求地址
@@ -176,7 +188,7 @@ BigClient - 获客销售明细
         }, function () {
             $.ajax({
                 type: "POST",
-                url: "#springUrl('/pfmReport/getInformation/delOne/')" + id,
+                url: "#springUrl('/pfmReport/getSalesDetails/delOne/')" + id,
                 datatype: "text",
                 success: function (data) {
                     if (data == 'true') {
@@ -192,7 +204,7 @@ BigClient - 获客销售明细
 
     function editOne(id) {
         var title = "新增获客销售明细";
-        var url = "#springUrl('/pfmReport/getInformation/edit.html')";
+        var url = "#springUrl('/pfmReport/getSalesDetails/edit.html')";
         if (id != null) {
             title = "编辑获客销售明细";
             url = url + "?id=" + id;

@@ -1,5 +1,6 @@
 package com.baomidou.springwind.service.impl;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.entity.GetSalesDetails;
 import com.baomidou.springwind.mapper.GetSalesDetailsMapper;
 import com.baomidou.springwind.service.IGetSalesDetailsService;
@@ -16,5 +17,14 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class GetSalesDetailsServiceImpl extends BaseServiceImpl<GetSalesDetailsMapper, GetSalesDetails> implements IGetSalesDetailsService {
-	
+
+    @Override
+    public Page<GetSalesDetails> selectPageByParams(Page<GetSalesDetails> page, GetSalesDetails getSalesDetails) {
+        return null;
+    }
+
+    @Override
+    public void deleteAll() {
+
+    }
 }

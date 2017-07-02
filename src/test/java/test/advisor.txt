@@ -1,0 +1,13 @@
+主键,id,id
+投顾编号,serial_no,serialNo
+投顾级别,job_title,jobTitle
+系统用户名,login_name,loginName
+投顾姓名,actual_name,actualName
+手机号码,mobile_no,mobileNo
+电子邮箱,email,email
+所属团队,team_name,teamName
+团队组长,team_leader,teamLeader
+团队所在地,team_location,teamLocation
+是否有效,is_valid,isValid
+创建时间,create_time,createTime
+更新时间,update_time,updateTime
