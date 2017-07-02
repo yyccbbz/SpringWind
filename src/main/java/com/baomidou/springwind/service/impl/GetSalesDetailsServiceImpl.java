@@ -34,13 +34,13 @@ public class GetSalesDetailsServiceImpl extends BaseServiceImpl<GetSalesDetailsM
             ew.eq("t_user_type", gsd.gettUserType());
         }
 
-        if (gsd.getBtUserName() != null) {
+        if (StringUtil.isNotEmpty(gsd.getBtUserName())) {
             ew.like("bt_user_name", gsd.getBtUserName());
         }
-        if (gsd.getBtMobileNo() != null) {
+        if (StringUtil.isNotEmpty(gsd.getBtMobileNo())) {
             ew.eq("bt_mobile_no", gsd.getBtMobileNo());
         }
-        if (gsd.getAdvisorName() != null) {
+        if (StringUtil.isNotEmpty(gsd.getAdvisorName())) {
             ew.eq("advisor_name", gsd.getAdvisorName());
         }
 
@@ -64,7 +64,7 @@ public class GetSalesDetailsServiceImpl extends BaseServiceImpl<GetSalesDetailsM
             ew.eq("limit_type", gsd.getLimitType());
         }
 
-        ew.orderBy("bt_register_time", false);
+        ew.orderBy("trans_time", false);
         System.err.println(ew.getSqlSegment());
         return selectPage(page, ew);
     }

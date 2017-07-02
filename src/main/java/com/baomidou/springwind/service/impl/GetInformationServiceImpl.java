@@ -22,6 +22,7 @@ public class GetInformationServiceImpl extends BaseServiceImpl<GetInformationMap
 
     @Override
     public Page<GetInformation> selectPageByParams(Page<GetInformation> page, GetInformation gi) {
+
         EntityWrapper<GetInformation> ew = new EntityWrapper<>();
 
         if (StringUtil.isNotEmpty(gi.gettUserName())) {
@@ -34,13 +35,13 @@ public class GetInformationServiceImpl extends BaseServiceImpl<GetInformationMap
             ew.eq("t_user_type", gi.gettUserType());
         }
 
-        if (gi.getBtUserName() != null) {
+        if (StringUtil.isNotEmpty(gi.getBtUserName())) {
             ew.like("bt_user_name", gi.getBtUserName());
         }
-        if (gi.getBtMobileNo() != null) {
+        if (StringUtil.isNotEmpty(gi.getBtMobileNo())) {
             ew.eq("bt_mobile_no", gi.getBtMobileNo());
         }
-        if (gi.getAdvisorName() != null) {
+        if (StringUtil.isNotEmpty(gi.getAdvisorName())) {
             ew.eq("advisor_name", gi.getAdvisorName());
         }
 
@@ -54,7 +55,7 @@ public class GetInformationServiceImpl extends BaseServiceImpl<GetInformationMap
             ew.eq("t_is_performance_pool", gi.gettIsPerformancePool());
         }
 
-        ew.orderBy("trans_time", false);
+        ew.orderBy("bt_register_time", false);
         System.err.println(ew.getSqlSegment());
         return selectPage(page, ew);
     }

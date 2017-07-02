@@ -1,33 +1,42 @@
 #override("title")
-BigClient - 用户管理
+BigClient - 投资顾问
 #end
 #override("css")
 <link href="#springUrl('/static/css/plugins/bootstrap-table/bootstrap-table.min.css')" rel="stylesheet">
 #end
 #override("breadcrumb")
-<li><a>权限管理</a></li><li class="active"><strong>用户管理</strong></li>
+<li><a>功能模块</a></li><li class="active"><strong>投资顾问</strong></li>
 #end
 #override("content")
 <div class="row">
 	<div class="ibox-content text-right form-inline" style="background: #F3F3F4;">
-		<div class="input-group">
-			<input type="text" class="form-control" id="txt_search" name="_search">
-			<span class="input-group-btn">
-				<button type="button" class="btn btn-info" onclick="queryBy()" id="btn_query">搜索</button>
-			</span>
-		</div>
-		<button class="btn btn-primary" onclick="editUser(null)" type="button">
-		<i class="fa fa-plus"></i>&nbsp;添加用户</button>
+
+
+		<button type="button" class="btn btn-info" onclick="searchByCondition();" id="btn_query">
+			<i class="fa fa-search-plus"></i>&nbsp;条件搜索
+		</button>
+
+		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
+			<i class="fa fa-download"></i>&nbsp;导出投资顾问
+		</button>
+
 		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
 		#if ($SSOPermission.isActionable("10010"))
-		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
-		<i class="fa fa-download"></i>&nbsp;导出查询结果</button>
-		<button class="btn btn-primary" onclick="uploadExcel()" type="button">
-		<i class="fa fa-upload"></i>&nbsp;导入EXCEL文件</button>
-		<input type="file" id="fileExcel" name="fileExcel" accept=".xls,.xlsx" style="display: none"/>
+		<button class="btn btn-primary" onclick="editOne(null)" type="button">
+			<i class="fa fa-user-plus"></i>&nbsp;添加投资顾问
+		</button>
+
+		<button class="btn btn-primary" onclick="addTestData()" type="button">
+			<i class="fa fa-database"></i>&nbsp;添加测试数据
+		</button>
+
+		<!--<button class="btn btn-primary" onclick="uploadExcel()" type="button">-->
+		<!--<i class="fa fa-pencil"></i>&nbsp;导入EXCEL文件</button>-->
+		<!--<input type="file" id="fileExcel" name="fileExcel" accept=".xls,.xlsx" style="display: none"/>-->
 		#end
 	</div>
 </div>
+
 <div class="row">
     <div class="col-sm-12" id="tableDiv">
         <!--<table id="dataTable"></table>-->
@@ -42,93 +51,83 @@ BigClient - 用户管理
 <script src="#springUrl('/static/js/base_list.js')"></script>
 <script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
-    var dataUrl = "#springUrl('/perm/user/getUserList.html')";
-    var dataColumns = [/*{
-            checkbox: true
-        }, */{
-            field: 'id',
-            title: '序号',
-            align: "center",
-            valign: "middle"
-        }, {
-            field: 'loginName',
-            title: '登录名',
-            align: "center",
-            valign: "middle"
-        }, {
-            field: 'email',
-            title: '邮箱',
-            align: "center",
-            valign: "middle"
-        }, {
-            field: 'type',
-            title: '用户类型',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatUserType(row.type);
-			}
-        }, {
-            field: 'status',
-            title: '状态',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatStatus(row.status);
-			}
-        }, {
-            field: 'createTime',
-            title: '创建时间',
-            align: "center",
-            valign: "middle",
-            formatter: function (value, row, index) {
-                return formatDateTime(row.createTime);
-            }
-			//value:代表当前单元格中的值，row：代表当前行,index:代表当前行的下标
-        }, {
-            field: 'lastTime',
-            title: '最后更新时间',
-            align: "center",
-            valign: "middle",
-            formatter: function (value, row, index) {
-                return formatDateTime(row.lastTime);
-            }
-        }, {
-            title: '操作',
-            align: "center",
-            valign: "middle",
+    var dataUrl = "#springUrl('/features/advisor/getList.html')";
+    var dataColumns = [
+        { field: 'serialNo', title: '投顾编号', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'jobTitle', title: '投顾级别', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'loginName', title: '系统用户名', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'actualName', title: '投顾姓名', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'mobileNo', title: '手机号码', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'email', title: '电子邮箱', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'teamName', title: '所属团队', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'teamLeader', title: '团队组长', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'teamLocation', title: '团队所在地', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'isValid', title: '是否有效', sortable:'true',  align: 'center', valign: 'middle' ,
+            formatter: function (value, row, index) { return formatWhether(row.isValid); } }
+		<!-- 此处按钮级别权限控制,目前只有 admin 拥有该权限! -->
+		#if ($SSOPermission.isActionable("10010"))
+        ,{
+            title: '操作', align: "center", valign: "middle",
             formatter: function (value, row, index) {
                 var id = row.id;
-                return '<a class="btn btn-xs btn-warning" onclick="editUser(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
-                	<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
-                	#if ($SSOPermission.isActionable("10010"))
-                    +'<a class="btn btn-xs btn-danger" onclick="delUser(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
-                    #end;
+                return '<a class="btn btn-xs btn-warning" onclick="editOne(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
+					+'<a class="btn btn-xs btn-danger" onclick="delOne(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
             }
         }
+    	#end
     ];
-    function dataQueryParams(params) {
+
+
+    /**点击搜索按钮，弹出搜索条件的弹层*/
+    function searchByCondition(){
+        var title = "请选择筛选条件";
+        var url = "#springUrl('/features/advisor/search.html')";
+        layer.open({
+            type: 2,
+            title: title,
+            shadeClose: true,
+            shade: 0.8,
+            area: ['600px', '435px'],
+            fix: false,
+            maxmin: true,
+            content: url
+        });
+    }
+
+
+    function dataQueryParams(params,formData) {
+        if (formData == '' || formData == null || formData == undefined) {
+            formData = '';
+        }
         var temp = {
-            _size: params.limit,				//页面大小
-            _index: params.offset,				//页码
-            _search: $("#txt_search").val(), 	//搜索
+            _size: params.limit,	//页面大小
+            _index: params.offset,	//页码
+            _search: formData, 		//搜索条件
         };
-		// console.log(temp);
+//		console.log(temp);
         return temp;
     }
 
 
-    /**点击搜索*/
-	function queryBy(){
-        var oTable1 = new TableInit();
-        oTable1.Init();
-	}
+    /*添加测试数据*/
+    function addTestData() {
+        $.ajax({
+            type: "get",
+            url: "#springUrl('/features/advisor/addTestData')",
+            datatype: "text",
+            success: function (data) {
+                if(data == 'true'){
+                    $('#dataTable').bootstrapTable('refresh',{url:dataUrl});
+                }
+            }
+        });
+    }
 
 	/**导出Excel*/
 	function downloadExcel() {
         // 模拟Ajax获取
         downLoadFile({
-            url: "#springUrl('/perm/user/downloadExcel.html')", //请求的url
+            url: "#springUrl('/features/advisor/downloadExcel.html')", //请求的url
             data: {search: $("#txt_search").val()}				//要发送的数据
         });
     }
@@ -143,7 +142,7 @@ BigClient - 用户管理
             layer.confirm('确定上传吗？', {
                 btn: ['确定', '取消'] // 按钮
             }, function () {
-                var url = "#springUrl('/perm/user/uploadExcel/')";
+                var url = "#springUrl('/features/advisor/uploadExcel')";
                 var fileId = "fileExcel";
                 $.ajaxFileUpload({
                     url: url,                              //用于文件上传的服务器端请求地址
@@ -167,18 +166,18 @@ BigClient - 用户管理
         });
     }
 
-    function delUser(userId) {
+    function delOne(id) {
         // 询问框
         layer.confirm('确定删除吗？', {
             btn: ['确定', '取消'] // 按钮
         }, function () {
             $.ajax({
                 type: "POST",
-                url: "#springUrl('/perm/user/delUser/')" + userId,
+                url: "#springUrl('/features/advisor/delOne/')" + id,
                 datatype: "text",
                 success: function (data) {
-                    if(data == 'true'){
-                        $('#dataTable').bootstrapTable('refresh',{url:dataUrl});
+                    if (data == 'true') {
+                        $('#dataTable').bootstrapTable('refresh', {url: dataUrl});
                     }
                     layer.closeAll();
                 }
@@ -188,24 +187,24 @@ BigClient - 用户管理
         });
     }
 
-	function editUser(id){
-		var title = "新增用户";
-		var url = "#springUrl('/perm/user/edit.html')";
-		if(id!=null){
-			title = "编辑用户";
-			url = url + "?id=" + id;
-		}
-		layer.open({
-			type: 2,
-			title: title,
-			shadeClose: true,
-			shade: 0.8,
-			area: ['600px', '430px'],
-			fix: false,
-			maxmin: true,
-			content: url
-		});
-	}
+    function editOne(id) {
+        var title = "新增投资顾问";
+        var url = "#springUrl('/features/advisor/edit.html')";
+        if (id != null) {
+            title = "编辑投资顾问";
+            url = url + "?id=" + id;
+        }
+        layer.open({
+            type: 2,
+            title: title,
+            shadeClose: true,
+            shade: 0.8,
+            area: ['600px', '430px'],
+            fix: false,
+            maxmin: true,
+            content: url
+        });
+    }
 </script>
 #end
 #extends("/common/framework.html")

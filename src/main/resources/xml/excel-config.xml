@@ -217,4 +217,21 @@
 		<field name="updateTime" title="更新时间" pattern="yyyy/MM/dd HH:mm:ss"/>
 	</excel>
 
+	<!-- 功能模块 -->
+	<excel id="advisor" class="com.baomidou.springwind.entity.Advisor"
+		   sheetname="投资顾问" defaultColumnWidth="5000" defaultAlign="center" enableStyle="true">
+		<field name="id" title="主键"/>
+		<field name="serialNo" title="投顾编号"/>
+		<field name="jobTitle" title="投顾级别"/>
+		<field name="loginName" title="系统用户名"/>
+		<field name="actualName" title="投顾姓名"/>
+		<field name="mobileNo" title="手机号码"/>
+		<field name="email" title="电子邮箱"/>
+		<field name="teamName" title="所属团队"/>
+		<field name="teamLeader" title="团队组长"/>
+		<field name="teamLocation" title="团队所在地"/>
+		<field name="isValid" title="是否有效" format="1:是,0:否"/>
+		<field name="createTime" title="创建时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="updateTime" title="更新时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+	</excel>
 </excels>
