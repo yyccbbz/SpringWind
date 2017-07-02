@@ -4,12 +4,15 @@ import java.io.*;
 
 public class Test {
 
-    /*{ field: 'userName', title: '客户姓名', align: 'center', valign: 'middle' },*/
+    /*{ field: 'userName', title: '客户姓名', align: 'center', valign: 'middle' },
+    * <field name="id" title="主键"/>
+    * */
 
     public static void main(String[] args) throws IOException {
 
 //        File file = new File("E:\\Workspace\\IdeaProjects\\SpringWind\\src\\test\\java\\test\\product_expires.txt");
-        File file = new File("E:\\Users\\IdeaProjects\\SpringWind\\src\\test\\java\\test\\getSalesDetails.txt");
+//        File file = new File("E:\\Users\\IdeaProjects\\SpringWind\\src\\test\\java\\test\\getSalesDetails.txt");
+        File file = new File("D:\\ideaworkspace\\SpringWind\\src\\test\\java\\test\\getSalesDetails.txt");
 
         if (file.isFile() && file.exists()) { //判断文件是否存在
 
@@ -26,7 +29,10 @@ public class Test {
                 String s3 = strs[2];//类属性
 
                 String field = "{ field: '" + s3 + "', title: '" + s1 + "', sortable:'true',  align: 'center', valign: 'middle' },";
-                System.err.println(field);
+//                System.err.println(field);
+
+                String excelLine = "<field name=\""+s3+"\" title=\""+s1+"\"/>";
+                System.err.println(excelLine);
                 sb.append(s3);
                 sb.append(",");
 

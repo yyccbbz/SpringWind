@@ -148,28 +148,48 @@ public class GetSalesDetailsController extends BaseController {
 
         ArrayList<GetSalesDetails> list = new ArrayList<>();
         for (int i = 1; i <= 100; i++) {
-            GetSalesDetails gi = new GetSalesDetails();
+            GetSalesDetails gsd = new GetSalesDetails();
             /*
 #id,tMobileNo,tMemberNo,tUserName,advisorId,advisorName,tUserType,tReportDate,tIsPerformancePool,btMobileNo,btMemberNo,
-#btUserName,btRegisterTime,productId,productName,productType,productRate,transAmount,transTime,inceptionDate,dueDate,limitDays,limitType,createTime,updateTime,
+#btUserName,btRegisterTime,
+productId,productName,productType,productRate,
+transAmount,transTime,inceptionDate,dueDate,
+limitDays,limitType,createTime,updateTime,
             */
-            gi.settMobileNo(RandomStringUtils.randomNumeric(11));
-            gi.settMemberNo(RandomStringUtils.randomAlphanumeric(10));
-            gi.settUserName(RandomStringUtils.randomAlphabetic(5));
-            gi.setAdvisorId(Integer.parseInt(RandomStringUtils.randomNumeric(4)));
-            gi.setAdvisorName(RandomStringUtils.randomAlphabetic(5));
-            gi.settUserType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'1', '2', '3'})));
-            gi.settReportDate(DateUtil.randomDate("2017-01-01", "2017-07-01"));
-            gi.settIsPerformancePool(Integer.parseInt(RandomStringUtils.random(1, new char[]{'0', '1'})));
-            gi.setBtMobileNo(RandomStringUtils.randomNumeric(11));
-            gi.setBtMemberNo(RandomStringUtils.randomAlphanumeric(10));
-            gi.setBtUserName(RandomStringUtils.randomAlphabetic(5));
-            gi.setBtRegisterTime(DateUtil.randomDate("2017-01-01", "2017-07-01"));
-//            gi.setBtTransAmount((Double.valueOf(RandomStringUtils.randomNumeric(6))));
-            gi.setCreateTime(new Date());
-            gi.setUpdateTime(gi.getCreateTime());
-            list.add(gi);
-            System.err.println(gi);
+            gsd.settMobileNo(RandomStringUtils.randomNumeric(11));
+            gsd.settMemberNo(RandomStringUtils.randomAlphanumeric(10));
+            gsd.settUserName(RandomStringUtils.randomAlphabetic(5));
+            gsd.setAdvisorId(Integer.parseInt(RandomStringUtils.randomNumeric(4)));
+            gsd.setAdvisorName(RandomStringUtils.randomAlphabetic(5));
+            gsd.settUserType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'1', '2', '3'})));
+            gsd.settReportDate(DateUtil.randomDate("2017-01-01", "2017-07-01"));
+            gsd.settIsPerformancePool(Integer.parseInt(RandomStringUtils.random(1, new char[]{'0', '1'})));
+            gsd.setBtMobileNo(RandomStringUtils.randomNumeric(11));
+            gsd.setBtMemberNo(RandomStringUtils.randomAlphanumeric(10));
+            gsd.setBtUserName(RandomStringUtils.randomAlphabetic(5));
+            gsd.setBtRegisterTime(DateUtil.randomDate("2017-01-01", "2017-07-01"));
+            gsd.setProductId(RandomStringUtils.randomNumeric(4));
+            gsd.setProductName(RandomStringUtils.randomNumeric(4));
+            gsd.setProductType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'1', '2', '3','4'})));
+            gsd.setProductRate(RandomStringUtils.randomNumeric(2));
+            gsd.setTransAmount((Double.valueOf(RandomStringUtils.randomNumeric(6))));
+            gsd.setTransTime(DateUtil.randomDate("2017-01-01", "2017-07-01"));
+            gsd.setInceptionDate(DateUtil.randomDate("2017-01-01", "2017-07-01"));
+            gsd.setDueDate(DateUtil.randomDate("2017-01-01", "2017-07-01"));
+            gsd.setLimitDays(Integer.parseInt(RandomStringUtils.randomNumeric(3)));
+
+            if (i % 3 == 2) {
+                gsd.setLimitType(0);
+            } else if (i % 3 == 0) {
+                gsd.setLimitType(6);
+            } else {
+                gsd.setLimitType(12);
+            }
+
+            gsd.setCreateTime(new Date());
+            gsd.setUpdateTime(gsd.getCreateTime());
+            list.add(gsd);
+            System.err.println(gsd);
         }
         Boolean b = getSalesDetailsService.insertBatch(list);
         return b.toString();

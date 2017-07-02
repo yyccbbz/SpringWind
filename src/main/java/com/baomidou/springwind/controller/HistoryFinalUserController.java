@@ -2,6 +2,7 @@ package com.baomidou.springwind.controller;
 
 import com.baomidou.kisso.annotation.Permission;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
+import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.DateUtil;
 import com.baomidou.springwind.common.utils.StringUtil;
@@ -86,6 +87,23 @@ public class HistoryFinalUserController extends BaseController{
         return jsonPage(userPage);
     }
 
+    /**
+     *加载历史月份数据
+     * @param
+     * @return
+     */
+    @Permission
+    @ResponseBody
+    @RequestMapping(value = "/getMonth")
+    public String getMonthData(Model model){
+
+        model.addAttribute("historyUser",historyFinalUserService.getMonthData());
+
+        //List<HistoryFinalUser> historyFinalUserList = historyFinalUserService.getMonthData();
+
+        return "/clientList/historyFinalUser/list";
+
+    }
 
     @ResponseBody
     @Permission("5005")

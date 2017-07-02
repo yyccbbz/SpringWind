@@ -110,7 +110,7 @@ public class GetSalesDetails implements Serializable {
      * 投资金额
      */
 	@TableField("trans_amount")
-	private BigDecimal transAmount;
+	private Double transAmount;
     /**
      * 投资时间
      */
@@ -284,11 +284,11 @@ public class GetSalesDetails implements Serializable {
 		this.productRate = productRate;
 	}
 
-	public BigDecimal getTransAmount() {
+	public Double getTransAmount() {
 		return transAmount;
 	}
 
-	public void setTransAmount(BigDecimal transAmount) {
+	public void setTransAmount(Double transAmount) {
 		this.transAmount = transAmount;
 	}
 

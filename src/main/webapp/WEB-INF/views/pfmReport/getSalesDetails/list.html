@@ -78,7 +78,7 @@ BigClient - 获客销售明细
             formatter: function (value, row, index) { return formatDate(row.dueDate); } },
         { field: 'limitDays', title: '产品期限（天）', sortable:'true',  align: 'center', valign: 'middle' },
         { field: 'limitType', title: '产品期限类型', sortable:'true',  align: 'center', valign: 'middle',
-            formatter: function (value, row, index) { return formatLmitType(row.limitType);}},
+            formatter: function (value, row, index) { return formatLmitType(row.limitType);}}
 		<!-- 此处按钮级别权限控制,目前只有 admin 拥有该权限! -->
 		#if ($SSOPermission.isActionable("10010"))
         ,{

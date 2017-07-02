@@ -63,9 +63,6 @@
             <div class="form-group col-xs-4">
                 <label class="form-label">投资顾问</label>
                 <select class="form-control" name="advisorName">
-                    <!--#foreach($role in $roleList)
-                        <option id="$!{role.id}" value="$!{role.id}">$!{role.name}</option>
-                        #end-->
                     <option value="">请选择</option>
                     #foreach($advisor in $advisors)
                     <option id="$!{advisor.id}" value="$!{advisor.actualName}">$!{advisor.actualName}</option>
@@ -77,12 +74,12 @@
         <div class="row">
             <div class="form-group col-xs-4">
                 <label class="form-label">被推荐人注册日期 从</label>
-                <input type="text" class="form-control calendarBox calendar startDate" id="transTimeStart" name="btRegisterTime"/>
+                <input type="text" class="form-control calendarBox calendar startDate" id="timeStart" name="btRegisterTime"/>
                 <span class="glyphicon glyphicon-calendar"></span>
             </div>
             <div class="form-group col-xs-4">
                 <label class="form-label">至</label>
-                <input type="text" class="form-control calendarBox calendar endDate" id="transTimeEnd" name="updateTime"/>
+                <input type="text" class="form-control calendarBox calendar endDate" id="timeEnd" name="updateTime"/>
                 <span class="glyphicon glyphicon-calendar"></span>
             </div>
             <div class="form-group col-xs-4">
@@ -111,8 +108,8 @@
 <script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
     //日期插件
-    calendarWithoutTime("#transTimeStart");
-    calendarWithoutTime("#transTimeEnd");
+    calendarWithoutTime("#timeStart");
+    calendarWithoutTime("#timeEnd");
 
     // 如果此时开始日期小于结束日期，不能提交。
     $(".startDate").change(function () {

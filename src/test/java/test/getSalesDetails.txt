@@ -17,9 +17,9 @@
 产品利率,product_rate,productRate
 投资金额,trans_amount,transAmount
 投资时间,trans_time,transTime
-定期产品成立日,inception_date,inceptionDate
-定期产品到期日,due_date,dueDate
-定期产品期限（天）,limit_days,limitDays
-定期产品期限类型,limit_type,limitType
+产品成立日,inception_date,inceptionDate
+产品到期日,due_date,dueDate
+产品期限（天）,limit_days,limitDays
+产品期限类型,limit_type,limitType
 创建时间,create_time,createTime
 更新时间,update_time,updateTime

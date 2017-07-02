@@ -81,8 +81,8 @@
 		<field name="pfmPoolDate" title="纳入业绩池日期" pattern="yyyy/MM/dd"/>
 		<field name="advisorName" title="投资顾问姓名"/>
 		<field name="userMark" title="用户标识"/>
-		<field name="createTime" title="记录创建时间" pattern="yyyy/MM/dd HH:mm:ss"/>
-		<field name="updateTime" title="记录更新时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="createTime" title="创建时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="updateTime" title="更新时间" pattern="yyyy/MM/dd HH:mm:ss"/>
 	</excel>
 
 	<!-- 业绩报表 -->
@@ -104,15 +104,62 @@
 		<field name="dueDate" title="定期产品到期日" pattern="yyyy/MM/dd "/>
 		<field name="limitDays" title="定期产品期限"/>
 		<field name="limitType" title="定期产品期限类型" format="0:新人专享,6:6个月,12:12个月"/>
-		<field name="userType" title="客户类别"/>
+		<field name="userType" title="客户类别"  format="1:上报,2:分配,3:未分配vip"/>
 		<field name="registerTime" title="注册时间" pattern="yyyy/MM/dd "/>
 		<field name="reportDate" title="注册时间" pattern="yyyy/MM/dd "/>
 		<field name="isVipuser" title="是否vip" format="1:是,0:否"/>
 		<field name="vipDate" title="成为vip日期" pattern="yyyy/MM/dd"/>
 		<field name="isPerformancePool" title="是否业绩池" format="1:是,0:否"/>
 		<field name="userMark" title="客户标识"/>
-		<field name="createTime" title="记录创建时间" pattern="yyyy/MM/dd HH:mm:ss"/>
-		<field name="updateTime" title="记录更新时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="createTime" title="创建时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="updateTime" title="更新时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+	</excel>
+	<excel id="getInformation" class="com.baomidou.springwind.entity.GetInformation"
+		   sheetname="获客信息" defaultColumnWidth="5000" defaultAlign="center" enableStyle="true">
+		<field name="id" title="主键"/>
+		<field name="tMobileNo" title="推荐人手机号"/>
+		<field name="tMemberNo" title="推荐人会员号"/>
+		<field name="tUserName" title="推荐人姓名"/>
+		<field name="advisorId" title="投资顾问ID号"/>
+		<field name="advisorName" title="投资顾问姓名"/>
+		<field name="tUserType" title="推荐人客户类别"  format="1:上报,2:分配,3:未分配vip"/>
+		<field name="tReportDate" title="推荐人上报分配日期" pattern="yyyy/MM/dd"/>
+		<field name="tIsPerformancePool" title="推荐人是否业绩池" format="1:是,0:否"/>
+		<field name="btMobileNo" title="被推荐人手机号"/>
+		<field name="btMemberNo" title="被推荐人会员号"/>
+		<field name="btUserName" title="被推荐人姓名"/>
+		<field name="btRegisterTime" title="被推荐人注册时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="btTransAmount" title="被推荐人投资金额（不含活期和转让）"/>
+		<field name="createTime" title="创建时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="updateTime" title="更新时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+	</excel>
+	<excel id="getSalesDetails" class="com.baomidou.springwind.entity.GetSalesDetails"
+		   sheetname="获客销售明细" defaultColumnWidth="5000" defaultAlign="center" enableStyle="true">
+		<field name="id" title="主键"/>
+		<field name="tMobileNo" title="推荐人手机号"/>
+		<field name="tMemberNo" title="推荐人会员号"/>
+		<field name="tUserName" title="推荐人姓名"/>
+		<field name="advisorId" title="投资顾问ID号"/>
+		<field name="advisorName" title="投资顾问姓名"/>
+		<field name="tUserType" title="推荐人客户类别"  format="1:上报,2:分配,3:未分配vip"/>
+		<field name="tReportDate" title="推荐人上报分配日期" pattern="yyyy/MM/dd"/>
+		<field name="tIsPerformancePool" title="推荐人是否业绩池" format="1:是,0:否"/>
+		<field name="btMobileNo" title="被推荐人手机号"/>
+		<field name="btMemberNo" title="被推荐人会员号"/>
+		<field name="btUserName" title="被推荐人姓名"/>
+		<field name="btRegisterTime" title="被推荐人注册时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="productId" title="产品ID号"/>
+		<field name="productName" title="产品名称"/>
+		<field name="productType" title="产品类型" format="1:定期,2:活期,3:活包定,4:转让"/>
+		<field name="productRate" title="产品利率"/>
+		<field name="transAmount" title="投资金额"/>
+		<field name="transTime" title="投资时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="inceptionDate" title="产品成立日" pattern="yyyy/MM/dd"/>
+		<field name="dueDate" title="产品到期日" pattern="yyyy/MM/dd"/>
+		<field name="limitDays" title="产品期限（天）"/>
+		<field name="limitType" title="产品期限类型" format="0:新人专享,6:6个月,12:12个月"/>
+		<field name="createTime" title="创建时间" pattern="yyyy/MM/dd HH:mm:ss"/>
+		<field name="updateTime" title="更新时间" pattern="yyyy/MM/dd HH:mm:ss"/>
 	</excel>
 
 	<!-- 统计报表 -->
@@ -142,7 +189,7 @@
 		<field name="mobileNo" title="客户手机号"/>
 		<field name="memberNo" title="客户会员号"/>
 		<field name="userName" title="客户姓名"/>
-		<field name="userType" title="客户类别"/>
+		<field name="userType" title="客户类别"  format="1:上报,2:分配,3:未分配vip"/>
 		<field name="registerTime" title="客户注册时间" pattern="yyyy/MM/dd HH:mm:ss"/>
 		<field name="dingqiAum" title="纯定期AUM"/>
 		<field name="huoqiAum" title="活期AUM"/>

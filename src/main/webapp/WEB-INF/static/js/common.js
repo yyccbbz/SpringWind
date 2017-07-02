@@ -58,6 +58,19 @@ function formatDate(time) {
     return year + "-" + month + "-" + date;
 }
 
+
+/**
+ * 历史月份下拉框值加载
+ */
+
+
+function getMonthValue() {
+    var optionValue=$("monthId").val();
+    var monthSelected=document.getElementById("monthId");
+
+
+}
+
 /**
  * 保留两位小数
  * @param str
