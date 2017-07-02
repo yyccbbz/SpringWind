@@ -73,7 +73,12 @@
         <div class="row">
             <div class="form-group col-xs-4">
                 <label class="form-label">投资顾问</label>
-                <input type="text" class="form-control" name="advisorName"/>
+                <select class="form-control" name="advisorName">
+                    <option value="">请选择</option>
+                    #foreach($advisor in $advisors)
+                    <option id="$!{advisor.id}" value="$!{advisor.actualName}">$!{advisor.actualName}</option>
+                    #end
+                </select>
             </div>
             <div class="form-group col-xs-4">
                 <label class="form-label">客户标识</label>

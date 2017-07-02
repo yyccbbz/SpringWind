@@ -38,9 +38,6 @@ public class GetInformationController extends BaseController {
     @Autowired
     private IGetInformationService getInformationService;
 
-    @Autowired
-    private IAdvisorService advisorService;
-
     /**
      * excel导出相关
      */

@@ -8,26 +8,21 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.DateUtil;
 import com.baomidou.springwind.common.utils.StringUtil;
-import com.baomidou.springwind.common.view.SpringMvcExcelView;
 import com.baomidou.springwind.entity.Excel;
 import com.baomidou.springwind.entity.PerformancePoolImportUser;
 import com.baomidou.springwind.excel.result.ExcelImportResult;
 import com.baomidou.springwind.service.IExcelService;
 import com.baomidou.springwind.service.IPerformancePoolImportUserService;
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -40,25 +35,29 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/clientList/pfmPoolImportUser")
-public class PerformancePoolImportUserController extends BaseController{
+public class PerformancePoolImportUserController extends BaseController {
 
     @Autowired
     private IPerformancePoolImportUserService performancePoolImportUserService;
     @Autowired
     private IExcelService excelService;
 
-    //excel-config.xml中配置的ID
+    /**
+     * excel导出相关
+     */
+    @Value("${performancePoolImportUser.excelName}")
+    private String excelName;
     @Value("${performancePoolImportUser.excelId}")
-    private String userExcelId;
-
-    //excel导出的字段
+    private String excelId;
     @Value("${performancePoolImportUser.fields}")
-    private String userFields;
+    private String excelFields;
 
     //限制最大上传大小--30M
     private final static int MAX_POST_SIZE = 30 * 1024 * 1024;
 
-    /**页面跳转*/
+    /**
+     * 页面跳转
+     */
     @Permission("5004")
     @RequestMapping("/list")
     public String list() {
@@ -82,23 +81,19 @@ public class PerformancePoolImportUserController extends BaseController{
     @ResponseBody
     @Permission("5004")
     @RequestMapping(value = "/getUserList")
-    public String getUserList(@RequestParam("_userName") String _userName,@RequestParam("_mobileNo") String _mobileNo) {
+    public String getUserList(@RequestParam("_userName") String _userName, @RequestParam("_mobileNo") String _mobileNo) {
 
-        System.err.println("筛选条件：客户姓名_userName = " + _userName+"，手机号码_mobileNo = "+_mobileNo);
+        System.err.println("筛选条件：客户姓名_userName = " + _userName + "，手机号码_mobileNo = " + _mobileNo);
 
-        Map<String,Object> params = new HashMap<>();
-
-        if(StringUtil.isNotEmpty(_userName)){
-            params.put("user_name",_userName);
+        EntityWrapper<PerformancePoolImportUser> ew = new EntityWrapper<>();
+        if (StringUtil.isNotEmpty(_userName)) {
+            ew.like("user_name", _userName);
         }
-
-        if(StringUtil.isNotEmpty(_mobileNo)){
-            params.put("mobile_no",_mobileNo);
+        if (StringUtil.isNotEmpty(_mobileNo)) {
+            ew.like("mobile_no", _mobileNo);
         }
-
         Page<PerformancePoolImportUser> page = getPage();
-        Page<PerformancePoolImportUser> userPage = performancePoolImportUserService.selectPage(page,
-                new EntityWrapper<PerformancePoolImportUser>().allEq(params));
+        Page<PerformancePoolImportUser> userPage = performancePoolImportUserService.selectPage(page, ew);
         return jsonPage(userPage);
     }
 
@@ -130,7 +125,6 @@ public class PerformancePoolImportUserController extends BaseController{
     /**
      * Excel导入
      */
-
     @ResponseBody
     @Permission("5004")
     @RequestMapping(value = "/uploadExcel", method = RequestMethod.POST)
@@ -166,7 +160,7 @@ public class PerformancePoolImportUserController extends BaseController{
                     excelService.insert(excel);
 
                     FileInputStream excelStream = new FileInputStream(cf.getFileUrl());
-                    ExcelImportResult readExcel = excelContext.readExcel(userExcelId, excelStream);
+                    ExcelImportResult readExcel = excelContext.readExcel(excelId, excelStream);
                     List<PerformancePoolImportUser> listBean = readExcel.getListBean();
 
                     performancePoolImportUserService.insertBatch(listBean);
@@ -187,32 +181,12 @@ public class PerformancePoolImportUserController extends BaseController{
      * @return
      */
     @Permission("5004")
-    @RequestMapping(value = "/downloadExcel",method = RequestMethod.POST)
-    public ModelAndView downloadExcel(){
+    @RequestMapping(value = "/downloadExcel", method = RequestMethod.POST)
+    public ModelAndView downloadExcel() {
 
-        /**1.执行你的业务逻辑获取数据，使用ExcelContent生成Workbook，需要四个参数:
-         *
-         * ①id 配置ID
-         * ②beans 配置class对应的List
-         * ③header 导出之前,在标题前面做出一些额外的操作,比如增加文档描述等,可以为null
-         * ④fields 指定Excel导出的字段(bean对应的字段名称),可以为null
-         */
-        Workbook workbook = null;
-        String id = userExcelId;
-        List<PerformancePoolImportUser> list = performancePoolImportUserService.selectList(null);
-        List<String> fields = Arrays.asList(userFields.split(","));
-        try {
-            workbook = excelContext.createExcel(id, list, null, fields);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        /**2.跳转到Excel下载视图*/
-        ModelAndView view = new ModelAndView("springMvcExcelView");
-        view.addObject(SpringMvcExcelView.EXCEL_NAME, "业绩池名单" + DateUtil.getCurrentTime());
-        view.addObject(SpringMvcExcelView.EXCEL_WORKBOOK, workbook);
-        view.addObject(SpringMvcExcelView.EXCEL_EMPTY_MESSAGE, "业绩池名单 没有相关数据可以导出");
-        return view;
+        List<String> fields = Arrays.asList(excelFields.split(","));
+        List<PerformancePoolImportUser> beans = performancePoolImportUserService.selectList(null);
+        return super.exportExcel(excelId, beans, null, fields, excelName);
     }
 
     @ResponseBody
