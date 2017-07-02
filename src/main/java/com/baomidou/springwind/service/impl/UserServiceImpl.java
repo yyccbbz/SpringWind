@@ -49,7 +49,7 @@ public class UserServiceImpl extends BaseServiceImpl<UserMapper, User> implement
     }
 
 
-    @Log("分页(条件)查询用户列表")
+    @Log("条件分页查询用户列表")
     @Override
     public Page<User> selectPageBySearch(Page<User> page, String search) {
         if (search != null && StringUtils.isNotEmpty(search)) {

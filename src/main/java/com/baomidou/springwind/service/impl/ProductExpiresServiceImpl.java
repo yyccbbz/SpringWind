@@ -51,6 +51,7 @@ public class ProductExpiresServiceImpl extends BaseServiceImpl<ProductExpiresMap
         return selectPage(page, ew);
     }
 
+    @Log("Truncate产品到期表")
     @Override
     public void deleteAll() {
         baseMapper.truncateTable();

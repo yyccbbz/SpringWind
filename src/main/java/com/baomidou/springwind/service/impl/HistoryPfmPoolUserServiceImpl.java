@@ -1,5 +1,6 @@
 package com.baomidou.springwind.service.impl;
 
+import com.baomidou.framework.annotations.Log;
 import com.baomidou.springwind.entity.HistoryPfmPoolUser;
 import com.baomidou.springwind.mapper.HistoryPfmPoolUserMapper;
 import com.baomidou.springwind.service.IHistoryPfmPoolUserService;
@@ -19,6 +20,7 @@ import java.util.List;
 @Service
 public class HistoryPfmPoolUserServiceImpl extends BaseServiceImpl<HistoryPfmPoolUserMapper, HistoryPfmPoolUser> implements IHistoryPfmPoolUserService {
 
+    @Log("查询历史业绩池名单的历史月份数据集")
     @Override
     public List<String> getMonthData() {
         return baseMapper.getMonthData();

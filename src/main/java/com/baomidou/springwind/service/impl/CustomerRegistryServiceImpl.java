@@ -1,5 +1,6 @@
 package com.baomidou.springwind.service.impl;
 
+import com.baomidou.framework.annotations.Log;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.StringUtil;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class CustomerRegistryServiceImpl extends BaseServiceImpl<CustomerRegistryMapper, CustomerRegistry> implements ICustomerRegistryService {
 
+    @Log("根据条件分页查询客户注册情况列表")
     @Override
     public Page<CustomerRegistry> selectPageByParams(Page<CustomerRegistry> page, CustomerRegistry cr) {
         EntityWrapper<CustomerRegistry> ew = new EntityWrapper<>();
@@ -45,6 +47,7 @@ public class CustomerRegistryServiceImpl extends BaseServiceImpl<CustomerRegistr
         return selectPage(page, ew);
     }
 
+    @Log("Truncate客户注册情况")
     @Override
     public void deleteAll() {
         baseMapper.truncateTable();

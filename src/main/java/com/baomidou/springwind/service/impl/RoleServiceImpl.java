@@ -1,5 +1,6 @@
 package com.baomidou.springwind.service.impl;
 
+import com.baomidou.framework.annotations.Log;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.springwind.entity.Role;
 import com.baomidou.springwind.entity.UserRole;
@@ -24,6 +25,7 @@ public class RoleServiceImpl extends BaseServiceImpl<RoleMapper, Role> implement
     @Autowired
     private UserRoleMapper userRoleMapper;
 
+    @Log("根据用户ID删除用户角色表中的关联信息")
     @Override
     public void deleteByUserId(Long userId) {
         UserRole ur = new UserRole();

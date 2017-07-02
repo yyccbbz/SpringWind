@@ -1,5 +1,6 @@
 package com.baomidou.springwind.service.impl;
 
+import com.baomidou.framework.annotations.Log;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.StringUtil;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GetInformationServiceImpl extends BaseServiceImpl<GetInformationMapper, GetInformation> implements IGetInformationService {
 
+    @Log("根据条件分页查询获客信息列表")
     @Override
     public Page<GetInformation> selectPageByParams(Page<GetInformation> page, GetInformation gi) {
 
@@ -60,6 +62,7 @@ public class GetInformationServiceImpl extends BaseServiceImpl<GetInformationMap
         return selectPage(page, ew);
     }
 
+    @Log("Truncate获客信息")
     @Override
     public void deleteAll() {
         baseMapper.truncateTable();

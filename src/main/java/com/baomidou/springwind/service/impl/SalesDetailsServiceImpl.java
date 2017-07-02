@@ -73,6 +73,7 @@ public class SalesDetailsServiceImpl extends BaseServiceImpl<SalesDetailsMapper,
         return selectPage(page, ew);
     }
 
+    @Log("TRUNCATE[销售明细]表")
     @Override
     public void deleteAll() {
         baseMapper.truncateTable();

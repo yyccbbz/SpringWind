@@ -1,5 +1,6 @@
 package com.baomidou.springwind.service.impl;
 
+import com.baomidou.framework.annotations.Log;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.StringUtil;
@@ -20,6 +21,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class AssetsBalanceServiceImpl extends BaseServiceImpl<AssetsBalanceMapper, AssetsBalance> implements IAssetsBalanceService {
 
+    @Log("根据条件分页查询资产余额列表")
     @Override
     public Page<AssetsBalance> selectPageByParams(Page<AssetsBalance> page, AssetsBalance ab) {
 
@@ -49,6 +51,7 @@ public class AssetsBalanceServiceImpl extends BaseServiceImpl<AssetsBalanceMappe
         return selectPage(page, ew);
     }
 
+    @Log("Truncate资产余额")
     @Override
     public void deleteAll() {
         baseMapper.truncateTable();
