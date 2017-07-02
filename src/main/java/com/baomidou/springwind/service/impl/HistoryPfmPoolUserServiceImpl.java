@@ -6,6 +6,8 @@ import com.baomidou.springwind.service.IHistoryPfmPoolUserService;
 import com.baomidou.springwind.service.support.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 历史业绩池名单 服务实现类
@@ -16,5 +18,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class HistoryPfmPoolUserServiceImpl extends BaseServiceImpl<HistoryPfmPoolUserMapper, HistoryPfmPoolUser> implements IHistoryPfmPoolUserService {
-	
+
+    @Override
+    public List<String> getMonthData() {
+        return baseMapper.getMonthData();
+    }
 }

@@ -5,22 +5,20 @@ import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.DateUtil;
 import com.baomidou.springwind.common.utils.StringUtil;
-import com.baomidou.springwind.common.view.SpringMvcExcelView;
 import com.baomidou.springwind.entity.HistoryPfmPoolUser;
-import org.apache.commons.lang.RandomStringUtils;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
-import org.springframework.ui.Model;
 import com.baomidou.springwind.service.IHistoryPfmPoolUserService;
+import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.WebDataBinder;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -36,18 +34,24 @@ public class HistoryPfmPoolUserController extends BaseController {
 
     @Autowired
     private IHistoryPfmPoolUserService historyPfmPoolUserService;
-    //excel-config.xml中配置的ID
+
+    /**
+     * excel导出相关
+     */
+    @Value("${historyPfmPoolUser.excelName}")
+    private String excelName;
     @Value("${historyPfmPoolUser.excelId}")
-    private String userExcelId;
-
-    //excel导出的字段
+    private String excelId;
     @Value("${historyPfmPoolUser.fields}")
-    private String userFields;
+    private String excelFields;
 
-    /**页面跳转*/
+    /**
+     * 页面跳转
+     */
     @Permission("5006")
     @RequestMapping("/list")
-    public String list() {
+    public String list(Model model) {
+        model.addAttribute("monthIdList", historyPfmPoolUserService.getMonthData());
         return "/clientList/historyPfmPoolUser/list";
     }
 
@@ -61,27 +65,32 @@ public class HistoryPfmPoolUserController extends BaseController {
     }
 
 
-    /**CRUD*/
+    /**
+     * CRUD
+     */
     @ResponseBody
     @Permission("5006")
     @RequestMapping(value = "/getUserList")
-    public String getUserList(@RequestParam("_userName") String _userName,@RequestParam("_mobileNo") String _mobileNo) {
+    public String getUserList(@RequestParam("_userName") String _userName,
+                              @RequestParam("_mobileNo") String _mobileNo,
+                              @RequestParam("_monthId") String _monthId) {
 
-        System.err.println("筛选条件：客户姓名_userName = " + _userName+"，手机号码_mobileNo = "+_mobileNo);
+        System.err.println("筛选条件：客户姓名_userName = " + _userName + "，手机号码_mobileNo = " + _mobileNo
+                + "，历史月份_monthId = " + _monthId);
 
-        Map<String,Object> params = new HashMap<>();
-
-        if(StringUtil.isNotEmpty(_userName)){
-            params.put("user_name",_userName);
+        EntityWrapper<HistoryPfmPoolUser> ew = new EntityWrapper<>();
+        if (StringUtil.isNotEmpty(_userName)) {
+            ew.like("user_name", _userName);
         }
-
-        if(StringUtil.isNotEmpty(_mobileNo)){
-            params.put("mobile_no",_mobileNo);
+        if (StringUtil.isNotEmpty(_mobileNo)) {
+            ew.like("mobile_no", _mobileNo);
         }
-
+        if (StringUtil.isNotEmpty(_monthId)) {
+            ew.eq("month_id", _monthId);
+        }
+        ew.orderBy("month_id",false);
         Page<HistoryPfmPoolUser> page = getPage();
-        Page<HistoryPfmPoolUser> userPage = historyPfmPoolUserService.selectPage(page,
-                new EntityWrapper<HistoryPfmPoolUser>().allEq(params));
+        Page<HistoryPfmPoolUser> userPage = historyPfmPoolUserService.selectPage(page, ew);
         return jsonPage(userPage);
     }
 
@@ -90,7 +99,7 @@ public class HistoryPfmPoolUserController extends BaseController {
     @RequestMapping("/editUser")
     public String editUser(HistoryPfmPoolUser historyFinalUser) {
         boolean rlt = false;
-        if (historyFinalUser!=null) {
+        if (historyFinalUser != null) {
             if (historyFinalUser.getId() != null) {
                 rlt = historyPfmPoolUserService.updateById(historyFinalUser);
             } else {
@@ -102,39 +111,18 @@ public class HistoryPfmPoolUserController extends BaseController {
         return callbackSuccess(rlt);
     }
 
-
     /**
      * Excel导出列表
      *
      * @return
      */
     @Permission("5006")
-    @RequestMapping(value = "/downloadExcel",method = RequestMethod.POST)
-    public ModelAndView downloadExcel(){
+    @RequestMapping(value = "/downloadExcel", method = RequestMethod.POST)
+    public ModelAndView downloadExcel() {
 
-        /**1.执行你的业务逻辑获取数据，使用ExcelContent生成Workbook，需要四个参数:
-         *
-         * ①id 配置ID
-         * ②beans 配置class对应的List
-         * ③header 导出之前,在标题前面做出一些额外的操作,比如增加文档描述等,可以为null
-         * ④fields 指定Excel导出的字段(bean对应的字段名称),可以为null
-         */
-        Workbook workbook = null;
-        String id = userExcelId;
-        List<HistoryPfmPoolUser> list = historyPfmPoolUserService.selectList(null);
-        List<String> fields = Arrays.asList(userFields.split(","));
-        try {
-            workbook = excelContext.createExcel(id, list, null, fields);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        /**2.跳转到Excel下载视图*/
-        ModelAndView view = new ModelAndView("springMvcExcelView");
-        view.addObject(SpringMvcExcelView.EXCEL_NAME, "历史正式名单" + DateUtil.getCurrentTime());
-        view.addObject(SpringMvcExcelView.EXCEL_WORKBOOK, workbook);
-        view.addObject(SpringMvcExcelView.EXCEL_EMPTY_MESSAGE, "历史正式名单 没有相关数据可以导出");
-        return view;
+        List<String> fields = Arrays.asList(excelFields.split(","));
+        List<HistoryPfmPoolUser> beans = historyPfmPoolUserService.selectList(null);
+        return super.exportExcel(excelId, beans, null, fields, excelName);
     }
 
     @ResponseBody
@@ -152,7 +140,7 @@ public class HistoryPfmPoolUserController extends BaseController {
         ArrayList<HistoryPfmPoolUser> list = new ArrayList<>();
         for (int i = 1; i <= 100; i++) {
             HistoryPfmPoolUser u = new HistoryPfmPoolUser();
-            u.setMonthId(RandomStringUtils.random(6,"201706201820162016"));
+            u.setMonthId(RandomStringUtils.random(6, "201706201820162016"));
             u.setMobileNo(RandomStringUtils.randomNumeric(11));
             u.setUserName(RandomStringUtils.randomAlphabetic(5));
             u.setPfmPoolDate(DateUtil.randomDate("2017-01-01", "2017-06-01"));

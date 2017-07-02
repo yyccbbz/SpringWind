@@ -2,15 +2,12 @@ package com.baomidou.springwind.controller;
 
 import com.baomidou.kisso.annotation.Permission;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
-import com.baomidou.mybatisplus.mapper.Wrapper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.DateUtil;
 import com.baomidou.springwind.common.utils.StringUtil;
-import com.baomidou.springwind.common.view.SpringMvcExcelView;
 import com.baomidou.springwind.entity.HistoryFinalUser;
 import com.baomidou.springwind.service.IHistoryFinalUserService;
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -21,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
 
 /**
  * <p>
@@ -33,23 +33,28 @@ import java.util.*;
  */
 @Controller
 @RequestMapping("/clientList/historyFinalUser")
-public class HistoryFinalUserController extends BaseController{
+public class HistoryFinalUserController extends BaseController {
 
     @Autowired
     private IHistoryFinalUserService historyFinalUserService;
 
-    //excel-config.xml中配置的ID
+    /**
+     * excel导出相关
+     */
+    @Value("${historyFinalUser.excelName}")
+    private String excelName;
     @Value("${historyFinalUser.excelId}")
-    private String userExcelId;
-
-    //excel导出的字段
+    private String excelId;
     @Value("${historyFinalUser.fields}")
-    private String userFields;
+    private String excelFields;
 
-    /**页面跳转*/
+    /**
+     * 页面跳转
+     */
     @Permission("5005")
     @RequestMapping("/list")
-    public String list() {
+    public String list(Model model) {
+        model.addAttribute("monthIdList", historyFinalUserService.getMonthData());
         return "/clientList/historyFinalUser/list";
     }
 
@@ -63,46 +68,33 @@ public class HistoryFinalUserController extends BaseController{
     }
 
 
-    /**CRUD*/
+    /**
+     * CRUD
+     */
     @ResponseBody
     @Permission("5005")
     @RequestMapping(value = "/getUserList")
-    public String getUserList(@RequestParam("_userName") String _userName,@RequestParam("_mobileNo") String _mobileNo) {
+    public String getUserList(@RequestParam("_userName") String _userName,
+                              @RequestParam("_mobileNo") String _mobileNo,
+                              @RequestParam("_monthId") String _monthId) {
 
-        System.err.println("筛选条件：客户姓名_userName = " + _userName+"，手机号码_mobileNo = "+_mobileNo);
+        System.err.println("筛选条件：客户姓名_userName = " + _userName + "，手机号码_mobileNo = " + _mobileNo
+                + "，历史月份_monthId = " + _monthId);
 
-        Map<String,Object> params = new HashMap<>();
-
-        if(StringUtil.isNotEmpty(_userName)){
-            params.put("user_name",_userName);
+        EntityWrapper<HistoryFinalUser> ew = new EntityWrapper<>();
+        if (StringUtil.isNotEmpty(_userName)) {
+            ew.like("user_name", _userName);
         }
-
-        if(StringUtil.isNotEmpty(_mobileNo)){
-            params.put("mobile_no",_mobileNo);
+        if (StringUtil.isNotEmpty(_mobileNo)) {
+            ew.like("mobile_no", _mobileNo);
         }
-
+        if (StringUtil.isNotEmpty(_monthId)) {
+            ew.eq("month_id", _monthId);
+        }
+        ew.orderBy("month_id",false);
         Page<HistoryFinalUser> page = getPage();
-        Page<HistoryFinalUser> userPage = historyFinalUserService.selectPage(page,
-                new EntityWrapper<HistoryFinalUser>().allEq(params));
+        Page<HistoryFinalUser> userPage = historyFinalUserService.selectPage(page, ew);
         return jsonPage(userPage);
-    }
-
-    /**
-     *加载历史月份数据
-     * @param
-     * @return
-     */
-    @Permission
-    @ResponseBody
-    @RequestMapping(value = "/getMonth")
-    public String getMonthData(Model model){
-
-        model.addAttribute("historyUser",historyFinalUserService.getMonthData());
-
-        //List<HistoryFinalUser> historyFinalUserList = historyFinalUserService.getMonthData();
-
-        return "/clientList/historyFinalUser/list";
-
     }
 
     @ResponseBody
@@ -110,7 +102,7 @@ public class HistoryFinalUserController extends BaseController{
     @RequestMapping("/editUser")
     public String editUser(HistoryFinalUser historyFinalUser) {
         boolean rlt = false;
-        if (historyFinalUser!=null) {
+        if (historyFinalUser != null) {
             if (historyFinalUser.getId() != null) {
                 rlt = historyFinalUserService.updateById(historyFinalUser);
             } else {
@@ -129,32 +121,12 @@ public class HistoryFinalUserController extends BaseController{
      * @return
      */
     @Permission("5005")
-    @RequestMapping(value = "/downloadExcel",method = RequestMethod.POST)
-    public ModelAndView downloadExcel(){
+    @RequestMapping(value = "/downloadExcel", method = RequestMethod.POST)
+    public ModelAndView downloadExcel() {
 
-        /**1.执行你的业务逻辑获取数据，使用ExcelContent生成Workbook，需要四个参数:
-         *
-         * ①id 配置ID
-         * ②beans 配置class对应的List
-         * ③header 导出之前,在标题前面做出一些额外的操作,比如增加文档描述等,可以为null
-         * ④fields 指定Excel导出的字段(bean对应的字段名称),可以为null
-         */
-        Workbook workbook = null;
-        String id = userExcelId;
-        List<HistoryFinalUser> list = historyFinalUserService.selectList(null);
-        List<String> fields = Arrays.asList(userFields.split(","));
-        try {
-            workbook = excelContext.createExcel(id, list, null, fields);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        /**2.跳转到Excel下载视图*/
-        ModelAndView view = new ModelAndView("springMvcExcelView");
-        view.addObject(SpringMvcExcelView.EXCEL_NAME, "历史正式名单" + DateUtil.getCurrentTime());
-        view.addObject(SpringMvcExcelView.EXCEL_WORKBOOK, workbook);
-        view.addObject(SpringMvcExcelView.EXCEL_EMPTY_MESSAGE, "历史正式名单 没有相关数据可以导出");
-        return view;
+        List<String> fields = Arrays.asList(excelFields.split(","));
+        List<HistoryFinalUser> beans = historyFinalUserService.selectList(null);
+        return super.exportExcel(excelId, beans, null, fields, excelName);
     }
 
     @ResponseBody
@@ -164,7 +136,7 @@ public class HistoryFinalUserController extends BaseController{
         ArrayList<HistoryFinalUser> list = new ArrayList<>();
         for (int i = 1; i <= 100; i++) {
             HistoryFinalUser u = new HistoryFinalUser();
-            u.setMonthId(RandomStringUtils.random(6,"201706201820162016"));
+            u.setMonthId(RandomStringUtils.random(6, "201706201820162016"));
             u.setMobileNo(RandomStringUtils.randomNumeric(11));
             u.setMemberNo(RandomStringUtils.randomAlphanumeric(10));
             u.setUserName(RandomStringUtils.randomAlphabetic(5));

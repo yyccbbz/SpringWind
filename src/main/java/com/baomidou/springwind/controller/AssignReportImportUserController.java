@@ -92,7 +92,6 @@ public class AssignReportImportUserController extends BaseController {
         if (StringUtil.isNotEmpty(_mobileNo)) {
             ew.like("mobile_no", _mobileNo);
         }
-
         Page<AssignReportImportUser> page = getPage();
         Page<AssignReportImportUser> userPage = assignReportImportUserService.selectPage(page, ew);
         return jsonPage(userPage);

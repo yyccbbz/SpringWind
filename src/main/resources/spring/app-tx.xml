@@ -28,6 +28,8 @@
 	<tx:advice id="transactionAdvice" transaction-manager="transactionManager">
 		<tx:attributes>
 			<tx:method name="select*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="query*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
 			<tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception" />
 			<tx:method name="update*" propagation="REQUIRED" rollback-for="Exception" />
 			<tx:method name="insert*" propagation="REQUIRED" rollback-for="Exception" />

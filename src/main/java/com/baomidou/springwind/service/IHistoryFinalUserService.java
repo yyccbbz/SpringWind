@@ -15,6 +15,6 @@ import java.util.List;
  */
 public interface IHistoryFinalUserService extends IService<HistoryFinalUser> {
 
-    public List<HistoryFinalUser> getMonthData();
+    List<String> getMonthData();
 	
 }

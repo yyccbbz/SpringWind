@@ -15,4 +15,8 @@
 		<result column="update_time" property="updateTime" />
 	</resultMap>
 
+	<select id="getMonthData" resultType="String">
+		SELECT DISTINCT  month_id AS monthId FROM history_pfm_pool_user ORDER BY monthId DESC
+	</select>
+
 </mapper>

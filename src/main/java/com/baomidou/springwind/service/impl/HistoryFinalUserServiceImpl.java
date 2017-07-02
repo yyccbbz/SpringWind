@@ -4,7 +4,6 @@ import com.baomidou.springwind.entity.HistoryFinalUser;
 import com.baomidou.springwind.mapper.HistoryFinalUserMapper;
 import com.baomidou.springwind.service.IHistoryFinalUserService;
 import com.baomidou.springwind.service.support.BaseServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,11 +19,8 @@ import java.util.List;
 @Service
 public class HistoryFinalUserServiceImpl extends BaseServiceImpl<HistoryFinalUserMapper, HistoryFinalUser> implements IHistoryFinalUserService {
 
-    @Autowired
-    private HistoryFinalUserMapper historyFinalUserMapper;
-
     @Override
-    public List<HistoryFinalUser> getMonthData() {
-        return historyFinalUserMapper.getMonthData();
+    public List<String> getMonthData() {
+        return baseMapper.getMonthData();
     }
 }

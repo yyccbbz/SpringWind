@@ -15,6 +15,6 @@ import java.util.List;
  */
 public interface HistoryFinalUserMapper extends BaseMapper<HistoryFinalUser> {
 
-    public List<HistoryFinalUser> getMonthData();
+    List<String> getMonthData();
 
 }
