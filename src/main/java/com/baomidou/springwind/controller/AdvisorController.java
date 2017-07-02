@@ -83,14 +83,12 @@ public class AdvisorController extends BaseController {
         System.err.println("筛选条件 formData =" + _search);
 
         Page<Advisor> page = getPage();
+        EntityWrapper<Advisor> ew = new EntityWrapper<Advisor>();
         if (StringUtil.isNotEmpty(_search)) {
-            //btRegisterTime-->updateTime trans_time-->createTime
-            Advisor advisor = JSONObject.parseObject(_search, Advisor.class);
-//            page = advisorService.selectPageByParams(page, advisor);
-        } else {
-            page = advisorService.selectPage(page,
-                    new EntityWrapper<Advisor>().orderBy("trans_time", false));
+            ew.like("actual_name", _search).or("mobile_no like {0}", "%" + _search + "%");
         }
+        page = advisorService.selectPage(page, ew);
+
         return jsonPage(page);
     }
 

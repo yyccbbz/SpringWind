@@ -11,20 +11,23 @@ BigClient - 投资顾问
 <div class="row">
 	<div class="ibox-content text-right form-inline" style="background: #F3F3F4;">
 
-
-		<button type="button" class="btn btn-info" onclick="searchByCondition();" id="btn_query">
-			<i class="fa fa-search-plus"></i>&nbsp;条件搜索
-		</button>
+		<div class="input-group">
+			<input type="text" class="form-control" id="txt_search" name="_search" placeholder="姓名或手机号模糊查询">
+			<span class="input-group-btn">
+				<button type="button" class="btn btn-info" onclick="queryBy()" id="btn_query">搜索</button>
+			</span>
+		</div>
 
 		<button class="btn btn-primary" onclick="downloadExcel()" type="button">
 			<i class="fa fa-download"></i>&nbsp;导出投资顾问
 		</button>
 
-		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
-		#if ($SSOPermission.isActionable("10010"))
 		<button class="btn btn-primary" onclick="editOne(null)" type="button">
 			<i class="fa fa-user-plus"></i>&nbsp;添加投资顾问
 		</button>
+
+		<!-- 此处按钮级别权限控制，目前只有 admin 拥有该权限！ -->
+		#if ($SSOPermission.isActionable("10010"))
 
 		<button class="btn btn-primary" onclick="addTestData()" type="button">
 			<i class="fa fa-database"></i>&nbsp;添加测试数据
@@ -77,22 +80,21 @@ BigClient - 投资顾问
     	#end
     ];
 
-
     /**点击搜索按钮，弹出搜索条件的弹层*/
-    function searchByCondition(){
-        var title = "请选择筛选条件";
-        var url = "#springUrl('/features/advisor/search.html')";
-        layer.open({
-            type: 2,
-            title: title,
-            shadeClose: true,
-            shade: 0.8,
-            area: ['600px', '435px'],
-            fix: false,
-            maxmin: true,
-            content: url
-        });
-    }
+//    function searchByCondition(){
+//        var title = "请选择筛选条件";
+//        var url = "#springUrl('/features/advisor/search.html')";
+//        layer.open({
+//            type: 2,
+//            title: title,
+//            shadeClose: true,
+//            shade: 0.8,
+//            area: ['600px', '435px'],
+//            fix: false,
+//            maxmin: true,
+//            content: url
+//        });
+//    }
 
 
     function dataQueryParams(params,formData) {
@@ -102,12 +104,17 @@ BigClient - 投资顾问
         var temp = {
             _size: params.limit,	//页面大小
             _index: params.offset,	//页码
-            _search: formData, 		//搜索条件
+            _search: $("#txt_search").val(), 		//搜索条件
         };
 //		console.log(temp);
         return temp;
     }
 
+    /**点击搜索*/
+    function queryBy(){
+        var oTable1 = new TableInit();
+        oTable1.Init();
+    }
 
     /*添加测试数据*/
     function addTestData() {
