@@ -113,7 +113,7 @@ public class AdvisorController extends BaseController {
     @ResponseBody
     @Permission("9001")
     @RequestMapping("/delOne/{id}")
-    public String delUser(@PathVariable Long id) {
+    public String delUser(@PathVariable Integer id) {
         Boolean rlt = advisorService.deleteById(id);
         return rlt.toString();
     }
