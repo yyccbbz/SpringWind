@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author CuiCan
- * @since 2017-06-09
+ * @since 2017-07-11
  */
 @TableName("performance_pool_import_user")
 public class PerformancePoolImportUser implements Serializable {

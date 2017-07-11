@@ -150,7 +150,7 @@ public class FinalUserController extends BaseController {
             u.setRegisterTime(DateUtil.randomDate("2017-01-01", "2017-05-01"));
             u.setIsVipuser(Integer.parseInt(RandomStringUtils.random(1, new char[]{'0', '1'})));
             u.setVipDate(DateUtil.randomDate("2017-01-01", "2017-05-01"));
-            u.setAdvisorId(Integer.parseInt(RandomStringUtils.randomNumeric(4)));
+            u.setAdvisorId(RandomStringUtils.randomNumeric(4));
             u.setAdvisorName(RandomStringUtils.randomAlphabetic(6));
             u.setUserMark(RandomStringUtils.randomAlphanumeric(6));
             u.setIsPerformancePool(Integer.parseInt(RandomStringUtils.random(1, new char[]{'0', '1'})));

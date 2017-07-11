@@ -159,7 +159,7 @@ limitDays,limitType,createTime,updateTime,
             gsd.settMobileNo(RandomStringUtils.randomNumeric(11));
             gsd.settMemberNo(RandomStringUtils.randomAlphanumeric(10));
             gsd.settUserName(RandomStringUtils.randomAlphabetic(5));
-            gsd.setAdvisorId(Integer.parseInt(RandomStringUtils.randomNumeric(4)));
+            gsd.setAdvisorId(RandomStringUtils.randomNumeric(4));
             gsd.setAdvisorName(RandomStringUtils.randomAlphabetic(5));
             gsd.settUserType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'1', '2', '3'})));
             gsd.settReportDate(DateUtil.randomDate("2017-01-01", "2017-07-01"));

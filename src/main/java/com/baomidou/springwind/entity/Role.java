@@ -10,7 +10,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author CuiCan
- * @since 2017-05-17
+ * @since 2017-07-11
  */
 public class Role implements Serializable {
 

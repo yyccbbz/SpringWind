@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author CuiCan
- * @since 2017-06-09
+ * @since 2017-07-11
  */
 @TableName("history_final_user")
 public class HistoryFinalUser implements Serializable {
@@ -46,7 +46,7 @@ public class HistoryFinalUser implements Serializable {
 	@TableField("user_name")
 	private String userName;
     /**
-     * 客户类别：1:上报,2:分配,3:未分配vip
+     * 客户类别：1:上报、2:分配、3:未分配vip
      */
 	@TableField("user_type")
 	private Integer userType;
@@ -61,7 +61,7 @@ public class HistoryFinalUser implements Serializable {
 	@TableField("register_time")
 	private Date registerTime;
     /**
-     * 是否vip：1是；0否
+     * 是否vip：1:是、0:否
      */
 	@TableField("is_vipuser")
 	private Integer isVipuser;
@@ -81,12 +81,12 @@ public class HistoryFinalUser implements Serializable {
 	@TableField("advisor_name")
 	private String advisorName;
     /**
-     * 用户标识：DKH000/DKH001
+     * 用户标识：1:DKH000、2:DKH001
      */
 	@TableField("user_mark")
 	private String userMark;
     /**
-     * 是否业绩池：1、是；0、否
+     * 是否业绩池：1:是、0:否
      */
 	@TableField("is_performance_pool")
 	private Integer isPerformancePool;

@@ -202,7 +202,7 @@ public class AssignReportImportUserController extends BaseController {
             AssignReportImportUser u = new AssignReportImportUser();
             u.setMobileNo(RandomStringUtils.randomNumeric(11));
             u.setUserName(RandomStringUtils.randomAlphabetic(5));
-            u.setUserType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'1', '2', '3'})));
+            u.setUserType(RandomStringUtils.randomNumeric(4));
             u.setReportDate(DateUtil.randomDate("2017-01-01", "2017-05-01"));
             u.setAdvisorName(RandomStringUtils.randomAlphabetic(6));
             u.setUserMark(RandomStringUtils.randomAlphanumeric(6));

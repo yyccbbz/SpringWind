@@ -11,7 +11,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author CuiCan
- * @since 2017-05-17
+ * @since 2017-07-11
  */
 @TableName("role_privilege")
 public class RolePrivilege implements Serializable {

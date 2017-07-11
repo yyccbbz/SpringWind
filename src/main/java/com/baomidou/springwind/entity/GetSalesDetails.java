@@ -1,7 +1,6 @@
 package com.baomidou.springwind.entity;
 
 import com.baomidou.mybatisplus.enums.IdType;
-import java.math.BigDecimal;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableField;
@@ -14,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author CuiCan
- * @since 2017-06-15
+ * @since 2017-07-11
  */
 @TableName("get_sales_details")
 public class GetSalesDetails implements Serializable {
@@ -45,14 +44,14 @@ public class GetSalesDetails implements Serializable {
      * 投资顾问ID号
      */
 	@TableField("advisor_id")
-	private Integer advisorId;
+	private String advisorId;
     /**
      * 投资顾问姓名
      */
 	@TableField("advisor_name")
 	private String advisorName;
     /**
-     * 推荐人客户类别：1：上报，2：分配，3：未分配vip
+     * 推荐人客户类别：1:上报、2:分配、3:未分配vip
      */
 	@TableField("t_user_type")
 	private Integer tUserType;
@@ -62,7 +61,7 @@ public class GetSalesDetails implements Serializable {
 	@TableField("t_report_date")
 	private Date tReportDate;
     /**
-     * 推荐人是否业绩池：0：否，1：是
+     * 推荐人是否业绩池：0:否、1:是
      */
 	@TableField("t_is_performance_pool")
 	private Integer tIsPerformancePool;
@@ -97,7 +96,7 @@ public class GetSalesDetails implements Serializable {
 	@TableField("product_name")
 	private String productName;
     /**
-     * 产品类型：1：定期，2：活期，3：活包定，4：转让
+     * 产品类型：1:定期、2:活期、3:活包定、4:转让
      */
 	@TableField("product_type")
 	private Integer productType;
@@ -132,7 +131,7 @@ public class GetSalesDetails implements Serializable {
 	@TableField("limit_days")
 	private Integer limitDays;
     /**
-     * 定期产品期限类型：0：新人专享，1:6个月，2:12个月
+     * 定期产品期限类型：0:新人专享、6:6个月、12:12个月
      */
 	@TableField("limit_type")
 	private Integer limitType;
@@ -180,11 +179,11 @@ public class GetSalesDetails implements Serializable {
 		this.tUserName = tUserName;
 	}
 
-	public Integer getAdvisorId() {
+	public String getAdvisorId() {
 		return advisorId;
 	}
 
-	public void setAdvisorId(Integer advisorId) {
+	public void setAdvisorId(String advisorId) {
 		this.advisorId = advisorId;
 	}
 

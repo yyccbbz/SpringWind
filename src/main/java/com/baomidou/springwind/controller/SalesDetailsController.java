@@ -153,7 +153,8 @@ isVipuser,vipDate,isPerformancePool,userMark,createTime,updateTime,
             sd.setMobileNo(RandomStringUtils.randomNumeric(11));
             sd.setMemberNo(RandomStringUtils.randomAlphanumeric(10));
             sd.setUserName(RandomStringUtils.randomAlphabetic(5));
-            sd.setAdvisorId(Integer.parseInt(RandomStringUtils.randomNumeric(4)));
+            // advisor --> serialNo
+            sd.setAdvisorId(RandomStringUtils.randomNumeric(4));
             sd.setAdvisorName(RandomStringUtils.randomAlphabetic(5));
             sd.setProductId(RandomStringUtils.randomAlphanumeric(4));
 

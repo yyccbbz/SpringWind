@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author CuiCan
- * @since 2017-07-02
+ * @since 2017-07-11
  */
 public class Advisor implements Serializable {
 

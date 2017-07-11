@@ -150,7 +150,7 @@ public class ProductExpiresController extends BaseController {
             pe.setMobileNo(RandomStringUtils.randomNumeric(11));
             pe.setMemberNo(RandomStringUtils.randomAlphanumeric(10));
             pe.setUserName(RandomStringUtils.randomAlphabetic(5));
-            pe.setAdvisorId(Integer.parseInt(RandomStringUtils.randomNumeric(4)));
+            pe.setAdvisorId(RandomStringUtils.randomNumeric(4));
             pe.setAdvisorName(RandomStringUtils.randomAlphabetic(6));
             pe.setIsPerformancePool(Integer.parseInt(RandomStringUtils.random(1, new char[]{'0', '1'})));
             pe.setProductId(RandomStringUtils.randomNumeric(5));

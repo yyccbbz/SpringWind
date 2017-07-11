@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author CuiCan
- * @since 2017-05-17
+ * @since 2017-07-11
  */
 @TableName("final_user")
 public class FinalUser implements Serializable {
@@ -41,7 +41,7 @@ public class FinalUser implements Serializable {
 	@TableField("user_name")
 	private String userName;
     /**
-     * 客户类别：1上报；2分配；3未分配vip
+     * 客户类别：1:上报；2:分配；3:未分配vip
      */
 	@TableField("user_type")
 	private Integer userType;
@@ -56,7 +56,7 @@ public class FinalUser implements Serializable {
 	@TableField("register_time")
 	private Date registerTime;
     /**
-     * 是否vip：1是；0否
+     * 是否vip：1:是；0:否
      */
 	@TableField("is_vipuser")
 	private Integer isVipuser;
@@ -69,19 +69,19 @@ public class FinalUser implements Serializable {
      * 投资顾问ID号
      */
 	@TableField("advisor_id")
-	private Integer advisorId;
+	private String advisorId;
     /**
      * 投资顾问姓名
      */
 	@TableField("advisor_name")
 	private String advisorName;
     /**
-     * 用户标识：1、DKH000；2、DKH001
+     * 用户标识：1:DKH000；2:DKH001
      */
 	@TableField("user_mark")
 	private String userMark;
     /**
-     * 是否业绩池：1、是；0、否
+     * 是否业绩池：1:是；0:否
      */
 	@TableField("is_performance_pool")
 	private Integer isPerformancePool;
@@ -169,11 +169,11 @@ public class FinalUser implements Serializable {
 		this.vipDate = vipDate;
 	}
 
-	public Integer getAdvisorId() {
+	public String getAdvisorId() {
 		return advisorId;
 	}
 
-	public void setAdvisorId(Integer advisorId) {
+	public void setAdvisorId(String advisorId) {
 		this.advisorId = advisorId;
 	}
 
@@ -217,24 +217,4 @@ public class FinalUser implements Serializable {
 		this.updateTime = updateTime;
 	}
 
-	@Override
-	public String toString() {
-		return "FinalUser{" +
-				"id=" + id +
-				", mobileNo='" + mobileNo + '\'' +
-				", memberNo='" + memberNo + '\'' +
-				", userName='" + userName + '\'' +
-				", userType=" + userType +
-				", reportDate=" + reportDate +
-				", registerTime=" + registerTime +
-				", isVipuser=" + isVipuser +
-				", vipDate=" + vipDate +
-				", advisorId=" + advisorId +
-				", advisorName='" + advisorName + '\'' +
-				", userMark='" + userMark + '\'' +
-				", isPerformancePool=" + isPerformancePool +
-				", createTime=" + createTime +
-				", updateTime=" + updateTime +
-				'}';
-	}
 }

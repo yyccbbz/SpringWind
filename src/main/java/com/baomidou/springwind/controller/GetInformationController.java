@@ -153,7 +153,7 @@ btMobileNo,btMemberNo,btUserName,btRegisterTime,btTransAmount,createTime,updateT
             gi.settMobileNo(RandomStringUtils.randomNumeric(11));
             gi.settMemberNo(RandomStringUtils.randomAlphanumeric(10));
             gi.settUserName(RandomStringUtils.randomAlphabetic(5));
-            gi.setAdvisorId(Integer.parseInt(RandomStringUtils.randomNumeric(4)));
+            gi.setAdvisorId(RandomStringUtils.randomNumeric(4));
             gi.setAdvisorName(RandomStringUtils.randomAlphabetic(5));
             gi.settUserType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'1', '2', '3'})));
             gi.settReportDate(DateUtil.randomDate("2017-01-01", "2017-07-01"));

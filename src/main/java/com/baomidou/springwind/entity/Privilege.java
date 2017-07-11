@@ -9,7 +9,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author CuiCan
- * @since 2017-05-17
+ * @since 2017-07-11
  */
 public class Privilege implements Serializable {
 
@@ -32,7 +32,7 @@ public class Privilege implements Serializable {
      */
 	private Integer type;
     /**
-     * 状态 0、正常 1、禁用
+     * 状态 1、正常 0、禁用
      */
 	private Integer state;
     /**

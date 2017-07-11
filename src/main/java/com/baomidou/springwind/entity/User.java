@@ -12,7 +12,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author CuiCan
- * @since 2017-05-17
+ * @since 2017-07-11
  */
 public class User implements Serializable {
 
@@ -37,7 +37,7 @@ public class User implements Serializable {
      */
 	private String email;
     /**
-     * 2、普通用户 1、管理员 3、超级管理员
+     * 0、普通用户 1、管理员 2、超级管理员
      */
 	private Integer type;
     /**

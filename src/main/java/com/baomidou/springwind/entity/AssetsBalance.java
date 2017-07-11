@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author CuiCan
- * @since 2017-06-25
+ * @since 2017-07-11
  */
 @TableName("assets_balance")
 public class AssetsBalance implements Serializable {
@@ -41,7 +41,7 @@ public class AssetsBalance implements Serializable {
 	@TableField("user_name")
 	private String userName;
     /**
-     * 客户类别：1：上报，2：分配，3：未分配vip
+     * 客户类别：1:上报、2:分配、3:未分配vip
      */
 	@TableField("user_type")
 	private Integer userType;
@@ -86,7 +86,7 @@ public class AssetsBalance implements Serializable {
 	@TableField("aum_date")
 	private Date aumDate;
     /**
-     * 是否业绩池：0：否，1：是
+     * 是否业绩池：0:否、1:是
      */
 	@TableField("is_performance_pool")
 	private Integer isPerformancePool;

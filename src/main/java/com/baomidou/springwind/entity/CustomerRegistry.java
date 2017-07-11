@@ -13,7 +13,7 @@ import java.io.Serializable;
  * </p>
  *
  * @author CuiCan
- * @since 2017-06-25
+ * @since 2017-07-11
  */
 @TableName("customer_registry")
 public class CustomerRegistry implements Serializable {
@@ -41,7 +41,7 @@ public class CustomerRegistry implements Serializable {
 	@TableField("user_name")
 	private String userName;
     /**
-     * 是否注册：0：否，1：是
+     * 是否注册：0:否、1:是
      */
 	@TableField("is_register")
 	private Integer isRegister;
