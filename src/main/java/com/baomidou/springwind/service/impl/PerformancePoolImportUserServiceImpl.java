@@ -16,5 +16,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class PerformancePoolImportUserServiceImpl extends BaseServiceImpl<PerformancePoolImportUserMapper, PerformancePoolImportUser> implements IPerformancePoolImportUserService {
-	
+
+    @Override
+    public void deleteAll() {
+        baseMapper.truncateTable();
+    }
 }

@@ -129,6 +129,9 @@ public class PerformancePoolImportUserController extends BaseController {
     @Permission("5004")
     @RequestMapping(value = "/uploadExcel", method = RequestMethod.POST)
     public UploadMsg uploadExcel() {
+
+        performancePoolImportUserService.deleteAll();
+
         UploadMsg msg = new UploadMsg();
         try {
             UploadMultipartRequest umr = new UploadMultipartRequest(request, getSaveDir(), MAX_POST_SIZE);

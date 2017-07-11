@@ -59,17 +59,6 @@ function formatDate(time) {
 }
 
 
-/**
- * 历史月份下拉框值加载
- */
-
-
-function getMonthValue() {
-    var optionValue=$("monthId").val();
-    var monthSelected=document.getElementById("monthId");
-
-
-}
 
 /**
  * 保留两位小数
@@ -101,6 +90,19 @@ function formatUserType(type){
         return '管理员';
     } else if (type == 3) {
         return '超级管理员';
+    } else {
+        return '';
+    }
+}
+/**
+ * 客户标识
+ * '1，DHK000；2，DHK001'
+ */
+function formatUserMark(type){
+    if (type == 1) {
+        return 'DHK000';
+    } else if (type == 2) {
+        return 'DHK001';
     } else {
         return '';
     }

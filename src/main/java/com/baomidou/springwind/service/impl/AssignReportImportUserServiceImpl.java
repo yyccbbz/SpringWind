@@ -16,5 +16,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class AssignReportImportUserServiceImpl extends BaseServiceImpl<AssignReportImportUserMapper, AssignReportImportUser> implements IAssignReportImportUserService {
-	
+
+    @Override
+    public void deleteAll() {
+        baseMapper.truncateTable();
+    }
 }

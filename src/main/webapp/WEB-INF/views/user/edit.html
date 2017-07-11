@@ -57,6 +57,7 @@ $("#myForm").validator({
 //        alert($(form).serialize());
         $.ajax({
         	url: "#springUrl('/perm/user/editUser')",
+        	data: $(form).serialize(),
             type: "POST",
             success: function(data){
             	var d = JSON.parse(data);

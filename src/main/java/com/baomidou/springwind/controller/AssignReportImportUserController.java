@@ -122,6 +122,9 @@ public class AssignReportImportUserController extends BaseController {
     @Permission("5003")
     @RequestMapping(value = "/uploadExcel", method = RequestMethod.POST)
     public UploadMsg uploadExcelFile() {
+
+        assignReportImportUserService.deleteAll();
+
         UploadMsg msg = new UploadMsg();
         try {
             UploadMultipartRequest umr = new UploadMultipartRequest(request, getSaveDir(), MAX_POST_SIZE);

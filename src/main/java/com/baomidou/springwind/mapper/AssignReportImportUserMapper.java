@@ -2,6 +2,7 @@ package com.baomidou.springwind.mapper;
 
 import com.baomidou.springwind.entity.AssignReportImportUser;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Update;
 
 /**
  * <p>
@@ -12,5 +13,6 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  * @since 2017-06-09
  */
 public interface AssignReportImportUserMapper extends BaseMapper<AssignReportImportUser> {
-
+    @Update("TRUNCATE TABLE assign_report_import_user")
+    void truncateTable();
 }

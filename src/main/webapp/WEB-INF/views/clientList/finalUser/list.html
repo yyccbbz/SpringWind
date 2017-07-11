@@ -114,7 +114,10 @@ BigClient - 正式名单
             field: 'userMark',
             title: '客户标识',
             align: "center",
-            valign: "middle"
+            valign: "middle",
+			formatter: function (value, row, index) {
+				return formatUserMark(row.userMark);
+			}
         }, {
             field: 'isPerformancePool',
             title: '是否业绩池',

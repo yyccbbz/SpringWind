@@ -12,5 +12,6 @@ import com.baomidou.mybatisplus.service.IService;
  * @since 2017-06-09
  */
 public interface IPerformancePoolImportUserService extends IService<PerformancePoolImportUser> {
-	
+
+    void deleteAll();
 }
