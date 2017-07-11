@@ -82,7 +82,8 @@ BigClient - 销售明细
             formatter: function (value, row, index) { return formatDate(row.vipDate); } },
         { field: 'isPerformancePool', title: '是否业绩池', sortable:'true',  align: 'center', valign: 'middle',
             formatter: function (value, row, index) { return formatWhether(row.isPerformancePool); } },
-        { field: 'userMark', title: '用户标识', sortable:'true',  align: 'center', valign: 'middle' }
+        { field: 'userMark', title: '用户标识', sortable:'true',  align: 'center', valign: 'middle' ,
+            formatter: function (value, row, index) { return formatUserMark(row.userMark); } }
 		<!-- 此处按钮级别权限控制,目前只有 admin 拥有该权限! -->
 		#if ($SSOPermission.isActionable("10010"))
         ,{

@@ -31,7 +31,7 @@ function dateFtt(fmt, time) {
  * @returns {*}
  */
 function formatDateTime(time) {
-    if (time == '' || time == null || time == undefined) return '';
+    if (time == '' || time == null || time == undefined) return '-';
     var datetime = new Date(time);
     // datetime.setTime(time);
     var year = datetime.getFullYear();
@@ -49,7 +49,7 @@ function formatDateTime(time) {
  * @returns {*}
  */
 function formatDate(time) {
-    if (time == '' || time == null || time == undefined) return '';
+    if (time == '' || time == null || time == undefined) return '-';
     var datetime = new Date(time);
     // datetime.setTime(time);
     var year = datetime.getFullYear();
@@ -91,7 +91,7 @@ function formatUserType(type){
     } else if (type == 3) {
         return '超级管理员';
     } else {
-        return '';
+        return '-';
     }
 }
 /**
@@ -104,7 +104,7 @@ function formatUserMark(type){
     } else if (type == 2) {
         return 'DHK001';
     } else {
-        return '';
+        return '-';
     }
 }
 
@@ -122,7 +122,7 @@ function formatPrivilegeType(type){
     } else if (type == 1) {
         return '功能';
     } else {
-        return '';
+        return '-';
     }
 }
 
@@ -133,7 +133,7 @@ function formatStatus(status){
     } else if (status == 1) {
         return '正常';
     } else {
-        return '';
+        return '-';
     }
 }
 
@@ -151,7 +151,7 @@ function formatFinalUserType(type){
     } else if (type == 3) {
         return '未分配vip';
     } else {
-        return '';
+        return '-';
     }
 }
 
@@ -170,7 +170,7 @@ function formatLmitType(type){
     } else if (type == 12) {
         return '12个月';
     } else {
-        return '';
+        return '-';
     }
 }
 
@@ -191,7 +191,7 @@ function formatProductType(type){
     }else if (type==4){
         return '转让';
     }else {
-        return '';
+        return '-';
     }
 }
 
@@ -209,7 +209,7 @@ function formatImportUserType(type){
     } else if (type == 3) {
         return '未分配vip';
     } else {
-        return '';
+        return '-';
     }
 }
 
@@ -224,7 +224,7 @@ function formatWhether(isyes) {
     } else if (isyes == 0) {
         return '否';
     } else {
-        return '';
+        return '-';
     }
 }
 
