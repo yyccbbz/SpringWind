@@ -10,49 +10,53 @@
    #parse("/common/nav_left.html")
    <!--右侧部分开始-->
    <div id="page-wrapper" class="gray-bg dashbard-1">
-	   <div class="row border-bottom">
-	   <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
-		   <div class="navbar-header">
-		       <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-		       <form role="search" class="navbar-form-custom" action="search_results.html">
-		           <div class="form-group">
-		               <input type="text" placeholder="请输入您需要查找的内容..." class="form-control" name="top-search" id="top-search">
-		           </div>
-		       </form>
+	   <!--<div class="row border-bottom">
+		   <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+			   <div class="navbar-header">
+				   <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+					   <i class="fa fa-bars"></i>
+				   </a>
+				   <form role="search" class="navbar-form-custom" action="search_results.html">
+					   <div class="form-group">
+						   <input type="text" placeholder="请输入您需要查找的内容..." class="form-control" name="top-search"
+								  id="top-search">
+					   </div>
+				   </form>
+			   </div>
+			   <ul class="nav navbar-top-links navbar-right">
+				   &lt;!&ndash; 此处站内信和警告 &ndash;&gt;
+				   &lt;!&ndash;#include('/common/dropdown.html')&ndash;&gt;
+				   <li>
+					   <a href="#springUrl('/account/lockscreen.html')">
+						   <i class="fa fa-sign-out"></i>退出
+					   </a>
+				   </li>
+			   </ul>
+		   </nav>
+	   </div>-->
+
+	   <div class="row border-bottom white-bg dashboard-header">
+		   <div class="col-lg-10">
+			   <!--<h3>QQ：253666335 <font color="red">版权归作者所有，永久开源免费！<a href="#">【点击捐赠】</a></font></h3>-->
+			   <ol class="breadcrumb">
+				   <li><a href="/index.html">首页</a></li>
+				   #block("breadcrumb")#end
+			   </ol>
 		   </div>
-	       <ul class="nav navbar-top-links navbar-right">
-			   <!-- 此处站内信和警告 -->
-			   <!--#include('/common/dropdown.html')-->
-	           <li>
-	               <a href="#springUrl('/account/lockscreen.html')">
-	                   <i class="fa fa-sign-out"></i>退出
-	               </a>
-	           </li>
-	       </ul>
-	   </nav>
 	   </div>
 
-	<div class="row border-bottom white-bg dashboard-header">
-		<div class="col-lg-10">
-			<!--<h3>QQ：253666335 <font color="red">版权归作者所有，永久开源免费！<a href="#">【点击捐赠】</a></font></h3>-->
-			<ol class="breadcrumb">
-				<li><a href="/index.html">首页</a></li>
-				#block("breadcrumb")#end
-			</ol>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-lg-12">
-			<div class="wrapper wrapper-content">
-				#block("content")#end
-			</div>
-			<div class="footer">
-				<div class="pull-right">
-					<a target="_blank" href="https://www.hdfax.com/">&copy;hdfax</a>
-				</div>
-			</div>
-		</div>
-	</div>
+	   <div class="row">
+		   <div class="col-lg-12">
+			   <div class="wrapper wrapper-content">
+				   #block("content")#end
+			   </div>
+			   <div class="footer">
+				   <div class="pull-right">
+					   <a target="_blank" href="https://www.hdfax.com/">&copy;hdfax</a>
+				   </div>
+			   </div>
+		   </div>
+	   </div>
    </div>
    <!--右侧部分结束-->
 </div>

@@ -50,83 +50,24 @@ BigClient - 正式名单
 <script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
     var dataUrl = "#springUrl('/clientList/finalUser/getUserList.html')";
-    var dataColumns = [/*{
-            field: 'id',
-            title: '序号',
-            align: "center",
-            valign: "middle"
-        }, */{
-            field: 'mobileNo',
-            title: '客户手机号',
-            align: "center",
-            valign: "middle"
-        }, {
-            field: 'userName',
-            title: '客户姓名',
-            align: "center",
-            valign: "middle"
-        }, {
-            field: 'userType',
-            title: '客户类别',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatFinalUserType(row.userType);
-			}
-        }, {
-            field: 'reportDate',
-            title: '上报日期',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatDate(row.reportDate);
-			}
-        }, {
-            field: 'registerTime',
-            title: '注册时间',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatDateTime(row.registerTime);
-			}
-        }, {
-            field: 'isVipuser',
-            title: '是否vip',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatWhether(row.isVipuser);
-			}
-        }, {
-            field: 'vipDate',
-            title: '成为vip日期',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatDate(row.vipDate);
-			}
-        }, {
-            field: 'advisorName',
-            title: '投资顾问',
-            align: "center",
-            valign: "middle"
-        }, {
-            field: 'userMark',
-            title: '客户标识',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatUserMark(row.userMark);
-			}
-        }, {
-            field: 'isPerformancePool',
-            title: '是否业绩池',
-            align: "center",
-            valign: "middle",
-			formatter: function (value, row, index) {
-				return formatWhether(row.isPerformancePool);
-			}
-        }
+    var dataColumns = [
+        {field: 'mobileNo',title: '客户手机号',align: "center",valign: "middle"},
+        {field: 'userName',title: '客户姓名',align: "center",valign: "middle"},
+        {field: 'userType',title: '客户类别',align: "center",valign: "middle",
+            formatter: function (value, row, index) {return formatFinalUserType(row.userType);}},
+        {field: 'reportDate',title: '上报日期',align: "center",valign: "middle",
+            formatter: function (value, row, index) {return formatDate(row.reportDate);}},
+        {field: 'registerTime',title: '注册时间',align: "center",valign: "middle",
+            formatter: function (value, row, index) {return formatDateTime(row.registerTime);}},
+        {field: 'isVipuser',title: '是否vip',align: "center",valign: "middle",
+            formatter: function (value, row, index) {return formatWhether(row.isVipuser);}},
+        {field: 'vipDate',title: '成为vip日期',align: "center",valign: "middle",
+            formatter: function (value, row, index) {return formatDate(row.vipDate);}},
+        {field: 'advisorName',title: '投资顾问',align: "center",valign: "middle"},
+        {field: 'userMark',title: '客户标识',align: "center",valign: "middle",
+            formatter: function (value, row, index) {return formatUserMark(row.userMark);}},
+        {field: 'isPerformancePool',title: '是否业绩池',align: "center",valign: "middle",
+            formatter: function (value, row, index) {return formatWhether(row.isPerformancePool);}}
 		<!-- 此处按钮级别权限控制,目前只有 admin 拥有该权限! -->
 		#if ($SSOPermission.isActionable("10010"))
         ,{

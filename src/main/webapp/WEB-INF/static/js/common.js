@@ -93,20 +93,25 @@ function formatUserType(type){
     } else {
         return '-';
     }
-}
+};
+
+
+
+
+
 /**
  * 客户标识
  * '1，DHK000；2，DHK001'
  */
 function formatUserMark(type){
-    if (type == 1) {
+    if (+type == 1) {
         return 'DHK000';
-    } else if (type == 2) {
+    } else if (+type == 2) {
         return 'DHK001';
     } else {
         return '-';
     }
-}
+};
 
 
 /**
