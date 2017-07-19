@@ -67,7 +67,8 @@ BigClient - 获客销售明细
         { field: 'btRegisterTime', title: '被推荐人注册时间', sortable:'true',  align: 'center', valign: 'middle',
             formatter: function (value, row, index) { return formatDateTime(row.btRegisterTime);}},
         { field: 'productName', title: '产品名称', sortable:'true',  align: 'center', valign: 'middle' },
-        { field: 'productType', title: '产品类型', sortable:'true',  align: 'center', valign: 'middle' },
+        { field: 'productType', title: '产品类型', sortable:'true',  align: 'center', valign: 'middle',
+            formatter: function (value, row, index) { return formatLmitType(row.limitType); }},
         { field: 'productRate', title: '产品利率', sortable:'true',  align: 'center', valign: 'middle' },
         { field: 'transAmount', title: '投资金额', sortable:'true',  align: 'center', valign: 'middle' },
         { field: 'transTime', title: '投资时间', sortable:'true',  align: 'center', valign: 'middle',
@@ -102,7 +103,7 @@ BigClient - 获客销售明细
             title: title,
             shadeClose: true,
             shade: 0.8,
-            area: ['600px', '435px'],
+            area: ['600px', '500px'],
             fix: false,
             maxmin: true,
             content: url

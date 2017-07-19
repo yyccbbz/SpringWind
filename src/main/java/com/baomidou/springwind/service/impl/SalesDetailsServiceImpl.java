@@ -64,7 +64,7 @@ public class SalesDetailsServiceImpl extends BaseServiceImpl<SalesDetailsMapper,
         if (sdVO.getIsPerformancePool() != null) {
             ew.eq("is_performance_pool", sdVO.getIsPerformancePool());
         }
-        if (sdVO.getUserMark() != null) {
+        if (StringUtil.isNotEmpty(sdVO.getUserMark())) {
             ew.eq("user_mark", sdVO.getUserMark());
         }
 
