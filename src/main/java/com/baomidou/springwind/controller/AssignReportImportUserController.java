@@ -120,7 +120,7 @@ public class AssignReportImportUserController extends BaseController {
     @ResponseBody
     @Permission("5003")
     @RequestMapping(value = "/uploadExcel", method = RequestMethod.POST)
-    public UploadMsg uploadExcelFile() {
+    public String uploadExcelFile() {
 
         assignReportImportUserService.deleteAll();
 
@@ -166,7 +166,7 @@ public class AssignReportImportUserController extends BaseController {
             e.printStackTrace();
         }
         System.err.println("msg = " + toJson(msg));
-        return msg;
+        return toJson(msg);
 
     }
 

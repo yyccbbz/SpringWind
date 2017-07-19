@@ -6,6 +6,8 @@ import com.baomidou.springwind.service.IPerformancePoolImportUserService;
 import com.baomidou.springwind.service.support.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 业绩池名单导入 服务实现类
@@ -20,5 +22,10 @@ public class PerformancePoolImportUserServiceImpl extends BaseServiceImpl<Perfor
     @Override
     public void deleteAll() {
         baseMapper.truncateTable();
+    }
+
+    @Override
+    public void batchInsert(List<PerformancePoolImportUser> listBean) {
+        baseMapper.batchInsert(listBean);
     }
 }

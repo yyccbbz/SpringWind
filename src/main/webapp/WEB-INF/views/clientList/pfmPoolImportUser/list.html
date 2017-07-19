@@ -170,7 +170,7 @@ BigClient - 业绩池名单
             _userName: $("#txt_userName").val(), 	//客户姓名输入
             _mobileNo: $("#txt_mobileNo").val(), 	//手机号码输入
         };
-        console.log(temp);
+//        console.log(temp);
         return temp;
     }
 
@@ -185,7 +185,10 @@ BigClient - 业绩池名单
         // 模拟Ajax获取
         downLoadFile({
             url: "#springUrl('/clientList/pfmPoolImportUser/downloadExcel.html')", //请求的url
-            data: {search: $("#txt_search").val()}				//要发送的数据
+            data: {
+                _userName: $("#txt_userName").val(),
+                _mobileNo: $("#txt_mobileNo").val()
+            } //要发送的数据
         });
     }
 
@@ -211,7 +214,7 @@ BigClient - 业绩池名单
                         layer.closeAll();
 						console.log(data);
 						console.log(data.success);
-                        if(data.success == 'true'){
+                        if(data.success){
                             $('#dataTable').bootstrapTable('refresh',{url:dataUrl});
                         }
                     },

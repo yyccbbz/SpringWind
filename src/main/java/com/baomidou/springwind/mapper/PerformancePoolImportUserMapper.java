@@ -2,7 +2,10 @@ package com.baomidou.springwind.mapper;
 
 import com.baomidou.springwind.entity.PerformancePoolImportUser;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +18,6 @@ import org.apache.ibatis.annotations.Update;
 public interface PerformancePoolImportUserMapper extends BaseMapper<PerformancePoolImportUser> {
     @Update("TRUNCATE TABLE performance_pool_import_user")
     void truncateTable();
+
+    void batchInsert(@Param("list") List<PerformancePoolImportUser> list);
 }

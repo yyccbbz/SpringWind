@@ -98,7 +98,7 @@ BigClient - 分配/上报名单导入
 //            _userName: $("#txt_userName").val(), 	//客户姓名输入
             _mobileNo: $("#txt_mobileNo").val(), 	//手机号码输入
         };
-        console.log(temp);
+//        console.log(temp);
         return temp;
     }
 
@@ -173,12 +173,12 @@ BigClient - 分配/上报名单导入
                     fileElementId: fileId,            	   //文件上传空间的id属性
                     dataType: "json",                      //返回值类型 一般设置为json
                     success: function (data, status) {     //服务器成功响应处理函数
-                        layer.closeAll();
 						console.log(data);
 						console.log(data.success);
-                        if(data.success == 'true'){
+                        if(data.success){
                             $('#dataTable').bootstrapTable('refresh',{url:dataUrl});
                         }
+                        layer.closeAll();
                     },
                     error: function (data, status, e) {     //服务器响应失败处理函数
                         console.log(data);

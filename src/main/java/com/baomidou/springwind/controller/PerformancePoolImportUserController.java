@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 /**
@@ -128,7 +129,7 @@ public class PerformancePoolImportUserController extends BaseController {
     @ResponseBody
     @Permission("5004")
     @RequestMapping(value = "/uploadExcel", method = RequestMethod.POST)
-    public UploadMsg uploadExcel() {
+    public String uploadExcel() {
 
         performancePoolImportUserService.deleteAll();
 
@@ -149,8 +150,6 @@ public class PerformancePoolImportUserController extends BaseController {
                         msg.setSuccess(true);
                         msg.setUrl(cf.getFileUrl());
                         msg.setSize(cf.getSize());
-                        System.err.println("上传文件地址：" + msg.getUrl());
-                        System.err.println("UploadFile cf：" + cf.toString());
                     }
                     msg.setMsg(cf.getUploadCode().desc());
                     /**读取Excel内容，进行写表*/
@@ -158,7 +157,7 @@ public class PerformancePoolImportUserController extends BaseController {
                     excel.setExcelName(cf.getOriginalFileName());
                     excel.setExcelRealName(cf.getFilesystemName());
                     excel.setExcelRealPath(cf.getFileUrl());
-                    excel.setUid(0L);
+                    excel.setUid(getCurrentUserId());
                     excel.setCreateTime(new Date());
                     excelService.insert(excel);
 
@@ -166,7 +165,9 @@ public class PerformancePoolImportUserController extends BaseController {
                     ExcelImportResult readExcel = excelContext.readExcel(excelId, excelStream);
                     List<PerformancePoolImportUser> listBean = readExcel.getListBean();
 
-                    performancePoolImportUserService.insertBatch(listBean);
+//                    performancePoolImportUserService.insertBatch(listBean,2000);
+                    performancePoolImportUserService.batchInsert(listBean);
+
                 }
             }
         } catch (IOException e) {
@@ -175,7 +176,7 @@ public class PerformancePoolImportUserController extends BaseController {
             e.printStackTrace();
         }
         System.out.println("msg = " + toJson(msg));
-        return msg;
+        return toJson(msg);
     }
 
     /**
@@ -185,10 +186,19 @@ public class PerformancePoolImportUserController extends BaseController {
      */
     @Permission("5004")
     @RequestMapping(value = "/downloadExcel", method = RequestMethod.POST)
-    public ModelAndView downloadExcel() {
-
+    public ModelAndView downloadExcel(@RequestParam("_userName") String _userName,
+                                      @RequestParam("_mobileNo") String _mobileNo) throws UnsupportedEncodingException {
+        EntityWrapper<PerformancePoolImportUser> ew = new EntityWrapper<>();
+        if (StringUtil.isNotEmpty(_userName)) {
+            String userName = new String(_userName.getBytes("iso-8859-1"), "utf-8");
+            ew.like("user_name", userName);
+        }
+        if (StringUtil.isNotEmpty(_mobileNo)) {
+            String mobileNo = new String(_mobileNo.getBytes("iso-8859-1"), "utf-8");
+            ew.like("mobile_no", mobileNo);
+        }
         List<String> fields = Arrays.asList(excelFields.split(","));
-        List<PerformancePoolImportUser> beans = performancePoolImportUserService.selectList(null);
+        List<PerformancePoolImportUser> beans = performancePoolImportUserService.selectList(ew);
         return super.exportExcel(excelId, beans, null, fields, excelName);
     }
 
