@@ -85,10 +85,10 @@ BigClient - 未分配的VIP名单
 
 	function dataQueryParams(params,formData) {
 		var temp = {
-			_size: params.limit,	//页面大小
-			_index: params.offset,	//页码
-			_userName: $("#txt_userName").val(), 	//客户姓名输入
-			_mobileNo: $("#txt_mobileNo").val(), 	//手机号码输入
+			_size: params.limit,				 //页面大小
+			_index: params.offset,				 //页码
+			_userName: $("#txt_userName").val(), //客户姓名输入
+			_mobileNo: $("#txt_mobileNo").val(), //手机号码输入
 		};
 		return temp;
     }
@@ -118,7 +118,10 @@ BigClient - 未分配的VIP名单
         // 模拟Ajax获取
         downLoadFile({
             url: "#springUrl('/clientList/unassignedVipUser/downloadExcel.html')", //请求的url
-            data: {search: $("#txt_search").val()}				//要发送的数据
+            data: {
+                _userName: $("#txt_userName").val(),
+				_mobileNo: $("#txt_mobileNo").val()
+            } //要发送的数据
         });
     }
 

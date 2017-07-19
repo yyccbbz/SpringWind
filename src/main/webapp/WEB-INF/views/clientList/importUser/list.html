@@ -11,10 +11,10 @@ BigClient - 分配/上报名单导入
 <div class="row">
 	<div class="ibox-content text-right form-inline" style="background: #F3F3F4;">
 
-		<button class="btn" type="button" disabled="disabled">
+		<!--<button class="btn" type="button" disabled="disabled">
 			<i></i>&nbsp;客户姓名
 		</button>
-		<input type="text" class="form-control" id="txt_userName" name="txt_userName">
+		<input type="text" class="form-control" id="txt_userName" name="txt_userName">-->
 
 		<button class="btn" type="button" disabled="disabled">
 			<i></i>&nbsp;手机号码
@@ -95,7 +95,7 @@ BigClient - 分配/上报名单导入
         var temp = {
             _size: params.limit,	//页面大小
             _index: params.offset,	//页码
-            _userName: $("#txt_userName").val(), 	//客户姓名输入
+//            _userName: $("#txt_userName").val(), 	//客户姓名输入
             _mobileNo: $("#txt_mobileNo").val(), 	//手机号码输入
         };
         console.log(temp);
@@ -150,7 +150,7 @@ BigClient - 分配/上报名单导入
         // 模拟Ajax获取
         downLoadFile({
             url: "#springUrl('/clientList/importUser/downloadExcel.html')", //请求的url
-            data: {search: $("#txt_search").val()}				//要发送的数据
+            data: {_mobileNo: $("#txt_mobileNo").val()}						//要发送的数据
         });
     }
 

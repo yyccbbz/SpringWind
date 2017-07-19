@@ -23,6 +23,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 /**
@@ -81,14 +82,12 @@ public class AssignReportImportUserController extends BaseController {
     @ResponseBody
     @Permission("5003")
     @RequestMapping(value = "/getUserList")
-    public String getUserList(@RequestParam("_userName") String _userName, @RequestParam("_mobileNo") String _mobileNo) {
+    public String getUserList(@RequestParam("_mobileNo") String _mobileNo) {
 
-        System.err.println("筛选条件：客户姓名_userName = " + _userName + "，手机号码_mobileNo = " + _mobileNo);
+        System.err.println("筛选条件：客户手机号码_mobileNo = " + _mobileNo);
 
         EntityWrapper<AssignReportImportUser> ew = new EntityWrapper<>();
-        if (StringUtil.isNotEmpty(_userName)) {
-            ew.like("user_name", _userName);
-        }
+
         if (StringUtil.isNotEmpty(_mobileNo)) {
             ew.like("mobile_no", _mobileNo);
         }
@@ -142,8 +141,6 @@ public class AssignReportImportUserController extends BaseController {
                         msg.setSuccess(true);
                         msg.setUrl(cf.getFileUrl());
                         msg.setSize(cf.getSize());
-                        System.err.println("上传文件地址：" + msg.getUrl());
-                        System.err.println("UploadFile cf：" + cf.toString());
                     }
                     msg.setMsg(cf.getUploadCode().desc());
                     /**读取Excel内容，进行写表*/
@@ -151,7 +148,7 @@ public class AssignReportImportUserController extends BaseController {
                     excel.setExcelName(cf.getOriginalFileName());
                     excel.setExcelRealName(cf.getFilesystemName());
                     excel.setExcelRealPath(cf.getFileUrl());
-                    excel.setUid(0L);
+                    excel.setUid(getCurrentUserId());
                     excel.setCreateTime(new Date());
                     excelService.insert(excel);
 
@@ -159,7 +156,8 @@ public class AssignReportImportUserController extends BaseController {
                     ExcelImportResult readExcel = excelContext.readExcel(excelId, excelStream);
                     List<AssignReportImportUser> listBean = readExcel.getListBean();
 
-                    assignReportImportUserService.insertBatch(listBean);
+//                    assignReportImportUserService.insertBatch(listBean);
+                    assignReportImportUserService.batchInsert(listBean);
                 }
             }
         } catch (IOException e) {
@@ -167,7 +165,7 @@ public class AssignReportImportUserController extends BaseController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("msg = " + toJson(msg));
+        System.err.println("msg = " + toJson(msg));
         return msg;
 
     }
@@ -180,10 +178,14 @@ public class AssignReportImportUserController extends BaseController {
      */
     @Permission("5003")
     @RequestMapping(value = "/downloadExcel", method = RequestMethod.POST)
-    public ModelAndView downloadExcel() {
-
+    public ModelAndView downloadExcel(@RequestParam("_mobileNo") String _mobileNo) throws UnsupportedEncodingException {
+        EntityWrapper<AssignReportImportUser> ew = new EntityWrapper<>();
+        if (StringUtil.isNotEmpty(_mobileNo)) {
+            String mobileNo = new String(_mobileNo.getBytes("iso-8859-1"), "utf-8");
+            ew.like("mobile_no", mobileNo);
+        }
         List<String> fields = Arrays.asList(excelFields.split(","));
-        List<AssignReportImportUser> beans = assignReportImportUserService.selectList(null);
+        List<AssignReportImportUser> beans = assignReportImportUserService.selectList(ew);
         return super.exportExcel(excelId, beans, null, fields, excelName);
     }
 

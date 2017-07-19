@@ -15,4 +15,15 @@
 		<result column="update_time" property="updateTime" />
 	</resultMap>
 
+
+	<insert id="batchInsert" parameterType="java.util.List">
+		INSERT INTO `assign_report_import_user`
+		(`mobile_no`, `user_name`, `user_type`, `report_date`, `advisor_name`, `user_mark`) VALUES
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.mobileNo}, #{item.userName}, #{item.userType},
+			#{item.reportDate}, #{item.advisorName}, #{item.userMark})
+		</foreach>
+	</insert>
+
+
 </mapper>

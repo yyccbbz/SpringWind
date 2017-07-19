@@ -6,6 +6,8 @@ import com.baomidou.springwind.service.IAssignReportImportUserService;
 import com.baomidou.springwind.service.support.BaseServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * <p>
  * 分配/上报名单导入 服务实现类
@@ -20,5 +22,10 @@ public class AssignReportImportUserServiceImpl extends BaseServiceImpl<AssignRep
     @Override
     public void deleteAll() {
         baseMapper.truncateTable();
+    }
+
+    @Override
+    public void batchInsert(List<AssignReportImportUser> listBean) {
+        baseMapper.batchInsert(listBean);
     }
 }

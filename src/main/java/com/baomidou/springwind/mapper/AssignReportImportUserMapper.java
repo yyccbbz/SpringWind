@@ -2,7 +2,10 @@ package com.baomidou.springwind.mapper;
 
 import com.baomidou.springwind.entity.AssignReportImportUser;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Update;
+
+import java.util.List;
 
 /**
  * <p>
@@ -15,4 +18,6 @@ import org.apache.ibatis.annotations.Update;
 public interface AssignReportImportUserMapper extends BaseMapper<AssignReportImportUser> {
     @Update("TRUNCATE TABLE assign_report_import_user")
     void truncateTable();
+
+    void batchInsert(@Param("list") List<AssignReportImportUser> list);
 }

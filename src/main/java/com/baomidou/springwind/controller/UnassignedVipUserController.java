@@ -19,6 +19,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -117,10 +118,20 @@ public class UnassignedVipUserController extends BaseController {
      */
     @Permission("5002")
     @RequestMapping(value = "/downloadExcel",method = RequestMethod.POST)
-    public ModelAndView downloadExcel(){
+    public ModelAndView downloadExcel(@RequestParam("_userName") String _userName,
+                                      @RequestParam("_mobileNo") String _mobileNo) throws UnsupportedEncodingException {
 
+        EntityWrapper<UnassignedVipUser> ew = new EntityWrapper<>();
+        if (StringUtil.isNotEmpty(_userName)) {
+            String userName = new String(_userName.getBytes("iso-8859-1"), "utf-8");
+            ew.like("user_name", userName);
+        }
+        if (StringUtil.isNotEmpty(_mobileNo)) {
+            String mobileNo = new String(_mobileNo.getBytes("iso-8859-1"), "utf-8");
+            ew.like("mobile_no", mobileNo);
+        }
         List<String> fields = Arrays.asList(excelFields.split(","));
-        List<UnassignedVipUser> beans = unassignedVipUserService.selectList(null);
+        List<UnassignedVipUser> beans = unassignedVipUserService.selectList(ew);
         return super.exportExcel(excelId, beans, null, fields, excelName);
     }
 
