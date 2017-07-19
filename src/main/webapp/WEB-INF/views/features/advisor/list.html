@@ -49,10 +49,6 @@ BigClient - 投资顾问
 #override("js")
 <script src="#springUrl('/static/js/plugins/bootstrap-table/bootstrap-table.min.js')"></script>
 <script src="#springUrl('/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js')"></script>
-<script src="#springUrl('/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js')"></script>
-<script src="#springUrl('/static/plugins/layer-v3.0.3/layer/layer.js')"></script>
-<script src="#springUrl('/static/js/base_list.js')"></script>
-<script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
     var dataUrl = "#springUrl('/features/advisor/getList.html')";
     var dataColumns = [
@@ -66,18 +62,19 @@ BigClient - 投资顾问
         { field: 'teamLeader', title: '团队组长', sortable:'true',  align: 'center', valign: 'middle' },
         { field: 'teamLocation', title: '团队所在地', sortable:'true',  align: 'center', valign: 'middle' },
         { field: 'isValid', title: '是否有效', sortable:'true',  align: 'center', valign: 'middle' ,
-            formatter: function (value, row, index) { return formatWhether(row.isValid); } }
-		<!-- 此处按钮级别权限控制,目前只有 admin 拥有该权限! -->
-		#if ($SSOPermission.isActionable("10010"))
-        ,{
+            formatter: function (value, row, index) { return formatWhether(row.isValid); } },
+		{
             title: '操作', align: "center", valign: "middle",
             formatter: function (value, row, index) {
                 var id = row.id;
                 return '<a class="btn btn-xs btn-warning" onclick="editOne(' + "'" + id + "'" + ')"><i class="fa fa-pencil"></i>编辑</a> '
-					+'<a class="btn btn-xs btn-danger" onclick="delOne(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
+                <!-- 此处按钮级别权限控制,目前只有 admin 拥有该权限! -->
+                #if ($SSOPermission.isActionable("10010"))
+                    +'<a class="btn btn-xs btn-danger" onclick="delOne(' + "'" + id + "'" + ')"><i class="fa fa-remove"></i>删除</a>'
+				#end
             }
         }
-    	#end
+
     ];
 
     /**点击搜索按钮，弹出搜索条件的弹层*/
@@ -116,7 +113,7 @@ BigClient - 投资顾问
         oTable1.Init();
     }
 
-    /*添加测试数据*/
+	/*添加测试数据*/
     function addTestData() {
         $.ajax({
             type: "get",
@@ -130,8 +127,8 @@ BigClient - 投资顾问
         });
     }
 
-	/**导出Excel*/
-	function downloadExcel() {
+    /**导出Excel*/
+    function downloadExcel() {
         // 模拟Ajax获取
         downLoadFile({
             url: "#springUrl('/features/advisor/downloadExcel.html')", //请求的url
@@ -159,8 +156,8 @@ BigClient - 投资顾问
                     dataType: "json",                      //返回值类型 一般设置为json
                     success: function (data, status) {     //服务器成功响应处理函数
                         layer.closeAll();
-						console.log(data);
-						console.log(data.success);
+                        console.log(data);
+                        console.log(data.success);
                         if(data.success == 'true'){
                             $('#dataTable').bootstrapTable('refresh',{url:dataUrl});
                         }
@@ -213,5 +210,9 @@ BigClient - 投资顾问
         });
     }
 </script>
+<script src="#springUrl('/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js')"></script>
+<script src="#springUrl('/static/plugins/layer-v3.0.3/layer/layer.js')"></script>
+<script src="#springUrl('/static/js/base_list.js')"></script>
+<script src="#springUrl('/static/js/common.js')"></script>
 #end
 #extends("/common/framework.html")
