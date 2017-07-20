@@ -6,7 +6,6 @@ import com.baomidou.framework.controller.SuperController;
 import com.baomidou.framework.mail.MailHelper;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.view.SpringMvcExcelView;
-import com.baomidou.springwind.entity.ProductExpires;
 import com.baomidou.springwind.excel.ExcelContext;
 import com.baomidou.springwind.excel.parsing.ExcelHeader;
 import com.baomidou.springwind.service.IAdvisorService;
@@ -24,7 +23,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -141,7 +139,7 @@ public class BaseController extends SuperController implements HandlerIntercepto
 		 */
 		Workbook workbook = null;
 		try {
-			workbook = excelContext.createExcel(id, beans, null, fields);
+			workbook = excelContext.createExcel(id, beans, header, fields);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

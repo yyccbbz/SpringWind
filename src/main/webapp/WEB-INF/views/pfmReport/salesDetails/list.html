@@ -51,6 +51,9 @@ BigClient - 销售明细
 <script src="#springUrl('/static/js/base_list.js')"></script>
 <script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
+
+	var query_params = "";
+
     var dataUrl = "#springUrl('/pfmReport/salesDetails/getList.html')";
     var dataColumns = [
         { field: 'userName', title: '客户姓名', sortable:'true',  align: 'center', valign: 'middle' },
@@ -96,7 +99,6 @@ BigClient - 销售明细
         }
     	#end
     ];
-
 
     /**点击搜索按钮，弹出搜索条件的弹层*/
     function searchByCondition(){
@@ -148,7 +150,7 @@ BigClient - 销售明细
         // 模拟Ajax获取
         downLoadFile({
             url: "#springUrl('/pfmReport/salesDetails/downloadExcel.html')", //请求的url
-            data: {search: $("#txt_search").val()}				//要发送的数据
+            data: {_search: query_params}	//要发送的数据
         });
     }
 

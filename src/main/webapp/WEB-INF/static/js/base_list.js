@@ -10,7 +10,7 @@ $(function () {
 
     //2.初始化表格原生的Button的点击事件
     /*var oButtonInit = new ButtonInit();
-    oButtonInit.Init();*/
+     oButtonInit.Init();*/
 });
 
 var TableInit = function () {
@@ -46,7 +46,7 @@ var TableInit = function () {
     oTableInit.formData = "";
     //得到查询的参数
     oTableInit.queryParams = function (params) {
-        return dataQueryParams(params,oTableInit.formData);
+        return dataQueryParams(params, oTableInit.formData);
     };
     return oTableInit;
 };
@@ -68,21 +68,21 @@ var ButtonInit = function () {
 };*/
 
 /**form表单序列化后的数据转json字符串*/
-function formToJsonStr(data){
+function formToJsonStr(data) {
     // var data = $("#form").serialize();
-    data= decodeURIComponent(data,true);//防止中文乱码
-    data = data.replace(/&/g, "','" );
-    data = data.replace(/=/g, "':'" );
-    data = "{'" +data + "'}" ;
+    data = decodeURIComponent(data, true);//防止中文乱码
+    data = data.replace(/&/g, "','");
+    data = data.replace(/=/g, "':'");
+    data = "{'" + data + "'}";
     return data;
 }
 /**form表单序列化后的数据转json对象*/
-function formToJson(data){
+function formToJson(data) {
     // var data = $("#form").serialize();
-    data= decodeURIComponent(data,true);//防止中文乱码
-    data = data.replace(/&/g, "','" );
-    data = data.replace(/=/g, "':'" );
-    data = "({'" +data + "'})" ;
+    data = decodeURIComponent(data, true);//防止中文乱码
+    data = data.replace(/&/g, "','");
+    data = data.replace(/=/g, "':'");
+    data = "({'" + data + "'})";
     obj = eval(data);
     return obj;
 }
