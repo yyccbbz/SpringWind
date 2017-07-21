@@ -134,13 +134,19 @@ BigClient - 资产余额表
         });
     }
 
-	/**导出Excel*/
-	function downloadExcel() {
-        // 模拟Ajax获取
-        downLoadFile({
-            url: "#springUrl('/statsReport/assetsBalance/downloadExcel.html')", 	//请求的url
-            data: {search: $("#txt_search").val()}									//要发送的数据
-        });
+    /**导出Excel*/
+    function downloadExcel() {
+        var myOptions = $('#dataTable').bootstrapTable('getOptions');
+        if(myOptions.totalRows >300000){
+            layer.alert("数据量超过三十万 请条件检索后导出", {icon: 2});
+        }else{
+            // 模拟Ajax获取
+            downLoadFile({
+                url: "#springUrl('/statsReport/assetsBalance/downloadExcel.html')", //请求的url
+                data: {_search: query_params}	//要发送的数据
+            });
+            layer.msg("开始下载 请耐心等待");
+        }
     }
 
     /**导入excel*/

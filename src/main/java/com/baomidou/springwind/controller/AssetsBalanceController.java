@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.DateUtil;
 import com.baomidou.springwind.common.utils.StringUtil;
 import com.baomidou.springwind.entity.AssetsBalance;
+import com.baomidou.springwind.entity.AssetsBalance;
 import com.baomidou.springwind.service.IAssetsBalanceService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -126,10 +128,35 @@ public class AssetsBalanceController extends BaseController {
      */
     @Permission("8002")
     @RequestMapping(value = "/downloadExcel", method = RequestMethod.POST)
-    public ModelAndView downloadExcel() {
+    public ModelAndView downloadExcel(@RequestParam("_search") String _search) throws UnsupportedEncodingException {
+        String search = new String(_search.getBytes("iso-8859-1"), "utf-8");
+        System.err.println("资产余额excel导出的条件 search =" + search);
 
+        EntityWrapper<AssetsBalance> ew = new EntityWrapper<>();
+        if (StringUtil.isNotEmpty(search)) {
+            AssetsBalance ab = JSONObject.parseObject(search, AssetsBalance.class);
+            if (StringUtil.isNotEmpty(ab.getUserName())) {
+                ew.like("user_name", ab.getUserName());
+            }
+            if (StringUtil.isNotEmpty(ab.getMobileNo())) {
+                ew.eq("mobile_no", ab.getMobileNo());
+            }
+            if (ab.getUserType() != null) {
+                ew.eq("user_type", ab.getUserType());
+            }
+            if (ab.getTransAum() != null) {
+                ew.gt("trans_aum", ab.getTransAum());
+            }
+            if (ab.getAccountAum() != null) {
+                ew.lt("trans_aum", ab.getAccountAum());
+            }
+            if (ab.getIsPerformancePool() != null) {
+                ew.eq("is_performance_pool", ab.getIsPerformancePool());
+            }
+        }
+        List<AssetsBalance> beans = assetsBalanceService.selectList(ew);
+        
         List<String> fields = Arrays.asList(excelFields.split(","));
-        List<AssetsBalance> beans = assetsBalanceService.selectList(null);
         return super.exportExcel(excelId, beans, null, fields, excelName);
     }
 
@@ -143,12 +170,7 @@ public class AssetsBalanceController extends BaseController {
         ArrayList<AssetsBalance> list = new ArrayList<>();
         for (int i = 1; i <= 100; i++) {
             AssetsBalance ab = new AssetsBalance();
-            /*
-id,mobile_no,member_no,user_name,user_type,register_time,
-dingqi_aum,huoqi_aum,huobaoding_aum,secondmarket_aum,
-trans_aum,account_aum,
-aum_date,is_performance_pool,create_time,update_time,
-            */
+           
             ab.setMobileNo(RandomStringUtils.randomNumeric(11));
             ab.setMemberNo(RandomStringUtils.randomAlphanumeric(10));
             ab.setUserName(RandomStringUtils.randomAlphabetic(5));

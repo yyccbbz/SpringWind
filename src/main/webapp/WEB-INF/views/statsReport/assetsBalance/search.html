@@ -127,7 +127,7 @@
     $(".yesBtn").click(function () {
         var formData = window.parent.formToJsonStr($('#myForm').serialize());
 //        console.log(formData);
-
+        window.parent.query_params = formData;
         //初始化列表
         var oTable1 = new window.parent.TableInit();
         oTable1.formData = formData;

@@ -18,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -132,10 +133,55 @@ public class GetSalesDetailsController extends BaseController {
      */
     @Permission("6003")
     @RequestMapping(value = "/downloadExcel", method = RequestMethod.POST)
-    public ModelAndView downloadExcel() {
+    public ModelAndView downloadExcel(@RequestParam("_search") String _search) throws UnsupportedEncodingException {
+        String search = new String(_search.getBytes("iso-8859-1"), "utf-8");
+        System.err.println("获客销售明细 excel导出的条件 search =" + search);
 
+        EntityWrapper<GetSalesDetails> ew = new EntityWrapper<>();
+        if (StringUtil.isNotEmpty(search)) {
+            GetSalesDetails gsd = JSONObject.parseObject(search, GetSalesDetails.class);
+            if (StringUtil.isNotEmpty(gsd.gettUserName())) {
+                ew.like("t_user_name", gsd.gettUserName());
+            }
+            if (StringUtil.isNotEmpty(gsd.gettMobileNo())) {
+                ew.eq("t_mobile_no", gsd.gettMobileNo());
+            }
+            if (gsd.gettUserType() != null) {
+                ew.eq("t_user_type", gsd.gettUserType());
+            }
+
+            if (StringUtil.isNotEmpty(gsd.getBtUserName())) {
+                ew.like("bt_user_name", gsd.getBtUserName());
+            }
+            if (StringUtil.isNotEmpty(gsd.getBtMobileNo())) {
+                ew.eq("bt_mobile_no", gsd.getBtMobileNo());
+            }
+            if (StringUtil.isNotEmpty(gsd.getAdvisorName())) {
+                ew.eq("advisor_name", gsd.getAdvisorName());
+            }
+
+            if (gsd.getBtRegisterTime() != null) {
+                ew.gt("bt_register_time", gsd.getBtRegisterTime());
+            }
+            if (gsd.getUpdateTime() != null) {
+                ew.lt("bt_register_time", gsd.getUpdateTime());
+            }
+            if (gsd.getProductType() != null) {
+                ew.eq("product_type", gsd.getProductType());
+            }
+
+            if (gsd.getTransTime() != null) {
+                ew.gt("trans_time", gsd.getTransTime());
+            }
+            if (gsd.getCreateTime() != null) {
+                ew.lt("trans_time", gsd.getCreateTime());
+            }
+            if (gsd.getLimitType() != null) {
+                ew.eq("limit_type", gsd.getLimitType());
+            }
+        }
+        List<GetSalesDetails> beans = getSalesDetailsService.selectList(ew);
         List<String> fields = Arrays.asList(excelFields.split(","));
-        List<GetSalesDetails> beans = getSalesDetailsService.selectList(null);
         return super.exportExcel(excelId, beans, null, fields, excelName);
     }
 
@@ -149,13 +195,7 @@ public class GetSalesDetailsController extends BaseController {
         ArrayList<GetSalesDetails> list = new ArrayList<>();
         for (int i = 1; i <= 100; i++) {
             GetSalesDetails gsd = new GetSalesDetails();
-            /*
-#id,tMobileNo,tMemberNo,tUserName,advisorId,advisorName,tUserType,tReportDate,tIsPerformancePool,btMobileNo,btMemberNo,
-#btUserName,btRegisterTime,
-productId,productName,productType,productRate,
-transAmount,transTime,inceptionDate,dueDate,
-limitDays,limitType,createTime,updateTime,
-            */
+
             gsd.settMobileNo(RandomStringUtils.randomNumeric(11));
             gsd.settMemberNo(RandomStringUtils.randomAlphanumeric(10));
             gsd.settUserName(RandomStringUtils.randomAlphabetic(5));
@@ -170,7 +210,7 @@ limitDays,limitType,createTime,updateTime,
             gsd.setBtRegisterTime(DateUtil.randomDate("2017-01-01", "2017-07-01"));
             gsd.setProductId(RandomStringUtils.randomNumeric(4));
             gsd.setProductName(RandomStringUtils.randomNumeric(4));
-            gsd.setProductType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'1', '2', '3','4'})));
+            gsd.setProductType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'1', '2', '3', '4'})));
             gsd.setProductRate(RandomStringUtils.randomNumeric(2));
             gsd.setTransAmount((Double.valueOf(RandomStringUtils.randomNumeric(6))));
             gsd.setTransTime(DateUtil.randomDate("2017-01-01", "2017-07-01"));
