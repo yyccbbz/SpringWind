@@ -27,7 +27,7 @@ public class FinalUserServiceImpl extends BaseServiceImpl<FinalUserMapper, Final
     public Page<FinalUser> selectPageByParams(Page<FinalUser> page, FinalUser finalUser) {
 
         EntityWrapper<FinalUser> ew = new EntityWrapper<>();
-//        ew.where("1={0}", "1");
+
         if (StringUtil.isNotEmpty(finalUser.getUserName())) {
             ew.like("user_name", finalUser.getUserName());
         }

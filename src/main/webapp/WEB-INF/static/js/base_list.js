@@ -13,7 +13,7 @@ $(function () {
      oButtonInit.Init();*/
 });
 
-var query_params = null;
+var query_params = "";
 
 var TableInit = function () {
     var oTableInit = new Object();

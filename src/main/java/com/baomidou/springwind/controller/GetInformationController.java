@@ -8,7 +8,6 @@ import com.baomidou.springwind.common.utils.DateUtil;
 import com.baomidou.springwind.common.utils.StringUtil;
 import com.baomidou.springwind.entity.Advisor;
 import com.baomidou.springwind.entity.GetInformation;
-import com.baomidou.springwind.service.IAdvisorService;
 import com.baomidou.springwind.service.IGetInformationService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -129,10 +129,45 @@ public class GetInformationController extends BaseController {
      */
     @Permission("6002")
     @RequestMapping(value = "/downloadExcel", method = RequestMethod.POST)
-    public ModelAndView downloadExcel() {
+    public ModelAndView downloadExcel(@RequestParam("_search") String _search) throws UnsupportedEncodingException {
+        String search = new String(_search.getBytes("iso-8859-1"), "utf-8");
+        System.err.println("获客信息 excel导出的条件 search =" + search);
 
+        EntityWrapper<GetInformation> ew = new EntityWrapper<>();
+        if (StringUtil.isNotEmpty(search)) {
+            GetInformation gi = JSONObject.parseObject(search, GetInformation.class);
+            if (StringUtil.isNotEmpty(gi.gettUserName())) {
+                ew.like("t_user_name", gi.gettUserName());
+            }
+            if (StringUtil.isNotEmpty(gi.gettMobileNo())) {
+                ew.eq("t_mobile_no", gi.gettMobileNo());
+            }
+            if (gi.gettUserType() != null) {
+                ew.eq("t_user_type", gi.gettUserType());
+            }
+
+            if (StringUtil.isNotEmpty(gi.getBtUserName())) {
+                ew.like("bt_user_name", gi.getBtUserName());
+            }
+            if (StringUtil.isNotEmpty(gi.getBtMobileNo())) {
+                ew.eq("bt_mobile_no", gi.getBtMobileNo());
+            }
+            if (StringUtil.isNotEmpty(gi.getAdvisorName())) {
+                ew.eq("advisor_name", gi.getAdvisorName());
+            }
+
+            if (gi.getBtRegisterTime() != null) {
+                ew.gt("bt_register_time", gi.getBtRegisterTime());
+            }
+            if (gi.getUpdateTime() != null) {
+                ew.lt("bt_register_time", gi.getUpdateTime());
+            }
+            if (gi.gettIsPerformancePool() != null) {
+                ew.eq("t_is_performance_pool", gi.gettIsPerformancePool());
+            }
+        }
+        List<GetInformation> beans = getInformationService.selectList(ew);
         List<String> fields = Arrays.asList(excelFields.split(","));
-        List<GetInformation> beans = getInformationService.selectList(null);
         return super.exportExcel(excelId, beans, null, fields, excelName);
     }
 
@@ -146,10 +181,7 @@ public class GetInformationController extends BaseController {
         ArrayList<GetInformation> list = new ArrayList<>();
         for (int i = 1; i <= 100; i++) {
             GetInformation gi = new GetInformation();
-            /*
-id,tMobileNo,tMemberNo,tUserName,advisorId,advisorName,tUserType,tReportDate,tIsPerformancePool,
-btMobileNo,btMemberNo,btUserName,btRegisterTime,btTransAmount,createTime,updateTime,
-            */
+
             gi.settMobileNo(RandomStringUtils.randomNumeric(11));
             gi.settMemberNo(RandomStringUtils.randomAlphanumeric(10));
             gi.settUserName(RandomStringUtils.randomAlphabetic(5));

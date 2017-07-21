@@ -147,7 +147,7 @@ BigClient - 销售明细
 	function downloadExcel() {
 
         var myOptions = $('#dataTable').bootstrapTable('getOptions');
-        console.log(myOptions.totalRows);
+//        console.log(myOptions.totalRows);
 
 	    if(myOptions.totalRows >300000){
             layer.alert("数据量超过三十万 请条件检索后导出", {icon: 2});

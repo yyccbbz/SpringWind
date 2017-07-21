@@ -8,6 +8,7 @@ import com.baomidou.springwind.common.utils.DateUtil;
 import com.baomidou.springwind.common.utils.StringUtil;
 import com.baomidou.springwind.entity.Advisor;
 import com.baomidou.springwind.entity.FinalUser;
+import com.baomidou.springwind.entity.SalesDetails;
 import com.baomidou.springwind.service.IFinalUserService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -128,10 +130,45 @@ public class FinalUserController extends BaseController {
      */
     @Permission("5001")
     @RequestMapping(value = "/downloadExcel", method = RequestMethod.POST)
-    public ModelAndView downloadExcel() {
+    public ModelAndView downloadExcel(@RequestParam("_search") String _search) throws UnsupportedEncodingException {
 
+        String search = new String(_search.getBytes("iso-8859-1"), "utf-8");
+        System.err.println("正式名单excel导出的条件 search =" + search);
+
+        EntityWrapper<FinalUser> ew = new EntityWrapper<>();
+        if (StringUtil.isNotEmpty(search)) {
+            FinalUser finalUser = JSONObject.parseObject(search, FinalUser.class);
+            if (StringUtil.isNotEmpty(finalUser.getUserName())) {
+                ew.like("user_name", finalUser.getUserName());
+            }
+            if (StringUtil.isNotEmpty(finalUser.getMobileNo())) {
+                ew.eq("mobile_no", finalUser.getMobileNo());
+            }
+            if (finalUser.getUserType() != null) {
+                ew.eq("user_type", finalUser.getUserType());
+            }
+            if (finalUser.getIsVipuser() != null) {
+                ew.eq("is_vipuser", finalUser.getIsVipuser());
+            }
+            if (StringUtil.isNotEmpty(finalUser.getAdvisorName())) {
+                ew.eq("advisor_name", finalUser.getAdvisorName());
+            }
+            if (StringUtil.isNotEmpty(finalUser.getUserMark())) {
+                ew.eq("user_mark", finalUser.getUserMark());
+            }
+            if (finalUser.getIsPerformancePool() != null) {
+                ew.eq("is_performance_pool", finalUser.getIsPerformancePool());
+            }
+            // 日期比较有三种情况
+            if (finalUser.getReportDate() != null) {
+                ew.gt("report_date", finalUser.getReportDate());
+            }
+            if (finalUser.getVipDate() != null) {
+                ew.lt("report_date", finalUser.getVipDate());
+            }
+        }
+        List<FinalUser> beans = finalUserService.selectList(ew);
         List<String> fields = Arrays.asList(excelFields.split(","));
-        List<FinalUser> beans = finalUserService.selectList(null);
         return super.exportExcel(excelId, beans, null, fields, excelName);
     }
 
