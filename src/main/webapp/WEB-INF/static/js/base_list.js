@@ -13,6 +13,8 @@ $(function () {
      oButtonInit.Init();*/
 });
 
+var query_params = null;
+
 var TableInit = function () {
     var oTableInit = new Object();
     //初始化Table

@@ -257,6 +257,19 @@ var downLoadFile = function (options) {
         config.callback();
     }
     $form[0].submit();
+
+    /*var data = {};
+    for (var key in config.data) {
+        data[key] = config.data[key];
+    }
+    $.ajax({
+        type: "POST",
+        url: config.url,
+        data: data,
+        success: function (data) {
+            console.log("下载开始。。。");
+        }
+    });*/
 };
 
 /**下载文件---新页面

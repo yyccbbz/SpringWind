@@ -44,16 +44,14 @@ BigClient - 销售明细
 </div>
 #end
 #override("js")
-<script src="#springUrl('/static/js/plugins/bootstrap-table/bootstrap-table.min.js')"></script>
+<script src="#springUrl('/static/js/plugins/bootstrap-table/bootstrap-table.js')"></script>
+<!--<script src="#springUrl('/static/js/plugins/bootstrap-table/bootstrap-table.min.js')"></script>-->
 <script src="#springUrl('/static/js/plugins/bootstrap-table/bootstrap-table-mobile.min.js')"></script>
 <script src="#springUrl('/static/js/plugins/bootstrap-table/locale/bootstrap-table-zh-CN.min.js')"></script>
 <script src="#springUrl('/static/plugins/layer-v3.0.3/layer/layer.js')"></script>
 <script src="#springUrl('/static/js/base_list.js')"></script>
 <script src="#springUrl('/static/js/common.js')"></script>
 <script type="text/javascript">
-
-	var query_params = "";
-
     var dataUrl = "#springUrl('/pfmReport/salesDetails/getList.html')";
     var dataColumns = [
         { field: 'userName', title: '客户姓名', sortable:'true',  align: 'center', valign: 'middle' },
@@ -131,7 +129,7 @@ BigClient - 销售明细
     }
 
 
-    /*添加测试数据*/
+    /**添加测试数据*/
     function addTestData() {
         $.ajax({
             type: "get",
@@ -147,11 +145,25 @@ BigClient - 销售明细
 
 	/**导出Excel*/
 	function downloadExcel() {
-        // 模拟Ajax获取
-        downLoadFile({
-            url: "#springUrl('/pfmReport/salesDetails/downloadExcel.html')", //请求的url
-            data: {_search: query_params}	//要发送的数据
-        });
+
+        var myOptions = $('#dataTable').bootstrapTable('getOptions');
+        console.log(myOptions.totalRows);
+
+	    if(myOptions.totalRows >300000){
+            layer.alert("数据量超过三十万 请条件检索后导出", {icon: 2});
+		}else{
+            // 模拟Ajax获取
+            downLoadFile({
+                url: "#springUrl('/pfmReport/salesDetails/downloadExcel.html')", //请求的url
+                data: {_search: query_params}	//要发送的数据
+            });
+            layer.msg("开始下载 请耐心等待");
+            //loading层
+//            var index = layer.load(1, {
+//                shade: [0.1,'#fff'] //0.1透明度的白色背景
+//            });
+//            layer.close(index);
+		}
     }
 
     /**导入excel*/

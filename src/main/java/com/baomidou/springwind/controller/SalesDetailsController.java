@@ -191,7 +191,7 @@ public class SalesDetailsController extends BaseController {
         List<String> fields = Arrays.asList(excelFields.split(","));
 
         //如果数据量大于30w，则加入头信息，提示数据最多30w
-        if (beans != null && beans.size() > 300000) {
+        /*if (beans != null && beans.size() > 300000) {
             List<SalesDetails> subList = beans.subList(0, 300000);
             ExcelHeader header = new ExcelHeader() {
                 @Override
@@ -205,7 +205,7 @@ public class SalesDetailsController extends BaseController {
                 }
             };
             return super.exportExcel(excelId, subList, header, fields, excelName);
-        }
+        }*/
 
         return super.exportExcel(excelId, beans, null, fields, excelName);
     }
