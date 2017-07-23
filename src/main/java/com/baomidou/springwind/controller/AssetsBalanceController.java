@@ -81,18 +81,20 @@ public class AssetsBalanceController extends BaseController {
     @RequestMapping(value = "/getList")
     public String getUserList(@RequestParam("_search") String _search) {
 
-        System.err.println("筛选条件 formData =" + _search);
+        System.err.println("资产余额筛选条件 formData =" + _search);
 
         Page<AssetsBalance> page = getPage();
+        Page<AssetsBalance> pageList = null;
         if (StringUtil.isNotEmpty(_search)) {
             //transAumSmall=transAum transAumBig=accountAum
             AssetsBalance ab = JSONObject.parseObject(_search, AssetsBalance.class);
-            page = assetsBalanceService.selectPageByParams(page, ab);
+            pageList = assetsBalanceService.selectPageByParams(page, ab);
         } else {
-            page = assetsBalanceService.selectPage(page,
-                    new EntityWrapper<AssetsBalance>().orderBy("aum_date", false));
+//            pageList = assetsBalanceService.selectPage(page,
+//                    new EntityWrapper<AssetsBalance>().orderBy("aum_date", false));
+            pageList = assetsBalanceService.selectPage(page,null);
         }
-        return jsonPage(page);
+        return jsonPage(pageList);
     }
 
     @ResponseBody

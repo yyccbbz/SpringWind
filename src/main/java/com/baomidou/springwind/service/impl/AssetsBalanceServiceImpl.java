@@ -46,7 +46,7 @@ public class AssetsBalanceServiceImpl extends BaseServiceImpl<AssetsBalanceMappe
             ew.eq("is_performance_pool", ab.getIsPerformancePool());
         }
 
-        ew.orderBy("aum_date", false);
+//        ew.orderBy("aum_date", false);
         System.err.println(ew.getSqlSegment());
         return selectPage(page, ew);
     }

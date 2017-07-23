@@ -86,7 +86,7 @@ public class GetSalesDetailsController extends BaseController {
     @RequestMapping(value = "/getList")
     public String getUserList(@RequestParam("_search") String _search) {
 
-        System.err.println("筛选条件 formData =" + _search);
+        System.err.println("获客销售明细筛选条件 formData =" + _search);
 
         Page<GetSalesDetails> page = getPage();
         if (StringUtil.isNotEmpty(_search)) {

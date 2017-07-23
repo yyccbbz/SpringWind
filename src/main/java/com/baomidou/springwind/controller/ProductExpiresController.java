@@ -79,7 +79,7 @@ public class ProductExpiresController extends BaseController {
     @RequestMapping(value = "/getUserList")
     public String getUserList(@RequestParam("_search") String _search) {
 
-        System.err.println("筛选条件 formData =" + _search);
+        System.err.println("产品到期筛选条件 formData =" + _search);
 
         Page<ProductExpires> page = getPage();
         if (StringUtil.isNotEmpty(_search)) {

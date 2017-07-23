@@ -80,7 +80,7 @@ public class AdvisorController extends BaseController {
     @RequestMapping(value = "/getList")
     public String getUserList(@RequestParam("_search") String _search) {
 
-        System.err.println("筛选条件 formData =" + _search);
+        System.err.println("投资顾问筛选条件 formData =" + _search);
 
         Page<Advisor> page = getPage();
         EntityWrapper<Advisor> ew = new EntityWrapper<Advisor>();

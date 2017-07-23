@@ -78,7 +78,7 @@ public class CustomerRegistryController extends BaseController {
     @RequestMapping(value = "/getList")
     public String getUserList(@RequestParam("_search") String _search) {
 
-        System.err.println("筛选条件 formData =" + _search);
+        System.err.println("客户注册筛选条件 formData =" + _search);
 
         Page<CustomerRegistry> page = getPage();
         if (StringUtil.isNotEmpty(_search)) {

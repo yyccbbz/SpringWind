@@ -84,7 +84,7 @@ public class FinalUserController extends BaseController {
     @RequestMapping(value = "/getUserList")
     public String getUserList(@RequestParam("_search") String _search) {
 
-        System.err.println("筛选条件 formData =" + _search);
+        System.err.println("正式客户名单筛选条件 formData =" + _search);
 
         Page<FinalUser> userPage = null;
         Page<FinalUser> page = getPage();
