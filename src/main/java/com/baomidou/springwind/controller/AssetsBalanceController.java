@@ -84,17 +84,15 @@ public class AssetsBalanceController extends BaseController {
         System.err.println("资产余额筛选条件 formData =" + _search);
 
         Page<AssetsBalance> page = getPage();
-        Page<AssetsBalance> pageList = null;
         if (StringUtil.isNotEmpty(_search)) {
             //transAumSmall=transAum transAumBig=accountAum
             AssetsBalance ab = JSONObject.parseObject(_search, AssetsBalance.class);
-            pageList = assetsBalanceService.selectPageByParams(page, ab);
+            page = assetsBalanceService.selectPageByParams(page, ab);
         } else {
-//            pageList = assetsBalanceService.selectPage(page,
-//                    new EntityWrapper<AssetsBalance>().orderBy("aum_date", false));
-            pageList = assetsBalanceService.selectPage(page,null);
+            page = assetsBalanceService.selectPage(page,
+                    new EntityWrapper<AssetsBalance>().orderBy("aum_date", false));
         }
-        return jsonPage(pageList);
+        return jsonPage(page);
     }
 
     @ResponseBody
