@@ -7,7 +7,6 @@ import com.baomidou.mybatisplus.plugins.Page;
 import com.baomidou.springwind.common.utils.DateUtil;
 import com.baomidou.springwind.common.utils.StringUtil;
 import com.baomidou.springwind.entity.AssetsBalance;
-import com.baomidou.springwind.entity.AssetsBalance;
 import com.baomidou.springwind.service.IAssetsBalanceService;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -155,7 +154,7 @@ public class AssetsBalanceController extends BaseController {
             }
         }
         List<AssetsBalance> beans = assetsBalanceService.selectList(ew);
-        
+
         List<String> fields = Arrays.asList(excelFields.split(","));
         return super.exportExcel(excelId, beans, null, fields, excelName);
     }
@@ -170,11 +169,11 @@ public class AssetsBalanceController extends BaseController {
         ArrayList<AssetsBalance> list = new ArrayList<>();
         for (int i = 1; i <= 100; i++) {
             AssetsBalance ab = new AssetsBalance();
-           
+
             ab.setMobileNo(RandomStringUtils.randomNumeric(11));
             ab.setMemberNo(RandomStringUtils.randomAlphanumeric(10));
             ab.setUserName(RandomStringUtils.randomAlphabetic(5));
-            ab.setUserType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'2','3', '1'})));
+            ab.setUserType(Integer.parseInt(RandomStringUtils.random(1, new char[]{'2', '3', '1'})));
             ab.setRegisterTime(DateUtil.randomDate("2017-01-01", "2017-07-01"));
             ab.setDingqiAum(Double.parseDouble(RandomStringUtils.randomNumeric(4)));
             ab.setHuoqiAum(Double.parseDouble(RandomStringUtils.randomNumeric(4)));

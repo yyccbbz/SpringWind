@@ -3441,6 +3441,8 @@ video {
   padding: 0 20px;
 }
 .wrapper-content {
+  /*自定义高度*/
+  height: calc(100vh - 60px);
   padding: 20px 10px 40px;
 }
 #page-wrapper {

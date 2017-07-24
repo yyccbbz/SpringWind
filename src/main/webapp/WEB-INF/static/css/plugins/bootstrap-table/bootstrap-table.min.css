@@ -26,6 +26,8 @@
 }
 
 .fixed-table-container {
+    /*自定义高度*/
+    height: calc(100vh - 270px) !important;
     position: relative;
     clear: both;
     border: 1px solid #ddd;
@@ -53,8 +55,6 @@
 }
 
 .fixed-table-container table {
-    /*TODO*/
-    height: 500px;
     width: 100%
 }
 
