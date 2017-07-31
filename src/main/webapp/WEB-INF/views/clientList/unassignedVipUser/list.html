@@ -69,7 +69,12 @@ BigClient - 未分配的VIP名单
 			formatter: function (value, row, index) {return formatDateTime(row.registerTime);}},
         {field: 'vipDate',title: '成为vip日期',align: "center",valign: "middle",
 			formatter: function (value, row, index) {return formatDate(row.vipDate);}},
-        {field: 'vipTransDingqi',title: '成为VIP时的历史定期投资额',align: "center",valign: "middle"},
+        {
+            field: 'vipTransDingqi',
+            title: '成为VIP时的历史定期投资额<br><font size="1" color="red">2017.8.1以前的VIP用户，未统计投资金额</font>',
+            align: "center",
+            valign: "middle"
+        },
 		<!-- 此处按钮级别权限控制,目前只有 admin 拥有该权限! -->
 		#if ($SSOPermission.isActionable("10010"))
         {
